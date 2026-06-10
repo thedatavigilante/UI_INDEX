@@ -1,0 +1,38 @@
+[
+  {
+    "state": "MD",
+    "year": 2026,
+    "statutory_wage_base": 8500,
+    "avg_annual_wage": 72800,
+    "covered_employment": 2840000,
+    "wage_base_as_pct_of_avg": 0.11675824175824176,
+    "expected_wage_base": 11866.4,
+    "per_employee_gap": 84.16,
+    "aggregate_gap": 239014400.0,
+    "sui_tax_rate": 0.025
+  },
+  {
+    "state": "VA",
+    "year": 2026,
+    "statutory_wage_base": 8000,
+    "avg_annual_wage": 68200,
+    "covered_employment": 3920000,
+    "wage_base_as_pct_of_avg": 0.11730205278592376,
+    "expected_wage_base": 11389.400000000001,
+    "per_employee_gap": 84.73500000000004,
+    "aggregate_gap": 332161200.0000002,
+    "sui_tax_rate": 0.025
+  },
+  {
+    "state": "DC",
+    "year": 2026,
+    "statutory_wage_base": 9000,
+    "avg_annual_wage": 112400,
+    "covered_employment": 760000,
+    "wage_base_as_pct_of_avg": 0.0800711743772242,
+    "expected_wage_base": 15286.400000000001,
+    "per_employee_gap": 157.16000000000005,
+    "aggregate_gap": 119441600.00000004,
+    "sui_tax_rate": 0.025
+  }
+]
