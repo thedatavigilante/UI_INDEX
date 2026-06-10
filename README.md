@@ -76,6 +76,39 @@ See `ui_index_analysis.ipynb` for full interactive reproduction of all charts.
 
 All three jurisdictions show **declining benefit adequacy** over the 16-year window. Maryland and Virginia crossed below the survival threshold (BAI < 1.0) by 2026. DC was already below threshold in 2010 and continues to deteriorate.
 
+## 🏛️ Political Accountability Layer (v2)
+
+The **per-employee injustice** connects to the **per-legislator portfolio**. The employer contribution gap module exposes how SUI wage base caps starve the trust fund. The political layer maps who controls the committees that keep these caps frozen.
+
+### Political Layer Metrics
+- **UI-Relevant Committee Members**: Members of Ways & Means, Labor, Finance, Budget, Appropriations
+- **Constituent Median Income**: Census ACS 2022 by congressional district (B19013_001E)
+- **Committee-to-Income Gap**: Compares member constituency wealth to their committee control over safety net funding
+
+### Data Sources
+- **Census ACS 2022**: Median household income by congressional district (✅ verified via api.census.gov)
+- **Congress.gov Directory**: Member metadata, committee assignments (✅ verified from public records)
+- **OpenSecrets API**: Financial disclosures, net worth, contributor industries (❌ Cloudflare blocked — documented as future integration)
+- **Congress.gov API**: Live member + committee data (❌ Rate limited — OVER_RATE_LIMIT, retry framework built)
+
+### Files
+- `political_layer_analyzer.py` — Static analysis with verified member data + Census income
+- `political_layer_builder.py` — Self-healing API client that fetches live data when rate limits allow
+- `political_layer_analysis.ipynb` — Interactive notebook with charts
+- `api_client.py` — Self-healing API client with retry, caching, and audit logging
+
+### Honest Limitations
+- OpenSecrets API requires manual key registration (blocked by Cloudflare challenge)
+- Congress.gov API rate limits require waiting period between bulk fetches
+- Committee assignments change with each Congress (current: 119th, 2025–2027)
+- Member financial disclosures are range-based, not exact amounts
+
+### Self-Healing Framework
+```
+api_client.py → retry with backoff → cache with TTL → audit log → validation report
+```
+When APIs are accessible, the builder automatically validates member counts (MD=10, VA=13, DC=1) and cross-references Census income data. When blocked, it falls back to verified static data with clear documentation.
+
 ## 📝 License
 
 MIT — see [LICENSE](LICENSE)
