@@ -42,7 +42,9 @@ jobs:
           cat > /tmp/fec_check.py << 'EOF'
           import json, sys
           with open('data/political/fec_funding_profiles.json') as f:
-              profiles = json.load(f)
+              data = json.load(f)
+          # Handle both wrapped (_metadata + data) and unwrapped formats
+          profiles = data.get('data', data) if isinstance(data, dict) else data
           errors = 0
           for p in profiles:
               total = p.get('total_receipts', 0) or 0
