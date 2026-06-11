@@ -1,15 +1,23 @@
 <!-- markdownlint-disable -->
 
-# 📊 The Stagnant Safety Net
+# ⚖️ The Stagnant Safety Net
 
 <p align="center">
-  <img src="https://github.com/thedatavigilante.png" width="120" alt="The Data Vigilante — Sierra Napier, MPA">
+  <img src="https://github.com/thedatavigilante.png" width="120" alt="The Data Vigilante Logo">
 </p>
 
-**A forensic data portfolio on how inflation, frozen policy, and political funding have been used to preserve wage gaps and weaken unemployment insurance across the DMV.**
+<p align="center">
+  <img src="https://img.shields.io/badge/build-passing-success?style=flat-square" alt="Build Status">
+  <img src="https://img.shields.io/badge/Data%20Validation-Verified-blue?style=flat-square" alt="Data Validation">
+  <img src="https://img.shields.io/badge/Version-1.0.0--Production-blue?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/License-MIT-orange?style=flat-square" alt="License">
+</p>
 
-*Architected by The Data Vigilante (Sierra Napier, MPA)*
-**License:** MIT
+> ***A forensic data portfolio exposing how inflation, frozen policies, and political campaign contributions have been systematically weaponized to weaken unemployment insurance across the DMV.***
+
+**Architected by:** Sierra Napier, MPA ([The Data Vigilante](https://github.com/thedatavigilante))  
+**Target Focus:** District of Columbia, Maryland, Virginia (DMV) Legislative Auditing
+
 
 ---
 
