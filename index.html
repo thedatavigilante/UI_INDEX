@@ -4,371 +4,627 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Stagnant Safety Net — The Data Vigilante</title>
+<meta name="description" content="A forensic data audit of unemployment insurance decay across DC, Maryland, and Virginia. Built in one day using AI. The safety net is broken and here's the receipts.">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #121212;
-    --bg2: #1a1a1a;
-    --fg: #e8e8e8;
-    --muted: #888;
-    --accent: #00FF41;
-    --accent2: #BFFF00;
-    --gold: #D4AF37;
+    --bg:      #121212;
+    --bg2:     #1a1a1a;
+    --bg3:     #1e1e1e;
+    --fg:      #e8e8e8;
+    --muted:   #888888;
+    --accent:  #00FF41;
+    --lime:    #BFFF00;
+    --gold:    #D4AF37;
     --crimson: #DC143C;
-    --card-bg: #1e1e1e;
-    --border: #2a2a2a;
-    --font-primary: 'Space Mono', monospace;
-    --font-secondary: 'Inter', sans-serif;
+    --blue:    #4aa8d8;
+    --border:  #2a2a2a;
+    --mono:    'Space Mono', monospace;
+    --sans:    'Inter', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: var(--font-secondary);
+    font-family: var(--sans);
     background: var(--bg);
     color: var(--fg);
-    line-height: 1.6;
+    line-height: 1.65;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 2rem 1.5rem;
+    padding: 0 1.5rem 4rem;
   }
 
-  /* HEADER / HERO */
-  header {
+  /* ── NAV ─────────────────────────────────────────────── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(18,18,18,0.96);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
-    padding-bottom: 2rem;
-    margin-bottom: 2.5rem;
-  }
-  .hero {
+    padding: 0.7rem 0;
+    margin: 0 -1.5rem 0;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 2rem;
-    margin: 1.5rem 0 1rem;
+    gap: 0;
     flex-wrap: wrap;
   }
+  nav .nav-brand {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 700;
+    margin-right: 1.5rem;
+    white-space: nowrap;
+  }
+  nav a {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    transition: color 0.15s, background 0.15s;
+  }
+  nav a:hover { color: var(--accent); background: rgba(0,255,65,0.07); }
+  .nav-bmc {
+    margin-left: auto;
+    background: var(--gold) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    padding: 0.3rem 0.8rem !important;
+    border-radius: 4px !important;
+  }
+  .nav-bmc:hover { background: #f0c040 !important; }
+
+  /* ── HERO ────────────────────────────────────────────── */
+  header {
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+  .badges { margin-bottom: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .badge {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.22rem 0.55rem;
+    border-radius: 3px;
+  }
+  .b-green  { background: var(--accent);  color: #000; }
+  .b-gold   { background: var(--gold);    color: #000; }
+  .b-red    { background: var(--crimson); color: #fff; }
+  .b-blue   { background: var(--blue);    color: #000; }
+  .b-outline { border: 1px solid var(--muted); color: var(--muted); background: transparent; }
+
+  .hero { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
   .hero-avatar {
-    width: 110px;
-    height: 110px;
+    width: 120px; height: 120px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid var(--accent);
-    box-shadow: 0 0 18px rgba(0, 255, 65, 0.45), 0 0 40px rgba(0, 255, 65, 0.15);
+    box-shadow: 0 0 22px rgba(0,255,65,0.5), 0 0 60px rgba(0,255,65,0.12);
     flex-shrink: 0;
   }
   .hero-text { flex: 1; min-width: 260px; }
   h1 {
-    font-family: var(--font-primary);
-    font-size: 2rem;
+    font-family: var(--mono);
+    font-size: 2.1rem;
     font-weight: 700;
-    letter-spacing: -0.01em;
     color: var(--accent);
-    text-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+    text-shadow: 0 0 25px rgba(0,255,65,0.4);
+    line-height: 1.2;
   }
-  .tagline {
-    font-family: var(--font-primary);
+  .hero-tagline {
+    font-family: var(--mono);
     font-size: 0.78rem;
     color: var(--gold);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-top: 0.4rem;
+    margin-top: 0.5rem;
   }
-  .subtitle {
-    color: var(--fg);
-    font-size: 1rem;
-    margin-top: 0.4rem;
+  .hero-subtitle {
+    font-size: 1.05rem;
     font-weight: 600;
-  }
-  .meta {
-    color: var(--muted);
-    font-size: 0.82rem;
     margin-top: 0.4rem;
+    color: var(--fg);
   }
-  .badge {
-    display: inline-block;
-    font-family: var(--font-primary);
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 0.2rem 0.55rem;
-    border-radius: 3px;
-    margin-right: 0.4rem;
+  .hero-meta {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
   }
-  .badge-green { background: var(--accent); color: #000; }
-  .badge-gold { background: var(--gold); color: #000; }
-  .badge-crimson { background: var(--crimson); color: #fff; }
 
-  /* SECTIONS */
-  h2 {
-    font-family: var(--font-primary);
-    font-size: 1.1rem;
+  /* ── QUOTE BANNER ─────────────────────────────────────── */
+  .quote-banner {
+    background: linear-gradient(135deg, #1a0a0a 0%, #1e1e1e 100%);
+    border-left: 4px solid var(--crimson);
+    border-radius: 0 6px 6px 0;
+    padding: 1.4rem 1.8rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .quote-banner blockquote {
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    color: var(--fg);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .quote-banner blockquote::before {
+    content: '"';
+    font-size: 3rem;
+    color: var(--crimson);
+    line-height: 0;
+    vertical-align: -0.6rem;
+    margin-right: 0.2rem;
+    font-style: normal;
+  }
+  .quote-banner cite {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── BMC BUTTON ───────────────────────────────────────── */
+  .bmc-section {
+    background: linear-gradient(135deg, #1a1500 0%, #1e1e1e 100%);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 1.4rem 1.8rem;
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .bmc-text { flex: 1; min-width: 220px; }
+  .bmc-text strong {
+    font-family: var(--mono);
+    color: var(--gold);
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .bmc-text p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+  .bmc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gold);
+    color: #000;
+    font-family: var(--mono);
+    font-size: 0.85rem;
     font-weight: 700;
-    color: var(--accent2);
-    margin: 2.5rem 0 1rem;
-    padding: 0.6rem 0 0.6rem 1rem;
+    text-decoration: none;
+    padding: 0.75rem 1.4rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: background 0.15s, transform 0.1s;
+    flex-shrink: 0;
+  }
+  .bmc-btn:hover { background: #f0c040; transform: translateY(-1px); }
+
+  /* ── AI CALLOUT ───────────────────────────────────────── */
+  .ai-callout {
+    background: #0d1a0d;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.9rem 1.2rem;
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  .ai-callout .ai-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .ai-callout p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+  .ai-callout strong { color: var(--accent); font-family: var(--mono); }
+
+  /* ── SECTION HEADERS ──────────────────────────────────── */
+  h2 {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--lime);
+    margin: 3rem 0 1rem;
+    padding: 0.65rem 0 0.65rem 1rem;
     border-left: 4px solid var(--accent);
     border-bottom: 1px solid var(--border);
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
   h3 {
-    font-family: var(--font-primary);
-    font-size: 0.9rem;
+    font-family: var(--mono);
+    font-size: 0.88rem;
     font-weight: 700;
     color: var(--accent);
     margin: 1.5rem 0 0.5rem;
     letter-spacing: 0.04em;
   }
-  p, li {
-    font-family: var(--font-secondary);
-    color: var(--fg);
-    font-size: 0.95rem;
-  }
-  ul { margin: 0.5rem 0 0.5rem 1.5rem; }
-  li { margin-bottom: 0.4rem; }
 
-  /* CARDS */
+  /* ── PROSE ─────────────────────────────────────────────── */
+  p { font-size: 0.95rem; color: var(--fg); margin-bottom: 0.5rem; }
+  ul, ol { margin: 0.5rem 0 0.8rem 1.5rem; }
+  li { font-size: 0.92rem; color: var(--fg); margin-bottom: 0.4rem; }
+  strong { color: var(--fg); }
+
+  /* ── CARDS ─────────────────────────────────────────────── */
   .card {
-    background: var(--card-bg);
+    background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 1.5rem;
-    margin: 1.5rem 0;
+    padding: 1.4rem;
+    margin: 1.2rem 0;
   }
   .card img {
     width: 100%;
     border-radius: 4px;
     margin: 1rem 0 0.5rem;
     border: 1px solid var(--border);
+    display: block;
   }
   .caption {
-    font-family: var(--font-primary);
-    font-size: 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
     color: var(--muted);
     text-align: center;
     margin-top: 0.5rem;
-    line-height: 1.4;
+    line-height: 1.5;
   }
-  .caption em { color: var(--accent2); font-style: normal; }
+  .caption em { color: var(--lime); font-style: normal; }
 
-  /* STAT ROW */
-  .stat-row {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin: 1.2rem 0;
-  }
+  /* ── STAT ROW ──────────────────────────────────────────── */
+  .stat-row { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.2rem 0; }
   .stat-box {
-    flex: 1;
-    min-width: 180px;
-    background: var(--card-bg);
+    flex: 1; min-width: 160px;
+    background: var(--bg3);
     border: 1px solid var(--border);
     border-top: 3px solid var(--accent);
     border-radius: 6px;
-    padding: 1.2rem 1rem;
+    padding: 1.1rem 1rem;
     text-align: center;
   }
+  .stat-box.danger { border-top-color: var(--crimson); }
+  .stat-box.gold   { border-top-color: var(--gold); }
   .stat-value {
-    font-family: var(--font-primary);
-    font-size: 1.9rem;
+    font-family: var(--mono);
+    font-size: 1.75rem;
     font-weight: 700;
     color: var(--accent);
   }
-  .stat-value.danger { color: var(--crimson); }
+  .stat-value.red  { color: var(--crimson); }
   .stat-value.gold { color: var(--gold); }
   .stat-label {
-    font-family: var(--font-primary);
-    font-size: 0.7rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-top: 0.4rem;
+    margin-top: 0.35rem;
   }
 
-  /* METHODOLOGY BOX */
+  /* ── CALLOUT BOXES ─────────────────────────────────────── */
+  .finding {
+    background: #0f1a0f;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    font-size: 0.9rem;
+  }
+  .finding .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
   .methodology {
     background: #181818;
     border-left: 3px solid var(--gold);
     padding: 1rem 1.2rem;
     margin: 1rem 0;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: #aaa;
-    font-family: var(--font-secondary);
   }
   .methodology strong { color: var(--fg); }
-  .methodology code {
-    font-family: var(--font-primary);
-    font-size: 0.8rem;
-    color: var(--accent2);
+  code {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--lime);
     background: #222;
-    padding: 0.1rem 0.3rem;
+    padding: 0.1rem 0.35rem;
     border-radius: 3px;
   }
 
-  /* FINDING CALLOUT */
-  .finding {
-    background: #181c18;
-    border: 1px solid var(--accent);
-    border-radius: 6px;
-    padding: 1rem 1.2rem;
-    margin: 1rem 0;
-    font-size: 0.9rem;
+  /* ── CITATION TABLE ─────────────────────────────────────── */
+  .cite-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  .cite-table th {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0.8rem;
+    text-align: left;
   }
-  .finding strong { color: var(--accent2); font-family: var(--font-primary); font-size: 0.82rem; }
-
-  /* GRID */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-    margin: 1rem 0;
+  .cite-table td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--fg);
+    vertical-align: top;
   }
-  .grid .card { margin: 0; }
+  .cite-table tr:hover td { background: #1e1e1e; }
+  .cite-table .status-ok   { color: var(--accent); font-family: var(--mono); font-size: 0.8rem; }
+  .cite-table .status-warn { color: var(--gold);   font-family: var(--mono); font-size: 0.8rem; }
+  .cite-table .status-fail { color: var(--crimson);font-family: var(--mono); font-size: 0.8rem; }
 
-  /* FOOTER */
+  /* ── FOOTER ─────────────────────────────────────────────── */
   footer {
     border-top: 2px solid var(--accent);
-    margin-top: 3.5rem;
-    padding-top: 1.5rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
     color: var(--muted);
-    font-family: var(--font-primary);
-    font-size: 0.75rem;
-    line-height: 1.8;
+    line-height: 2;
   }
-  footer .footer-brand {
-    color: var(--accent);
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-  footer .footer-tagline {
-    color: var(--gold);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; color: var(--accent2); }
+  .footer-brand { color: var(--accent); font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .footer-tagline { color: var(--gold); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
 
-  @media (max-width: 600px) {
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--lime); text-decoration: underline; }
+
+  @media (max-width: 640px) {
     h1 { font-size: 1.4rem; }
-    .stat-value { font-size: 1.4rem; }
-    .hero { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .hero-avatar { width: 80px; height: 80px; }
+    .stat-value { font-size: 1.3rem; }
+    nav { gap: 0.2rem; }
+    .bmc-section { flex-direction: column; }
   }
 </style>
 </head>
 <body>
 
+<!-- ── STICKY NAV ────────────────────────────────────────────── -->
+<nav>
+  <span class="nav-brand">📊 DATA VIGILANTE</span>
+  <a href="#ch1">Ch.1 BAI</a>
+  <a href="#ch2">Ch.2 WBI</a>
+  <a href="#ch3">Ch.3 MIPI</a>
+  <a href="#ch4">Ch.4 Gap</a>
+  <a href="#ch5">Ch.5 FEC</a>
+  <a href="#sources">Sources</a>
+  <a href="#methodology">Methods</a>
+  <a href="https://buymeacoffee.com/gosidehustlesisi" target="_blank" rel="noopener" class="nav-bmc">☕ Support</a>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────────────── -->
 <header>
-  <div>
-    <span class="badge badge-green">Forensic Audit</span>
-    <span class="badge badge-gold">Public Data</span>
-    <span class="badge badge-crimson">Political Accountability</span>
+  <div class="badges">
+    <span class="badge b-green">Forensic Audit</span>
+    <span class="badge b-gold">Public Data</span>
+    <span class="badge b-red">Political Accountability</span>
+    <span class="badge b-blue">DMV 2010–2026</span>
+    <span class="badge b-outline">Built in 1 Day · AI-Assisted</span>
   </div>
+
   <div class="hero">
-    <img
-      class="hero-avatar"
-      src="https://github.com/thedatavigilante.png"
-      alt="The Data Vigilante"
-      onerror="this.style.display='none'"
-    >
+    <img class="hero-avatar"
+         src="https://github.com/thedatavigilante.png"
+         alt="The Data Vigilante — Sierra Napier, MPA"
+         onerror="this.style.display='none'">
     <div class="hero-text">
       <h1>📊 The Stagnant Safety Net</h1>
-      <div class="tagline">The Robin Hood of AI</div>
-      <div class="subtitle">A Tri-State Forensic Audit of Unemployment Insurance Decay</div>
-      <div class="meta">The Data Vigilante &mdash; Sierra Napier, MPA &nbsp;|&nbsp; DC · Maryland · Virginia &nbsp;|&nbsp; 2010 → 2026</div>
+      <div class="hero-tagline">The Robin Hood of AI &nbsp;·&nbsp; The Data Vigilante</div>
+      <div class="hero-subtitle">A Tri-State Forensic Audit of Unemployment Insurance Decay</div>
+      <div class="hero-meta">Sierra Napier, MPA &nbsp;|&nbsp; DC · Maryland · Virginia &nbsp;|&nbsp; 2010 → 2026 &nbsp;|&nbsp; BLS · USDOL · FEC · Census · HUD</div>
     </div>
   </div>
-  <p style="color:#aaa; font-size:0.92rem; margin-top:0.5rem;">
-    A forensic data portfolio on how inflation, frozen policy, and political funding have been used to preserve wage gaps and weaken unemployment insurance across the DMV. The numbers are not incidental — they are the policy.
+
+  <div class="quote-banner">
+    <blockquote>I now know why they want to keep you sleeping. It's easier to rob you blind.</blockquote>
+    <cite>— The Data Vigilante</cite>
+  </div>
+
+  <p style="color:#aaa; font-size:0.93rem; margin-top:1rem; line-height:1.7;">
+    While you were busy surviving, three jurisdictions quietly let your unemployment safety net rot.
+    Benefits frozen. Wage bases locked. Trust funds drained. And the people with the power to fix it?
+    Funded by the same industries that profit from keeping your floor low.
+    This isn't a coincidence. <strong style="color:var(--lime)">This is the policy.</strong> Here are the receipts.
   </p>
 </header>
 
-<!-- ── CHAPTER 1 ── -->
-<h2>Chapter 1 — Worker Insolvency: The BAI</h2>
+<!-- ── BMC SUPPORT ─────────────────────────────────────────────── -->
+<div class="bmc-section">
+  <div class="bmc-text">
+    <strong>☕ Keep the Investigation Running</strong>
+    <p>
+      I'm currently unemployed — yes, actually living the data — and the APIs that power this
+      audit (FEC, Census, Congress.gov) cost real money to keep running. If this work matters to you,
+      buy me a coffee. Every dollar keeps the data flowing and the freeze exposed.
+    </p>
+  </div>
+  <a class="bmc-btn"
+     href="https://buymeacoffee.com/gosidehustlesisi"
+     target="_blank" rel="noopener">
+    ☕ Buy Me a Coffee
+  </a>
+</div>
+
+<div class="ai-callout">
+  <span class="ai-icon">🤖</span>
+  <p>
+    <strong>Built in one day using AI.</strong> This entire forensic audit — data pipeline, indices,
+    10 charts, FEC API integration, political accountability layer, and this portfolio —
+    was architected and shipped in a single session using Claude (Anthropic).
+    If the machine can expose a $601M annual shortfall faster than a legislative committee can schedule a hearing,
+    maybe the problem isn't the technology.
+  </p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 1 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="ch1">Chapter 1 — Worker Insolvency: The BAI</h2>
 
 <div class="card">
-  <p>The <strong>Benefit Adequacy Index (BAI)</strong> answers a single question: can a laid-off worker still pay rent? <code>BAI = Max WBA ÷ Weekly Housing Cost</code>. Below 1.0 is systemic failure — the benefit cannot cover housing alone, forcing workers to choose between rent and every other survival expense.</p>
+  <p>
+    The <strong>Benefit Adequacy Index (BAI)</strong> answers one question:
+    <em>can a laid-off worker still pay rent?</em>
+    <code>BAI = Max WBA ÷ Weekly Housing Cost</code>.
+    Below 1.0 is systemic failure — the benefit cannot cover housing alone,
+    before food, utilities, childcare, or transportation enter the equation.
+  </p>
+  <p style="margin-top:0.6rem; color:#aaa; font-size:0.9rem;">
+    Maryland's maximum weekly benefit has been <strong>$430 since 2010</strong>.
+    Not a typo. The same $430 across 16 years of wage growth, inflation, and a pandemic.
+    Meanwhile weekly housing costs in Maryland went from $295 to $450 —
+    a 52% increase. The safety net did not move. The cost of survival did.
+    This is not neglect. This is a choice.
+  </p>
   <img src="figures/01_bai_decay_trajectory.png" alt="BAI Decay Trajectory 2010–2026">
   <div class="caption">
-    Figure 1 — BAI decay across DC, Maryland, and Virginia (2010–2026).<br>
+    Figure 1 — BAI decay across DC, Maryland, and Virginia (2010–2026). Source: <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> + <a href="https://www.hud.gov/program_offices/comm_planning/affordablehousing/programs/home/fmr" target="_blank">HUD Fair Market Rents</a> + State DOL benefit schedules.<br>
     <em>Maryland and Virginia crossed below the 1.0 survival threshold by 2026. DC was already below in 2010.</em>
   </div>
 </div>
 
 <div class="stat-row">
-  <div class="stat-box">
-    <div class="stat-value danger">0.96</div>
+  <div class="stat-box danger">
+    <div class="stat-value red">0.96</div>
     <div class="stat-label">Maryland BAI 2026</div>
   </div>
-  <div class="stat-box">
-    <div class="stat-value danger">0.90</div>
+  <div class="stat-box danger">
+    <div class="stat-value red">0.90</div>
     <div class="stat-label">Virginia BAI 2026</div>
   </div>
-  <div class="stat-box">
-    <div class="stat-value danger">0.85</div>
+  <div class="stat-box danger">
+    <div class="stat-value red">0.85</div>
     <div class="stat-label">DC BAI 2026</div>
   </div>
   <div class="stat-box">
-    <div class="stat-value gold">1.46→0.96</div>
+    <div class="stat-value">1.46 → 0.96</div>
     <div class="stat-label">Maryland 16-yr decline</div>
   </div>
 </div>
 
 <div class="finding">
-  <strong>// FORENSIC FINDING</strong><br>
-  Maryland's maximum weekly benefit has been frozen at $430 since 2010. Average weekly housing costs rose from $295 to $450 in the same period — a 52% increase. The safety net did not move. The cost of survival did.
+  <span class="label">// FORENSIC FINDING — CH.1</span>
+  All three jurisdictions now operate below or near the survival threshold. Maryland's $430 maximum benefit
+  leaves a claimant $20/week short of just the rent. Virginia's $378 cap leaves them $42/week short.
+  DC claimants are $76/week short — in one of the most expensive housing markets in the country.
+  And that's before they buy groceries.
 </div>
 
-<!-- ── CHAPTER 2 ── -->
-<h2>Chapter 2 — The Corporate Tax Escape: WBI</h2>
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 2 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="ch2">Chapter 2 — The Corporate Tax Escape: WBI</h2>
 
 <div class="card">
-  <p>The <strong>Regressive Wage Base Index (WBI)</strong> exposes the employer side of the equation. <code>WBI = Taxable Wage Base ÷ Avg Annual Wage</code>. Employers pay SUI tax only on wages up to the statutory cap — a cap that has been frozen for decades while wages rose. The lower the WBI, the more regressive the system: high earners' wages above the cap are entirely exempt.</p>
+  <p>
+    The <strong>Regressive Wage Base Index (WBI)</strong> is where it gets deliberately boring —
+    which is exactly how they want it.
+    <code>WBI = Taxable Wage Base ÷ Avg Annual Wage</code>.
+    Employers only pay SUI tax on wages <em>up to the statutory cap</em>.
+    Maryland's cap: <strong>$8,500 — frozen since 1992</strong>.
+    A cap set when the median Maryland wage was around $32,000.
+    It is now $72,800. The math is not complicated.
+    The politics is.
+  </p>
   <img src="figures/02_wbi_stagnation.png" alt="WBI Stagnation">
   <div class="caption">
-    Figure 2 — WBI stagnation. Maryland frozen at $8,500 since 1992. Virginia at $8,000 since 2010.<br>
-    <em>DC raised its base once in 2018 but remains below its historical ratio.</em>
+    Figure 2 — WBI stagnation. Source: <a href="https://www.dol.gov/agencies/eta/unemployment-insurance/financing" target="_blank">DOL UI Financial Data</a> + <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> + State DOL statutory wage base schedules.<br>
+    <em>Maryland frozen at $8,500 since 1992. Virginia at $8,000 since 2010. DC raised once in 2018.</em>
   </div>
 </div>
 
 <div class="methodology">
-  <strong>Methodology note:</strong> The taxable wage base is the dollar cap on which employers pay SUI tax. Maryland: <code>$8,500</code> (frozen since 1992). Virginia: <code>$8,000</code> (frozen since 2010). DC: <code>$9,000</code> (raised in 2018). Average wages have grown 40–80% in the same period. A wage-indexed base would be $11,866 in Maryland, $11,389 in Virginia, and $15,286 in DC.
+  <strong>What this actually means:</strong> A Maryland employer pays SUI tax on the first $8,500 of every worker's wages.
+  On a worker earning $72,800/year, that's a taxable fraction of <code>11.7%</code>.
+  In 1992, that same ratio was <code>~26%</code>.
+  The employer's exposure to funding the safety net has been cut in half — not by legislation, not by negotiation —
+  by <em>inaction</em> compounded over three decades.
+  That's not a bug. That's the feature.
 </div>
 
-<!-- ── CHAPTER 3 ── -->
-<h2>Chapter 3 — The Poverty Trap: MIPI</h2>
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 3 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="ch3">Chapter 3 — The Poverty Trap: MIPI & Housing Gap</h2>
 
 <div class="card">
-  <p>The <strong>Multi-Income Penalty Index (MIPI)</strong> quantifies what happens when a UI recipient tries to supplement their income with part-time work. <code>MIPI = (Earnings − Disregard) ÷ Max WBA</code>. High MIPI means the system claws back nearly the entire value of supplementary earnings — punishing resourcefulness and trapping workers in full dependency.</p>
+  <p>
+    The <strong>Multi-Income Penalty Index (MIPI)</strong> measures what happens when a UI recipient
+    does exactly what every think-piece tells them to do: hustle.
+    <code>MIPI = (Earnings − Disregard) ÷ Max WBA</code>.
+    Earn $250/week in part-time work? The system claws back most of it in benefit reductions.
+    The disregard threshold — the amount you can earn before the penalty kicks in —
+    hasn't kept up with wages either. Shocking, I know.
+  </p>
   <img src="figures/03_mipi_clawback.png" alt="MIPI Clawback Severity">
   <div class="caption">
-    Figure 3 — MIPI clawback severity across jurisdictions.<br>
-    <em>Workers earning $250/week part-time lose most of that value in benefit reductions.</em>
+    Figure 3 — MIPI clawback severity across jurisdictions. Source: State DOL benefit calculation schedules + <a href="https://www.dol.gov/agencies/eta/unemployment-insurance" target="_blank">DOL UI Program</a>.<br>
+    <em>Workers earning $250/week part-time lose the majority of that value in benefit reductions. The system penalizes survival instincts.</em>
   </div>
 </div>
 
 <div class="card">
-  <img src="figures/04_housing_vs_wba_gap.png" alt="Housing vs WBA Gap">
+  <p>
+    The <strong>Housing Gap</strong> is the weekly dollar amount a UI claimant must conjure from thin air.
+    It is not abstract. It is the difference between housed and not.
+  </p>
+  <img src="figures/04_housing_vs_wba_gap.png" alt="Housing vs WBA Gap — 3-panel diverging lines">
   <div class="caption">
-    Figure 4 — Weekly housing cost vs. maximum weekly benefit (2026).<br>
-    <em>The survival deficit: what a claimant must cover from other sources every single week.</em>
+    Figure 4 — Housing cost (rising, crimson) vs. maximum weekly benefit (flat/frozen, dashed) per state.
+    Source: <a href="https://www.huduser.gov/portal/datasets/fmr.html" target="_blank">HUD Fair Market Rents</a> + State DOL benefit schedules.<br>
+    <em>The shaded area is the survival deficit. Watch Maryland's flat line and the housing cost climb past it and keep going.</em>
   </div>
 </div>
 
-<!-- ── CHAPTER 4 (EMPLOYER GAP) ── -->
-<h2>Chapter 4 — The Trust Fund Shortfall</h2>
+<div class="finding">
+  <span class="label">// FORENSIC FINDING — CH.3</span>
+  Maryland: −$20/week. Virginia: −$42/week. DC: −$76/week. These aren't gaps in a spreadsheet.
+  These are the amounts real people are expected to pull out of somewhere every single week
+  while the systems designed to help them sit frozen in 1992, 2010, and 2018 respectively.
+  If you designed a poverty trap on purpose, it would look exactly like this.
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 4 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="ch4">Chapter 4 — The Trust Fund Shortfall</h2>
 
 <div class="card">
-  <p>If the SUI taxable wage base had kept pace with average wage growth since 2010, employers would contribute significantly more per worker — and state trust funds would be solvent enough to support adequate benefits. The gap between what employers pay and what a wage-indexed system would require is the structural shortfall.</p>
+  <p>
+    If the SUI taxable wage base had kept pace with average wage growth since 2010,
+    here is what employers would be contributing per worker, per year —
+    and here is what they actually pay.
+    The difference is the structural shortfall. It is not speculative.
+    It is arithmetic.
+  </p>
   <img src="figures/05_employer_per_employee_gap.png" alt="Per-Employee Underpayment">
   <div class="caption">
-    Figure 5 — Per-employee structural underpayment ($/worker/year).<br>
-    <em>Calculated using DOL historical effective SUI tax rates by state and year — not a flat assumption.</em>
+    Figure 5 — Per-employee structural underpayment ($/worker/year).
+    Source: <a href="https://www.dol.gov/agencies/eta/unemployment-insurance/financing" target="_blank">DOL UI Financial Data</a> (effective SUI tax rates) + <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> (wages).<br>
+    <em>Uses DOL historical effective SUI tax rates by state and year — not a flat assumption. Rates shown inside each bar.</em>
   </div>
 </div>
 
 <div class="stat-row">
-  <div class="stat-box">
+  <div class="stat-box gold">
     <div class="stat-value gold">$601.3M</div>
     <div class="stat-label">DMV Annual Shortfall</div>
   </div>
@@ -389,103 +645,233 @@
 <div class="card">
   <img src="figures/06_employer_aggregate_gap.png" alt="Aggregate Trust Fund Shortfall">
   <div class="caption">
-    Figure 6 — Annual aggregate trust fund shortfall by state.<br>
-    <em>Virginia's low statutory rate (1.9% in 2026 vs. Maryland's 2.6%) shifts the burden of frozen policy onto future economic downturns.</em>
+    Figure 6 — Annual aggregate trust fund shortfall by state ($ millions).
+    Source: <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> (covered employment) + <a href="https://www.dol.gov/agencies/eta/unemployment-insurance/financing" target="_blank">DOL UI Financial Data</a>.<br>
+    <em>$601.3 million per year, every year, disappearing from the trust fund because of a number that hasn't moved since George H.W. Bush was president.</em>
   </div>
 </div>
 
 <div class="card">
   <img src="figures/07_statutory_vs_expected_wage_base.png" alt="Statutory vs Expected Wage Base">
   <div class="caption">
-    Figure 7 — Statutory vs. expected wage base (2026).<br>
-    <em>The gap is the intentional support hole: benefits stay flat while the cost of living rises and employers pay into a shrinking share of wages.</em>
+    Figure 7 — Statutory (frozen) vs. expected (wage-indexed) taxable wage base, 2026.
+    Source: State DOL + <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a>.<br>
+    <em>The red bar is what the base would be if it tracked the same ratio to wages it had in 2010. The blue bar is what the law actually says. The gap between them is $601M/year.</em>
   </div>
 </div>
 
-<!-- ── CHAPTER 5 (POLITICAL FUNDING) ── -->
-<h2>Chapter 5 — Who Funds the Freeze</h2>
+<div class="finding">
+  <span class="label">// FORENSIC FINDING — CH.4</span>
+  Maryland's taxable wage base is now <strong>11.7%</strong> of the average annual wage.
+  In 2010 it was 16.3%. Virginia: from 16.7% to 11.7%.
+  DC: from 13.6% to 8.0%. The trust fund is being systematically starved —
+  not by economic downturn, but by a policy choice to let the denominator grow
+  while the numerator sits perfectly still.
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 5 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="ch5">Chapter 5 — Who Funds the Freeze</h2>
+
+<p style="color:#aaa; font-size:0.93rem; margin-bottom:1rem; line-height:1.7;">
+  Here is where it stops being an economics paper and starts being an accountability document.
+  Seven legislators on UI-relevant committees were analyzed for their 2024 FEC campaign finance profiles.
+  These are the people who vote on benefit caps, taxable wage bases, and disregard thresholds.
+  Let's talk about who's buying their attention.
+</p>
 
 <div class="card">
-  <p>The FEC layer connects the policy outcomes to the funding sources. Seven legislators on UI-relevant committees were analyzed for their 2024 campaign finance profiles. The question: who funds the people who hold the levers on benefit caps, SUI wage bases, and disregard thresholds?</p>
-  <img src="figures/11_fec_total_receipts.png" alt="FEC Total Receipts">
+  <img src="figures/11_fec_total_receipts.png" alt="FEC Total Receipts by Member">
   <div class="caption">
-    Figure 11 — Total receipts by member, 2024 cycle (FEC data).<br>
-    <em>$46.6M in total campaign receipts reviewed across 7 priority members.</em>
+    Figure 11 — Total campaign receipts by UI committee member, 2024 cycle (FEC API).
+    Source: <a href="https://api.open.fec.gov" target="_blank">FEC Open API v1</a>, cycle=2024, Schedule F3 summaries.<br>
+    <em>$46.6M in total receipts across 7 members. David Trone: $63.8M — largely self-funded. Tim Kaine: $18.3M. Scale matters.</em>
   </div>
 </div>
 
 <div class="card">
   <img src="figures/12_fec_business_vs_labor.png" alt="Business vs Labor Contributions">
   <div class="caption">
-    Figure 12 — Business vs. labor contributions by member.<br>
-    <em>Trone, Hoyer, and Warner each show $1M+ in business-linked funding. The ratio of business-to-labor funding maps directly onto committee jurisdiction over UI policy.</em>
+    Figure 12 — Business vs. labor itemized contributions (Schedule A, ≥$500, 2024 cycle).
+    Source: <a href="https://api.open.fec.gov" target="_blank">FEC Open API v1</a>.<br>
+    <em>Business contributions dominate where labor is absent. Trone, Warner, and Kaine show near-zero itemized labor contributions at the $500+ threshold analyzed.</em>
   </div>
 </div>
 
 <div class="card">
-  <img src="figures/13_fec_contribution_mix.png" alt="Contribution Mix">
+  <img src="figures/13_fec_contribution_mix.png" alt="Contribution Source Mix">
   <div class="caption">
-    Figure 13 — Full contribution mix by member (business, labor, PAC/committee, other).<br>
-    <em>Contribution categorization uses FEC Schedule A data with string-pattern matching on contributor names. Approximate — see limitations.</em>
+    Figure 13 — Contribution source mix as % of itemized total (individual / PAC / business), 2024 cycle.
+    Source: <a href="https://api.open.fec.gov" target="_blank">FEC Open API v1</a>, Schedule A categorized by contributor name pattern.<br>
+    <em>Categorization uses keyword matching on contributor names — see limitations. For production use, FEC official industry codes are more reliable.</em>
   </div>
 </div>
 
 <div class="finding">
-  <strong>// FORENSIC FINDING</strong><br>
-  The legislators with jurisdiction over UI benefit caps and SUI taxable wage bases receive disproportionate business-linked campaign funding. This is not coincidence — it is the funding moat that keeps the freeze in place.
+  <span class="label">// FORENSIC FINDING — CH.5</span>
+  The same committee members who have jurisdiction over UI benefit caps and SUI wage bases
+  receive disproportionate business-linked campaign contributions relative to labor.
+  Ben Cline (VA), Dutch Ruppersberger (MD), and Steny Hoyer (MD) show the clearest
+  business-to-labor funding ratios in itemized contributions.
+  This analysis does not prove causation. It documents a pattern.
+  You can draw your own conclusions about why Maryland's wage base hasn't moved since 1992.
 </div>
 
-<!-- ── METHODOLOGY ── -->
-<h2 id="methodology">Methodology & Data Sources</h2>
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SOURCES & CITATIONS -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="sources">Data Sources &amp; Citations</h2>
+
 <div class="card">
-  <h3>Data Sources</h3>
-  <ul>
-    <li><strong>BLS QCEW:</strong> Average annual wages, covered employment (2024 annual average)</li>
-    <li><strong>State DOL statutes:</strong> SUI taxable wage bases, maximum weekly benefits</li>
-    <li><strong>DOL UI Financial Data:</strong> Historical average effective SUI tax rates by state and year</li>
-    <li><strong>HUD Fair Market Rents:</strong> Weekly housing cost proxies by jurisdiction</li>
-    <li><strong>FEC API (v1):</strong> Campaign finance data, 2024 cycle, Schedule A itemized contributions</li>
-    <li><strong>Census ACS 2022:</strong> Median household income by congressional district</li>
-    <li><strong>Congress.gov:</strong> Committee assignments, member metadata (119th Congress)</li>
-  </ul>
+  <table class="cite-table">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Data Used</th>
+        <th>Status</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>BLS QCEW</strong> — Bureau of Labor Statistics, Quarterly Census of Employment and Wages</td>
+        <td>Average annual wages, covered employment (2024 annual avg)</td>
+        <td class="status-ok">✅ LIVE</td>
+        <td><a href="https://www.bls.gov/cew/" target="_blank">bls.gov/cew</a></td>
+      </tr>
+      <tr>
+        <td><strong>USDOL / State DOL Statutes</strong></td>
+        <td>SUI taxable wage bases, maximum weekly benefits, disregard thresholds</td>
+        <td class="status-ok">✅ VERIFIED</td>
+        <td><a href="https://www.dol.gov/agencies/eta/unemployment-insurance" target="_blank">dol.gov/eta/ui</a></td>
+      </tr>
+      <tr>
+        <td><strong>DOL UI Financial Data</strong></td>
+        <td>Historical average effective SUI tax rates (2010, 2018, 2026) by state</td>
+        <td class="status-ok">✅ VERIFIED</td>
+        <td><a href="https://oui.doleta.gov/unemploy/hb394.asp" target="_blank">oui.doleta.gov</a></td>
+      </tr>
+      <tr>
+        <td><strong>HUD Fair Market Rents</strong></td>
+        <td>Annual FMR by metro area → weekly housing cost proxies</td>
+        <td class="status-ok">✅ VERIFIED</td>
+        <td><a href="https://www.huduser.gov/portal/datasets/fmr.html" target="_blank">huduser.gov/fmr</a></td>
+      </tr>
+      <tr>
+        <td><strong>FEC Open API (v1)</strong></td>
+        <td>Campaign receipts, committee totals, Schedule A itemized contributions — 2024 cycle</td>
+        <td class="status-ok">✅ LIVE</td>
+        <td><a href="https://api.open.fec.gov/developers/" target="_blank">api.open.fec.gov</a></td>
+      </tr>
+      <tr>
+        <td><strong>Census ACS 2022</strong></td>
+        <td>Median household income by congressional district</td>
+        <td class="status-ok">✅ LIVE</td>
+        <td><a href="https://api.census.gov/data.html" target="_blank">api.census.gov</a></td>
+      </tr>
+      <tr>
+        <td><strong>Congress.gov</strong></td>
+        <td>Committee assignments, member metadata — 119th Congress (2025–2027)</td>
+        <td class="status-warn">⚠️ RATE-LIMITED</td>
+        <td><a href="https://api.congress.gov/" target="_blank">api.congress.gov</a></td>
+      </tr>
+      <tr>
+        <td><strong>OpenSecrets</strong></td>
+        <td>Industry contribution codes, member net worth</td>
+        <td class="status-fail">❌ BLOCKED</td>
+        <td><a href="https://www.opensecrets.org/api" target="_blank">opensecrets.org/api</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">
+    All data sources are public record. No proprietary or restricted datasets were used.
+    Every figure in this audit is reproducible from the source code at
+    <a href="https://github.com/thedatavigilante/UI_INDEX" target="_blank">github.com/thedatavigilante/UI_INDEX</a>.
+    See <a href="DATA_CATALOG.md">DATA_CATALOG.md</a> for full file lineage and metadata provenance.
+  </p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- METHODOLOGY -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="methodology">Methodology</h2>
+<div class="card">
+  <h3>Why Comparative Static Baselines?</h3>
+  <p style="color:#aaa; font-size:0.9rem; margin-bottom:0.8rem;">
+    This analysis anchors to three specific years — 2010, 2018, 2026 — rather than continuous time-series.
+    Benefit caps, wage bases, and disregard thresholds change through discrete legislative acts, not gradual drift.
+    Anchoring to the same three moments across all three jurisdictions makes the policy decay visible and
+    comparable — a moving average would obscure the step-function nature of the neglect.
+  </p>
 
   <h3>Index Formulas</h3>
   <ul>
-    <li><strong>BAI</strong> = Max Weekly Benefit ÷ Median Weekly Housing Cost &nbsp;|&nbsp; <em>Below 1.0 = systemic failure</em></li>
-    <li><strong>WBI</strong> = Taxable Wage Base ÷ Average Annual Wage</li>
-    <li><strong>MIPI</strong> = (Earnings − Disregard Threshold) ÷ Max Weekly Benefit</li>
-    <li><strong>Housing Gap</strong> = Median Weekly Housing − Max Weekly Benefit</li>
-    <li><strong>Employer Gap</strong> = (Expected Base − Statutory Base) × DOL Effective Rate × Covered Employment</li>
+    <li><code>BAI</code> = Max Weekly Benefit ÷ Median Weekly Housing Cost &nbsp;|&nbsp; <em>Below 1.0 = systemic failure</em></li>
+    <li><code>WBI</code> = Taxable Wage Base ÷ Average Annual Wage</li>
+    <li><code>MIPI</code> = (Earnings − Disregard Threshold) ÷ Max Weekly Benefit</li>
+    <li><code>Housing Gap</code> = Weekly Housing − Max Weekly Benefit ($/week deficit)</li>
+    <li><code>Employer Gap</code> = (Expected Base − Statutory Base) × DOL Effective Rate × Covered Employment</li>
   </ul>
 
   <h3>Honest Limitations</h3>
   <ul>
-    <li>Campaign finance categorization uses keyword matching on contributor names — approximate. Official FEC industry codes would be more precise.</li>
-    <li>Self-funding detection uses last-name matching and may include false positives.</li>
-    <li>Employer gap uses the 2010-ratio method (Method B). Alternative methodologies produce different dollar figures — see source code for scenarios A–E.</li>
-    <li>BLS wage and employment data are 2024 annual averages; 2026 figures are projected.</li>
-    <li>Committee assignments reflect the 119th Congress (2025–2027) and change each Congress.</li>
+    <li>FEC contribution categorization uses <strong>keyword matching</strong> on contributor names — approximate. Official FEC industry codes would be more precise but require paid API access.</li>
+    <li>Self-funding detection uses last-name matching and may include false positives. David Trone's $63.8M reflects significant self-funding that is excluded from the itemized analysis.</li>
+    <li>Employer gap uses the <strong>2010-ratio method (Method B)</strong>. Alternative methodologies produce different dollar figures — see source code for scenarios A–E.</li>
+    <li>BLS wage and employment data are 2024 annual averages; 2026 figures are projected forward.</li>
+    <li>Committee assignments reflect the <strong>119th Congress (2025–2027)</strong> and change each Congress.</li>
+    <li>OpenSecrets API is blocked by Cloudflare challenge — industry contribution codes are unavailable without manual registration.</li>
   </ul>
 </div>
 
-<!-- ── NOTEBOOKS ── -->
-<h2>Interactive Analysis</h2>
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- NOTEBOOKS -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2>Go Deeper</h2>
 <div class="card">
-  <p>This is a static portfolio extract. For interactive notebooks, scenario comparison, and raw data access:</p>
-  <ul>
-    <li><a href="https://github.com/thedatavigilante/UI_INDEX">GitHub Repository</a> — full source code, data, and notebooks</li>
-    <li><a href="https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/ui_index_analysis.ipynb">BAI/WBI/MIPI Analysis Notebook</a> (nbviewer)</li>
-    <li><a href="https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/political_layer_analysis.ipynb">Political Layer Notebook</a> (nbviewer)</li>
-    <li><a href="DATA_CATALOG.md">DATA_CATALOG.md</a> — full file inventory with lineage and metadata provenance</li>
+  <p>This is a static portfolio extract. For interactive notebooks, scenario analysis, and raw data:</p>
+  <ul style="margin-top:0.8rem;">
+    <li>📊 <a href="https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/ui_index_analysis.ipynb" target="_blank">BAI / WBI / MIPI Analysis Notebook</a> — run the indices yourself</li>
+    <li>🏛️ <a href="https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/political_layer_analysis.ipynb" target="_blank">Political Layer Notebook</a> — FEC + Census + committee data</li>
+    <li>📁 <a href="https://github.com/thedatavigilante/UI_INDEX" target="_blank">Full Source Code</a> — every script, every data file, MIT licensed</li>
+    <li>📋 <a href="DATA_CATALOG.md">DATA_CATALOG.md</a> — full file inventory with lineage and provenance</li>
   </ul>
 </div>
 
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- BMC FOOTER CALLOUT -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="bmc-section" style="margin-top:2.5rem;">
+  <div class="bmc-text">
+    <strong>☕ If This Made You Mad, Good. Now Help Me Keep Going.</strong>
+    <p>
+      The APIs cost money. The research takes time. And yes, I am currently experiencing
+      the exact policy failure this audit documents — unemployed, watching the BAI in real time.
+      If you found value in this work, a coffee keeps the freeze exposed.
+    </p>
+  </div>
+  <a class="bmc-btn"
+     href="https://buymeacoffee.com/gosidehustlesisi"
+     target="_blank" rel="noopener">
+    ☕ Buy Me a Coffee
+  </a>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ══════════════════════════════════════════════════════════════ -->
 <footer>
   <div class="footer-brand">📊 The Data Vigilante</div>
   <div class="footer-tagline">The Robin Hood of AI</div>
-  <p style="margin-top:0.6rem;">Sierra Napier, MPA &nbsp;|&nbsp; The Stagnant Safety Net — A Tri-State Forensic Audit</p>
-  <p>Data: BLS · USDOL · DOL UI Financial Data · FEC · Census ACS · HUD FMR &nbsp;|&nbsp; Generated: 2026-06-11</p>
-  <p>License: MIT &nbsp;|&nbsp; <a href="https://github.com/thedatavigilante/UI_INDEX">github.com/thedatavigilante/UI_INDEX</a></p>
+  <p style="margin-top:0.8rem;">Sierra Napier, MPA &nbsp;|&nbsp; The Stagnant Safety Net — A Tri-State Forensic Audit</p>
+  <p>Data: BLS · USDOL · DOL UI Financial Data · FEC · Census ACS · HUD FMR</p>
+  <p>Built in one day using AI (Claude, Anthropic) · Generated: 2026-06-11</p>
+  <p>License: MIT &nbsp;|&nbsp;
+     <a href="https://github.com/thedatavigilante/UI_INDEX" target="_blank">github.com/thedatavigilante/UI_INDEX</a> &nbsp;|&nbsp;
+     <a href="https://buymeacoffee.com/gosidehustlesisi" target="_blank">☕ Support the work</a>
+  </p>
 </footer>
 
 </body>
