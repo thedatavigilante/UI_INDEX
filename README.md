@@ -18,73 +18,95 @@
 **Architected by:** Sierra Napier, MPA ([The Data Vigilante](https://github.com/thedatavigilante))  
 **Target Focus:** District of Columbia, Maryland, Virginia (DMV) Legislative Auditing
 
-
 ---
 
 ## 🗺️ What This Is
 
-This repository contains the data, code, and analysis behind an investigation into how unemployment insurance safety net adequacy has eroded across three jurisdictions — and who funds the legislators holding the policy levers.
+This repository houses the end-to-end data pipeline, economic modeling, and forensic analysis behind an investigation into the systemic erosion of unemployment insurance (UI) safety nets across the DMV (District of Columbia, Maryland, and Virginia). 
 
-It includes:
-- **4 macroeconomic indices** (BAI, WBI, MIPI, Housing Gap) calculated from BLS and Census data
-- **7 static visualization charts** (matplotlib) exported as PNGs
-- **3 political funding charts** (FEC data, 2024 cycle) exported as PNGs
-- **2 interactive Jupyter notebooks** for exploration and scenario analysis
-- **A portfolio landing page** (`index.html`) that embeds all figures
+For decades, the conversation around unemployment has been dominated by administrative hand-waving and the myth of "trust fund insolvency." This project cuts through the noise. By marrying live-source macroeconomic indicators with campaign finance records from the Federal Election Commission ([FEC.gov](https://www.fec.gov)), this portfolio transitions the narrative from personal frustration to undeniable structural proof: **the safety net is failing because it was designed to fail.**
+
+### 🛠️ The Architecture at a Glance
+To prove this decay, the codebase dynamically pulls, caches, and models data across two primary layers:
+
+* **The Macroeconomic Layer:** Calculates four custom socio-economic vulnerability indices (BAI, WBI, MIPI, and the Housing Gap) anchored against historical baselines (2010, 2018, 2026) to expose exactly how far benefits have fallen behind real-world survival costs.
+* **The Political Accountability Layer:** Pipelines 2024 election cycle fundraising metrics to cross-reference the lawmakers holding crucial committee oversight seats against the corporate PAC money funding their campaigns.
+
+The entire ecosystem compiles seamlessly into an automated, responsive **4-page static portfolio site** designed to give journalists, policymakers, and advocates the raw, unvarnished data infrastructure needed to demand structural legislative transparency.
 
 ---
 
 ## 📐 Forensic Metrics Defined
 
+To prove exactly how the system shifts the economic burden onto working families, this engine calculates four core macroeconomic indices. We use raw, un-gameable figures from the Bureau of Labor Statistics (BLS) and the U.S. Census Bureau to turn personal frustration into undeniable structural proof.
+
 ### 1. Benefit Adequacy Index (BAI)
 `BAI = Max_WBA ÷ Weekly_Housing_Cost`
 
-Isolates whether the maximum weekly benefit cap forces a choice between rent and immediate survival. **Any BAI < 1.0 indicates systemic failure** — the benefit does not cover housing alone.
+$$\text{BAI} = \frac{\text{Maximum Weekly Benefit Amount (WBA)}}{\text{Weekly Housing Cost}}$$
+
+* **Current Baseline Rule:** Isolates whether the maximum weekly benefit cap forces a choice between rent and immediate survival. **Any BAI < 1.0 indicates systemic failure** — the benefit does not cover housing alone.
+* **The Human Reality (Why it matters):** Can your unemployment check secure a roof over your head? A score of **1.0** means your check covers rent and baseline utilities *only*, leaving exactly $0.00 for food, medicine, or transit. When a state legally mandates a BAI below 1.0 (as seen in DC and Maryland), it forces a structural housing crisis on a worker the exact day they are laid off.
 
 ### 2. Regressive Wage Base Index (WBI)
 `WBI = Taxable_Wage_Base ÷ Avg_Annual_Wage`
 
-Tracks how much of the average worker's wage is actually subject to unemployment insurance taxation. As wages rise and the wage base stays frozen, the WBI falls — meaning employers pay into a shrinking share of the wage pool, narrowing the trust fund.
+$$\text{WBI} = \frac{\text{Taxable Wage Base}}{\text{Average Annual Wage}}$$
+
+* **Current Baseline Rule:** Tracks how much of the average worker's wage is actually subject to unemployment insurance taxation. As wages rise and the wage base stays frozen, the WBI falls — meaning employers pay into a shrinking share of the wage pool, narrowing the trust fund.
+* **The Human Reality (Why it matters):** This measures how heavily the funding rules favor massive corporations at the expense of regular workers. As regional salaries grow, the tax cap remains frozen. Big businesses pay taxes on a smaller and smaller fraction of their payroll, starving the public trust fund of hundreds of millions of dollars. This artificial scarcity is then used by politicians as a hollow excuse to deny you an inflation adjustment.
 
 ### 3. Multi-Income Penalty Index (MIPI)
 `MIPI = (Side_Hustle_Earnings − Disregard_Threshold) ÷ Max_WBA`
 
-Quantifies the institutional penalty on workers who earn supplementary income while receiving benefits. High MIPI = aggressive clawback that punishes resourcefulness and traps workers in dependency.
+$$\text{MIPI} = \frac{\text{Side Hustle Earnings} - \text{Disregard Threshold}}{\text{Maximum Weekly Benefit Amount (WBA)}}$$
+
+* **Current Baseline Rule:** Quantifies the institutional penalty on workers who earn supplementary income while receiving benefits. High MIPI = aggressive clawback that punishes resourcefulness and traps workers in dependency.
+* **The Human Reality (Why it matters):** If you try to survive a layoff by picking up part-time gig work or a freelance side hustle to buy groceries, the system aggressively penalizes you. States allow a tiny, stagnant "Earnings Disregard" (often as low as $30 a week), but every single dollar you earn *above* that threshold is slashed **dollar-for-dollar** from your check. It acts as a 100% effective tax rate on survival.
 
 ### 4. Housing Gap
 `Housing_Gap = Weekly_Housing_Cost − Max_WBA`
 
-The raw weekly survival deficit: how many dollars short a claimant is after benefits, before any other expenses.
+$$\text{Housing Gap} = \text{Weekly Housing Cost} - \text{Maximum Weekly Benefit Amount (WBA)}$$
+
+* **Current Baseline Rule:** Measures the raw weekly financial deficit facing an unemployed individual before buying a single bag of groceries.
+* **The Human Reality (Why it matters):** This isn't an abstract data point—it is the brutal, cold weekly dollar shortage you are forced to figure out just to keep from being evicted before you can even think about buying groceries, paying a medical bill, or filling up your gas tank to get to an interview.
+
+## 📦 The Evidence Locker (Data Artifacts & Visual Proof)
+
+Data isn't just rows and columns; it’s the verifiable proof behind our findings. Below is the structured index of the underlying datasets and the generated visual portfolio built by this engine.
+
+## 📦 The Evidence Locker (Data Artifacts & Visual Proof)
+
+Data isn't just rows and columns; it’s the verifiable proof behind our findings. Below is the structured index of the underlying datasets and the generated visual portfolio built by this engine to provide an undeniable receipt of how the system operates.
+
+### 📊 Forensic Notebooks
+| File | Tactical Purpose | What it Exposes to the Common Person |
+| :--- | :--- | :--- |
+| `ui_index_analysis.ipynb` | Interactive Macro Auditing | **The Baseline Sandbox.** The actual analytical space where the multi-decade decay of the BAI, WBI, and Housing Gaps were calculated using raw economic data. |
+| `political_layer_analysis.ipynb` | Campaign Finance Cross-Examination | **The Corruption Blueprint.** Connects incoming FEC donation streams directly to committee assignments, proving that oversight isn't neutral. |
+
+### 🗄️ Processed Evidence (Data Files)
+| File / Dataset | Core Source Engine | What the Data Discovered (The Real-World Meaning) |
+| :--- | :--- | :--- |
+| `data/dmv_macro_baselines.csv` | Manual / BLS / Census | **The Bedrock Truth.** The raw, unvarnished numbers tracking weekly housing costs, average annual wages, and statutory benefit caps since 2010. |
+| `data/political/fec_funding_profiles.json` | `fec_integration_v251d.py` | **The Money Trail.** Cycle-filtered campaign profiles for targeted lawmakers, stamped with corporate PAC dependency flags to show who pays for the stagnation. |
+| `data/political/fec_excluded_self_funding.json` | `fec_integration_v251d.py` | **The Out-of-Bounds Ledger.** Isolates massive self-funders (like David Trone's $62.9M run) so multi-millionaire anomalies don't distort traditional corporate PAC benchmarks. |
+| `data/political/employer_contribution_gap.json` | `employer_contribution_gap.py` | **The Deficit Receipt.** Computes the exact state-by-state dollar amount missing from public trust funds due to frozen corporate tax bases ($601.3M aggregate shortfall). |
+| `data/political/political_layer_report.json` | `political_layer_builder.py` | **The Accountability Matrix.** Fuses active Congress members with their specific committee power seats and regional household income baselines. |
+
+### 📉 Visual Portfolio (Generated Tracking Figures)
+These exported visualization assets are dynamically embedded directly into the frontend user interface to turn dense datasets into immediate visual realization.
+
+* **`figures/01_bai_decay_trajectory.png`** : *The Breaking Point.* Universally tracks the downward slide of the BAI from 2010 to 2026 as it crosses below the 1.0 survival threshold across DC, MD, and VA—proving the system no longer covers basic survival.
+* **`figures/02_wbi_stagnation.png`** : *The Corporate Free Ride.* Charts how the taxable wage base shrinks as a percentage of real wages, starving public trust funds while regional productivity and corporate profits climb.
+* **`figures/03_mipi_clawback.png`** : *The Side-Hustle Poverty Trap.* Visually graphs the immediate financial cliff workers hit when trying to supplement an unlivable check with part-time work—exposing the literal dollar-for-dollar penalty state systems impose on resourcefulness.
+* **`figures/06_employer_aggregate_gap.png`** : *The $601.3 Million Hole.* A stark bar chart totaling the immense funding gap left in state safety nets by stagnant employer tax policies, showing the money that *should* be supporting families.
+* **`figures/12_fec_business_vs_labor.png`** : *The Influence Skew.* Contrasts the lopsided ratio of business-to-labor PAC money flowing into the campaigns of key oversight committee chairs, demonstrating exactly why worker protections are frozen.
 
 ---
 
-## 🔬 Methodology Note
-
-This analysis uses **comparative static baselines** (2010, 2018, 2026) rather than continuous time-series or live API polling. The choice is intentional: benefit caps, wage bases, and disregard thresholds change through discrete legislative acts, not gradual drift. Anchoring to the same three moments across all three jurisdictions makes the policy decay visible and comparable — a moving average would obscure the step-function nature of the neglect.
-
-Where live API data is used (FEC, Census ACS), the pipeline includes a self-healing client with caching and audit logging so rate limits don't corrupt the baseline record.
-
 ---
-
-## 🗂️ Files in This Repository
-
-### Python Scripts (12 files)
-
-| File | Purpose |
-|------|---------|
-| `ui_index_engine.py` | Reads `dmv_macro_baselines.csv`, calculates BAI/WBI/MIPI/Housing Gap indices |
-| `generate_figures.py` | Generates the 4 base charts (01–04) from the CSV data |
-| `employer_contribution_gap.py` | Calculates per-state employer contribution gap (frozen SUI wage bases vs. expected) |
-| `generate_employer_gap_charts.py` | Generates the 3 employer gap charts (05–07) |
-| `fec_integration_v251d.py` | FEC API integration (2024 cycle-filtered, production) — generates `fec_funding_profiles.json` |
-| `fec_integration_raw_investigative.py` | FEC API integration (multi-cycle, raw) — for corruption anomaly detection |
-| `fec_quick_test.py` | Quick FEC API connectivity test — diagnostic only, no cycle filter |
-| `generate_fec_charts.py` | Generates the 3 FEC funding charts (11–13) from `fec_funding_profiles.json` |
-| `political_layer_builder.py` | Congress.gov + Census ACS enrichment — generates member metadata with committee assignments and median income |
-| `political_layer_analyzer.py` | Analyzes `political_layer_report.json` for political patterns |
-| `delta_analyzer.py` | Compares cycle-filtered vs. multi-cycle FEC data to generate corruption delta flags |
-| `api_client.py` | Self-healing API client with caching, retry, and audit logging |
-
 ### Notebooks (2 files)
 
 | File | Purpose |
