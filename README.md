@@ -135,11 +135,13 @@ Where live API data is used (FEC, Census ACS), the pipeline includes a self-heal
 
 | Jurisdiction | BAI 2010 | BAI 2026 | Δ BAI | Direction |
 |-------------|----------|----------|-------|-----------|
-| Maryland | 1.46 | 0.96 | **−0.50** | WORSENING |
-| Virginia | 1.40 | 0.90 | **−0.50** | WORSENING |
-| DC | 0.94 | 0.85 | **−0.09** | WORSENING |
+| Maryland | 1.46 | 0.96 | **−0.50** | 🔴 BELOW THRESHOLD |
+| Virginia | 1.40 | **1.02** | **−0.38** | 🟡 BARELY ABOVE (SB 1056, Jan 2026) |
+| DC | 0.94 | 0.85 | **−0.09** | 🔴 BELOW THRESHOLD |
 
-All three jurisdictions show declining benefit adequacy over the 16-year window. Maryland and Virginia crossed below the survival threshold (BAI < 1.0) by 2026. DC was already below threshold in 2010 and continues to deteriorate.
+Maryland and DC operate below the survival threshold with no scheduled correction. Virginia passed **SB 1056** (effective January 4, 2026), raising the max WBA from $378 to **$430** — the first increase since 2014 — bringing its BAI to 1.02. Virginia is $10/week from failure. DC was already below threshold in 2010 and continues to deteriorate.
+
+> **Data verified against live sources, 2026-06-11.** Virginia max WBA: [VEC official announcement](https://vec.virginia.gov/new-weekly-benefit-amounts-effective-january-4-2026). SUI wage bases: [EY Tax News](https://taxnews.ey.com/news/2026-0124-2026-state-unemployment-insurance-taxable-wage-bases). DC max WBA: [DC.gov Unemployment](https://unemployment.dc.gov/page/information-claimants). FEC totals: [FEC.gov](https://www.fec.gov/data/).
 
 ### Employer Contribution Gap
 - **Per-employee underpayment:** $84–$157 per worker, per year
@@ -150,9 +152,23 @@ All three jurisdictions show declining benefit adequacy over the 16-year window.
 - **Wage base erosion:** MD base is now 11.7% of average wage (down from 16.3% in 2010); VA 11.7% (down from 16.7%); DC 8.0% (down from 13.6%)
 
 ### Political Accountability: Who Funds the Freeze
-- **7 priority members** analyzed across UI-relevant committees
-- **$46.6M** in total campaign receipts reviewed (2024 cycle)
-- Business contributions dominate committee chairs: Trone, Hoyer, and Warner each show $1M+ in business-linked funding
+- **7 members** with UI-relevant committee assignments analyzed using FEC 2023-2024 reporting period data
+- **$89.9M** in total committee activity ($26.1M excluding David Trone's $62.9M in personal loans to his campaign)
+- **David Trone** co-founded Total Wine & More (~$2.4B company) and sat on the **Ways and Means Committee** while self-funding 98.7% of his Senate campaign
+- 4 of 7 members show **$0 in itemized labor contributions** at the ≥$500 FEC reporting threshold
+- Business contributions dominate itemized giving; Hoyer, Cline, and Ruppersberger show the clearest business-to-labor ratios
+- **Note:** Mark Warner (VA, 2026 race) and Chris Van Hollen (MD, ~2028 race) were not 2024 candidates; their figures represent off-cycle committee fundraising
+
+### Lawmaker Salary vs. UI Benefit: The Contrast
+
+| Body | Their pay change (2014–2026) | UI max WBA change (2014–2026) |
+|------|------------------------------|-------------------------------|
+| MD General Assembly | +$6,306 (+12.5%) via auto Compensation Commission | **+$0 (0%)** — frozen 12 years |
+| VA General Assembly | +$32,360 (+183%) proposed 2026 | +$52 (+13.8%) — first change since 2014 |
+| DC Council | +CPI auto-linked (~+15%) | +$85 (+23.7%) — still below survival threshold |
+| U.S. Congress | $0 (0%) — $174K frozen since 2009 | N/A (federal FUTA floor only) |
+
+Sources: [MD Compensation Commission 2026](https://mgaleg.maryland.gov/Pubs/Other/2026-Report-of-the-General-Assembly-Compensation-Commission.pdf) · [CRS RL30064 Congressional Salaries](https://www.congress.gov/crs-product/RL30064) · [WSET VA 278% raise](https://wset.com/news/local/virginia-senate-democrats-pass-state-budget-add-nearly-300-percent-pay-increase-for-legislators-money-taxes-richmond-republicans-amendments-affordability) · [DC Code §1-611.09](https://code.dccouncil.gov/us/dc/council/code/sections/1-611.09)
 
 ---
 
