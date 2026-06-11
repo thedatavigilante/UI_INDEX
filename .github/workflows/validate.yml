@@ -39,30 +39,31 @@ jobs:
           echo "✅ Figures check passed ($COUNT PNGs)"
       - name: FEC data quality check
         run: |
-          python3 -c "
-import json, sys
-with open('data/political/fec_funding_profiles.json') as f:
-    profiles = json.load(f)
-errors = 0
-for p in profiles:
-    total = p.get('total_receipts', 0) or 0
-    itemized = sum([
-        p.get('business_contributions', 0),
-        p.get('labor_contributions', 0),
-        p.get('pac_committee_contributions', 0),
-        p.get('other_contributions', 0)
-    ])
-    quality = p.get('data_quality', 'UNKNOWN')
-    if quality != 'VALID':
-        print(f'⚠️ {p[\"name\"]}: {quality} — {p.get(\"validation_message\", \"\")}')
-        errors += 1
-    else:
-        print(f'✅ {p[\"name\"]}: {p.get(\"validation_message\", \"\")}')
-if errors > 0:
-    print(f'❌ {errors}/{len(profiles)} profiles failed data quality check')
-    sys.exit(1)
-print(f'✅ All {len(profiles)} profiles passed data quality validation')
-"
+          cat > /tmp/fec_check.py << 'EOF'
+          import json, sys
+          with open('data/political/fec_funding_profiles.json') as f:
+              profiles = json.load(f)
+          errors = 0
+          for p in profiles:
+              total = p.get('total_receipts', 0) or 0
+              itemized = sum([
+                  p.get('business_contributions', 0),
+                  p.get('labor_contributions', 0),
+                  p.get('pac_committee_contributions', 0),
+                  p.get('other_contributions', 0)
+              ])
+              quality = p.get('data_quality', 'UNKNOWN')
+              if quality != 'VALID':
+                  print(f'⚠️ {p["name"]}: {quality} — {p.get("validation_message", "")}')
+                  errors += 1
+              else:
+                  print(f'✅ {p["name"]}: {p.get("validation_message", "")}')
+          if errors > 0:
+              print(f'❌ {errors}/{len(profiles)} profiles failed data quality check')
+              sys.exit(1)
+          print(f'✅ All {len(profiles)} profiles passed data quality validation')
+          EOF
+          python3 /tmp/fec_check.py
       - name: Check script syntax
         run: |
           python3 -m py_compile fec_integration_v251d.py
