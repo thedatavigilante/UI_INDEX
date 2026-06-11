@@ -21,33 +21,13 @@ jobs:
           pip install -r requirements.txt
       - name: Validate JSON data files
         run: |
-          python -c "
-import json, sys
-try:
-    files = [
-        'data/political/political_layer_report.json',
-        'data/political/fec_funding_profiles.json',
-        'data/political/fec_audit_log.json'
-    ]
-    for f in files:
-        json.load(open(f))
-        print(f'✅ {f}')
-    print('All JSON files valid')
-except Exception as e:
-    print(f'❌ JSON validation failed: {e}')
-    sys.exit(1)
-"
+          python3 -c "import json; json.load(open('data/political/political_layer_report.json')); print('political_layer_report.json OK')"
+          python3 -c "import json; json.load(open('data/political/fec_funding_profiles.json')); print('fec_funding_profiles.json OK')"
+          python3 -c "import json; json.load(open('data/political/fec_audit_log.json')); print('fec_audit_log.json OK')"
+          echo "✅ All JSON files valid"
       - name: Validate CSV data files
         run: |
-          python -c "
-import pandas as pd, sys
-try:
-    df = pd.read_csv('data/dmv_macro_baselines.csv')
-    print(f'✅ CSV valid: {len(df)} rows, {len(df.columns)} columns')
-except Exception as e:
-    print(f'❌ CSV validation failed: {e}')
-    sys.exit(1)
-"
+          python3 -c "import pandas as pd; df = pd.read_csv('data/dmv_macro_baselines.csv'); print(f'✅ CSV valid: {len(df)} rows, {len(df.columns)} columns')"
       - name: Check exported figures exist
         run: |
           COUNT=$(ls figures/*.png 2>/dev/null | wc -l)
@@ -59,7 +39,7 @@ except Exception as e:
           echo "✅ Figures check passed ($COUNT PNGs)"
       - name: FEC data quality check
         run: |
-          python -c "
+          python3 -c "
 import json, sys
 with open('data/political/fec_funding_profiles.json') as f:
     profiles = json.load(f)
@@ -85,9 +65,9 @@ print(f'✅ All {len(profiles)} profiles passed data quality validation')
 "
       - name: Check script syntax
         run: |
-          python -m py_compile fec_integration_v251d.py
-          python -m py_compile ui_index_engine.py
-          python -m py_compile generate_figures.py
+          python3 -m py_compile fec_integration_v251d.py
+          python3 -m py_compile ui_index_engine.py
+          python3 -m py_compile generate_figures.py
           echo "✅ All Python scripts compile successfully"
       - name: Verify no __pycache__ committed
         run: |
