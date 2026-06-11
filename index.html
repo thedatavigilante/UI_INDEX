@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Stagnant Safety Net — The Data Vigilante</title>
 <meta name="description" content="A forensic data audit of unemployment insurance decay across DC, Maryland, and Virginia. Built in one day using AI. The safety net is broken and here's the receipts.">
+<meta name="author" content="Sierra Napier, MPA — The Data Vigilante">
+<meta property="og:title" content="The Stagnant Safety Net — The Data Vigilante">
+<meta property="og:description" content="A forensic audit of unemployment insurance decay across DC, MD, and VA. The safety net is broken and here are the receipts. $601M/year disappearing.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thedatavigilante.github.io/UI_INDEX/">
+<meta property="og:image" content="https://thedatavigilante.github.io/UI_INDEX/figures/01_bai_decay_trajectory.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Stagnant Safety Net — The Data Vigilante">
+<meta name="twitter:description" content="Forensic data audit: who broke the UI safety net in DC, MD, VA — and who's funding the freeze.">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -383,6 +392,67 @@
   .footer-brand { color: var(--accent); font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
   .footer-tagline { color: var(--gold); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
 
+  /* ── LIGHT MODE ─────────────────────────────────────────── */
+  body.light {
+    --bg:      #f5f5f5;
+    --bg2:     #ffffff;
+    --bg3:     #eeeeee;
+    --fg:      #111111;
+    --muted:   #555555;
+    --border:  #dddddd;
+    --accent:  #007a20;
+    --lime:    #5a8000;
+  }
+  body.light nav {
+    background: rgba(245,245,245,0.97);
+  }
+  body.light .quote-banner {
+    background: linear-gradient(135deg, #fff0f0 0%, #f8f8f8 100%);
+  }
+  body.light .bmc-section {
+    background: linear-gradient(135deg, #fffbea 0%, #f8f8f8 100%);
+  }
+  body.light .ai-callout {
+    background: #f0fff4;
+  }
+  body.light .finding {
+    background: #f0fff4;
+  }
+  body.light code {
+    background: #e8e8e8;
+    color: #3a6800;
+  }
+  body.light .methodology {
+    background: #fafafa;
+    color: #444;
+  }
+
+  #theme-toggle {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    margin-left: 0.3rem;
+  }
+  #theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── "SO WHAT?" CALLOUT ──────────────────────────────────── */
+  .callout-plain {
+    border-left: 4px solid var(--gold);
+    background: transparent;
+    padding: 0.85rem 1.2rem;
+    margin: 0 0 1.2rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--fg);
+    line-height: 1.5;
+  }
+
   a { color: var(--accent); text-decoration: none; }
   a:hover { color: var(--lime); text-decoration: underline; }
 
@@ -407,7 +477,9 @@
   <a href="#ch5">Ch.5 FEC</a>
   <a href="#sources">Sources</a>
   <a href="#methodology">Methods</a>
-  <a href="https://buymeacoffee.com/gosidehustlesisi" target="_blank" rel="noopener" class="nav-bmc">☕ Support</a>
+  <a href="https://www.linkedin.com/in/sierran" target="_blank" rel="noopener">LinkedIn</a>
+  <button id="theme-toggle" aria-label="Toggle light/dark mode" onclick="toggleTheme()">◑</button>
+  <a href="https://buymeacoffee.com/thedatavigilante" target="_blank" rel="noopener" class="nav-bmc">☕ Support</a>
 </nav>
 
 <!-- ── HERO ──────────────────────────────────────────────────── -->
@@ -457,7 +529,7 @@
     </p>
   </div>
   <a class="bmc-btn"
-     href="https://buymeacoffee.com/gosidehustlesisi"
+     href="https://buymeacoffee.com/thedatavigilante"
      target="_blank" rel="noopener">
     ☕ Buy Me a Coffee
   </a>
@@ -479,9 +551,11 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <h2 id="ch1">Chapter 1 — Worker Insolvency: The BAI</h2>
 
+<div class="callout-plain">Your unemployment check can't pay your rent. That's not a coincidence — it's 16 years of policy choices.</div>
+
 <div class="card">
   <p>
-    The <strong>Benefit Adequacy Index (BAI)</strong> answers one question:
+    The <strong><abbr title="Can your UI check cover your rent? Below 1.0 = no.">Benefit Adequacy Index (BAI)</abbr></strong> answers one question:
     <em>can a laid-off worker still pay rent?</em>
     <code>BAI = Max WBA ÷ Weekly Housing Cost</code>.
     Below 1.0 is systemic failure — the benefit cannot cover housing alone,
@@ -533,9 +607,11 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <h2 id="ch2">Chapter 2 — The Corporate Tax Escape: WBI</h2>
 
+<div class="callout-plain">The cap on what your employer pays into unemployment hasn't moved in over 30 years. Your wages have. Theirs haven't. That math is not an accident.</div>
+
 <div class="card">
   <p>
-    The <strong>Regressive Wage Base Index (WBI)</strong> is where it gets deliberately boring —
+    The <strong><abbr title="What % of your wage is actually taxed for UI? Falling = system starves.">Regressive Wage Base Index (WBI)</abbr></strong> is where it gets deliberately boring —
     which is exactly how they want it.
     <code>WBI = Taxable Wage Base ÷ Avg Annual Wage</code>.
     Employers only pay SUI tax on wages <em>up to the statutory cap</em>.
@@ -565,9 +641,11 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <h2 id="ch3">Chapter 3 — The Poverty Trap: MIPI & Housing Gap</h2>
 
+<div class="callout-plain">Drove Uber to make ends meet while on unemployment? The government sees that $250 and takes most of it back out of your check. The system punishes you for surviving.</div>
+
 <div class="card">
   <p>
-    The <strong>Multi-Income Penalty Index (MIPI)</strong> measures what happens when a UI recipient
+    The <strong><abbr title="How much of your side gig does the UI office claw back? Higher = more punishment for earning.">Multi-Income Penalty Index (MIPI)</abbr></strong> measures what happens when a UI recipient
     does exactly what every think-piece tells them to do: hustle.
     <code>MIPI = (Earnings − Disregard) ÷ Max WBA</code>.
     Earn $250/week in part-time work? The system claws back most of it in benefit reductions.
@@ -606,6 +684,8 @@
 <!-- CHAPTER 4 -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <h2 id="ch4">Chapter 4 — The Trust Fund Shortfall</h2>
+
+<div class="callout-plain">Maryland's unemployment tax cap hasn't moved since 1992 — when gas was $1.05 a gallon. That frozen number costs the DMV region $601 million every single year.</div>
 
 <div class="card">
   <p>
@@ -673,6 +753,8 @@
 <!-- CHAPTER 5 -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <h2 id="ch5">Chapter 5 — Who Funds the Freeze</h2>
+
+<div class="callout-plain">The legislators who control your unemployment benefits received $46.6 million in campaign money — mostly from the industries that benefit from keeping your employer's tax bill low. Follow the money.</div>
 
 <p style="color:#aaa; font-size:0.93rem; margin-bottom:1rem; line-height:1.7;">
   Here is where it stops being an economics paper and starts being an accountability document.
@@ -853,7 +935,7 @@
     </p>
   </div>
   <a class="bmc-btn"
-     href="https://buymeacoffee.com/gosidehustlesisi"
+     href="https://buymeacoffee.com/thedatavigilante"
      target="_blank" rel="noopener">
     ☕ Buy Me a Coffee
   </a>
@@ -870,9 +952,24 @@
   <p>Built in one day using AI (Claude, Anthropic) · Generated: 2026-06-11</p>
   <p>License: MIT &nbsp;|&nbsp;
      <a href="https://github.com/thedatavigilante/UI_INDEX" target="_blank">github.com/thedatavigilante/UI_INDEX</a> &nbsp;|&nbsp;
-     <a href="https://buymeacoffee.com/gosidehustlesisi" target="_blank">☕ Support the work</a>
+     <a href="https://www.linkedin.com/in/sierran" target="_blank" rel="noopener">LinkedIn ↗</a> &nbsp;|&nbsp;
+     <a href="https://buymeacoffee.com/thedatavigilante" target="_blank">☕ Support the work</a>
   </p>
 </footer>
 
+<script>
+function toggleTheme() {
+  const light = document.body.classList.toggle('light');
+  localStorage.setItem('theme', light ? 'light' : 'dark');
+  document.getElementById('theme-toggle').textContent = light ? '☀' : '◑';
+}
+(function() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = '☀';
+  }
+})();
+</script>
 </body>
 </html>

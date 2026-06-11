@@ -2,6 +2,10 @@
 
 # 📊 The Stagnant Safety Net
 
+<p align="center">
+  <img src="https://github.com/thedatavigilante.png" width="120" alt="The Data Vigilante — Sierra Napier, MPA">
+</p>
+
 **A forensic data portfolio on how inflation, frozen policy, and political funding have been used to preserve wage gaps and weaken unemployment insurance across the DMV.**
 
 *Architected by The Data Vigilante (Sierra Napier, MPA)*
@@ -101,7 +105,7 @@ Where live API data is used (FEC, Census ACS), the pipeline includes a self-heal
 | `figures/03_mipi_clawback.png` | MIPI clawback severity — penalty rate on supplementary earnings |
 | `figures/04_housing_vs_wba_gap.png` | Housing cost vs. benefit gap — weekly survival deficit by state |
 | `figures/05_employer_per_employee_gap.png` | Per-employee underpayment ($84–$157/worker/year) |
-| `figures/06_employer_aggregate_gap.png` | Annual trust fund shortfall ($690.6M/year across DMV) |
+| `figures/06_employer_aggregate_gap.png` | Annual trust fund shortfall ($601.3M/year across DMV) |
 | `figures/07_statutory_vs_expected_wage_base.png` | Statutory vs. expected wage base — what employers would pay if the base tracked wages |
 | `figures/11_fec_total_receipts.png` | FEC total receipts by member |
 | `figures/12_fec_business_vs_labor.png` | Business vs. labor contributions — committee chairs skew heavily business |
@@ -139,10 +143,10 @@ All three jurisdictions show declining benefit adequacy over the 16-year window.
 
 ### Employer Contribution Gap
 - **Per-employee underpayment:** $84–$157 per worker, per year
-- **Aggregate trust fund shortfall:** **$690.6M/year** across DMV
-  - Virginia: $332.2M/year
-  - Maryland: $239.0M/year
-  - DC: $119.4M/year
+- **Aggregate trust fund shortfall:** **$601.3M/year** across DMV (using DOL historical effective SUI rates)
+  - Virginia: $252.4M/year
+  - Maryland: $248.6M/year
+  - DC: $100.3M/year
 - **Wage base erosion:** MD base is now 11.7% of average wage (down from 16.3% in 2010); VA 11.7% (down from 16.7%); DC 8.0% (down from 13.6%)
 
 ### Political Accountability: Who Funds the Freeze
@@ -246,14 +250,14 @@ See `DATA_CATALOG.md` for the full file inventory with lineage.
 
 The static portfolio landing page is at `index.html`. For interactive notebooks:
 
-- [BAI/WBI/MIPI Analysis](https://nbviewer.org/github/gosidehustlesisi/UI_INDEX/blob/main/ui_index_analysis.ipynb)
-- [Political Layer Analysis](https://nbviewer.org/github/gosidehustlesisi/UI_INDEX/blob/main/political_layer_analysis.ipynb)
+- [BAI/WBI/MIPI Analysis](https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/ui_index_analysis.ipynb)
+- [Political Layer Analysis](https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/political_layer_analysis.ipynb)
 
 ---
 
 ## 🔗 Repository
 
-https://github.com/gosidehustlesisi/UI_INDEX
+https://github.com/thedatavigilante/UI_INDEX
 
 ---
 
