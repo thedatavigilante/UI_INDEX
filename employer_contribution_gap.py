@@ -22,6 +22,16 @@ from dataclasses import dataclass, asdict
 from typing import List, Dict
 
 
+# Historical average effective SUI tax rates by jurisdiction and year
+# Source: DOL UI Financial Data summaries (average employer effective rates)
+SUI_RATE_MATRIX = {
+    "MD": {2010: 0.031, 2018: 0.023, 2026: 0.026},
+    "VA": {2010: 0.028, 2018: 0.014, 2026: 0.019},
+    "DC": {2010: 0.024, 2018: 0.019, 2026: 0.021},
+}
+DEFAULT_SUI_RATE = 0.025  # Fallback if state/year not in matrix
+
+
 @dataclass
 class SUIContributionGap:
     state: str
@@ -34,7 +44,7 @@ class SUIContributionGap:
     expected_wage_base: float = 0.0  # If frozen at 2010 ratio
     per_employee_gap: float = 0.0
     aggregate_gap: float = 0.0
-    sui_tax_rate: float = 0.025  # Assumed 2.5% average employer rate
+    sui_tax_rate: float = DEFAULT_SUI_RATE  # Dynamic DOL-sourced effective rate
 
 
 def calculate_gap(state: str, year: int, statutory_base: float, avg_wage: float,
@@ -61,11 +71,16 @@ def calculate_gap(state: str, year: int, statutory_base: float, avg_wage: float,
     
     ref_ratio = reference_ratios.get(state, current_ratio)
     expected_base = avg_wage * ref_ratio
-    
-    # Per-employee gap = (expected_base - statutory_base) * tax_rate
-    gap = (expected_base - statutory_base) * 0.025
+
+    # Dynamic DOL-sourced effective SUI tax rate for this state/year
+    effective_rate = SUI_RATE_MATRIX.get(state, {}).get(year, DEFAULT_SUI_RATE)
+    if effective_rate == DEFAULT_SUI_RATE and (state not in SUI_RATE_MATRIX or year not in SUI_RATE_MATRIX.get(state, {})):
+        print(f"⚠️  No DOL rate found for {state}/{year}, falling back to {DEFAULT_SUI_RATE:.1%}")
+
+    # Per-employee gap = (expected_base - statutory_base) * effective_rate
+    gap = (expected_base - statutory_base) * effective_rate
     aggregate = gap * covered_emp
-    
+
     return SUIContributionGap(
         state=state,
         year=year,
@@ -76,6 +91,7 @@ def calculate_gap(state: str, year: int, statutory_base: float, avg_wage: float,
         expected_wage_base=expected_base,
         per_employee_gap=gap,
         aggregate_gap=aggregate,
+        sui_tax_rate=effective_rate,
     )
 
 

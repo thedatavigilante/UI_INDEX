@@ -1,56 +1,38 @@
-{
-  "_metadata": {
-    "generated_by": "employer_contribution_gap.py",
-    "generated_at": "2026-06-11T00:00:00Z",
-    "cycle": 2026,
-    "api_version": "N/A",
-    "reconciliation_status": "CALCULATED",
-    "purpose": "Per-state employer contribution gap based on frozen SUI wage bases vs. expected wage-indexed bases",
-    "methodology": "Expected wage base = avg_annual_wage * 2010 reference ratio. Per-employee gap = (expected_base - statutory_base) * 0.025. Aggregate = per_employee_gap * covered_employment.",
-    "data_sources": {
-      "avg_annual_wage": "BLS QCEW 2024 (approximate)",
-      "statutory_wage_base": "State DOL statutes (MD=$8,500, VA=$8,000, DC=$9,000)",
-      "covered_employment": "BLS QCEW annual average 2024 (approximate)",
-      "sui_tax_rate": "Assumed 2.5% average employer rate"
-    },
-    "caveat": "Avg wages and covered employment are approximate. Reference ratios are 2010 statutory base / 2010 avg wage. This is Method B (2010 ratio preserved) from the scenario analysis. See README.md for alternative methodologies (A, C, D, E)."
+[
+  {
+    "state": "MD",
+    "year": 2026,
+    "statutory_wage_base": 8500,
+    "avg_annual_wage": 72800,
+    "covered_employment": 2840000,
+    "wage_base_as_pct_of_avg": 0.11675824175824176,
+    "expected_wage_base": 11866.4,
+    "per_employee_gap": 87.52639999999998,
+    "aggregate_gap": 248574975.99999994,
+    "sui_tax_rate": 0.026
   },
-  "data": [
-    {
-      "state": "MD",
-      "year": 2026,
-      "statutory_wage_base": 8500,
-      "avg_annual_wage": 72800,
-      "covered_employment": 2840000,
-      "wage_base_as_pct_of_avg": 0.11675824175824176,
-      "expected_wage_base": 11866.4,
-      "per_employee_gap": 84.16,
-      "aggregate_gap": 239014400.0,
-      "sui_tax_rate": 0.025
-    },
-    {
-      "state": "VA",
-      "year": 2026,
-      "statutory_wage_base": 8000,
-      "avg_annual_wage": 68200,
-      "covered_employment": 3920000,
-      "wage_base_as_pct_of_avg": 0.11730205278592376,
-      "expected_wage_base": 11389.400000000001,
-      "per_employee_gap": 84.73500000000004,
-      "aggregate_gap": 332161200.0000002,
-      "sui_tax_rate": 0.025
-    },
-    {
-      "state": "DC",
-      "year": 2026,
-      "statutory_wage_base": 9000,
-      "avg_annual_wage": 112400,
-      "covered_employment": 760000,
-      "wage_base_as_pct_of_avg": 0.0800711743772242,
-      "expected_wage_base": 15286.400000000001,
-      "per_employee_gap": 157.16000000000005,
-      "aggregate_gap": 119441600.00000004,
-      "sui_tax_rate": 0.025
-    }
-  ]
-}
+  {
+    "state": "VA",
+    "year": 2026,
+    "statutory_wage_base": 8000,
+    "avg_annual_wage": 68200,
+    "covered_employment": 3920000,
+    "wage_base_as_pct_of_avg": 0.11730205278592376,
+    "expected_wage_base": 11389.400000000001,
+    "per_employee_gap": 64.39860000000003,
+    "aggregate_gap": 252442512.00000012,
+    "sui_tax_rate": 0.019
+  },
+  {
+    "state": "DC",
+    "year": 2026,
+    "statutory_wage_base": 9000,
+    "avg_annual_wage": 112400,
+    "covered_employment": 760000,
+    "wage_base_as_pct_of_avg": 0.0800711743772242,
+    "expected_wage_base": 15286.400000000001,
+    "per_employee_gap": 132.01440000000005,
+    "aggregate_gap": 100330944.00000004,
+    "sui_tax_rate": 0.021
+  }
+]
