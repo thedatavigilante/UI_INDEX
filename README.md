@@ -1,14 +1,15 @@
-# UI Index: The Stagnant Safety Net
+<!-- markdownlint-disable -->
 
-A forensic audit of unemployment insurance decay across DC, Maryland, and Virginia (2010–2026), with political funding analysis tracing the legislative levers.
+# 📊 The Stagnant Safety Net
 
-**Author:** Sierra Napier, MPA  
-**Project:** *The Stagnant Safety Net: A Tri-State Forensic Audit*  
+**A forensic data portfolio on how inflation, frozen policy, and political funding have been used to preserve wage gaps and weaken unemployment insurance across the DMV.**
+
+*Architected by The Data Vigilante (Sierra Napier, MPA)*
 **License:** MIT
 
 ---
 
-## What This Is
+## 🗺️ What This Is
 
 This repository contains the data, code, and analysis behind an investigation into how unemployment insurance safety net adequacy has eroded across three jurisdictions — and who funds the legislators holding the policy levers.
 
@@ -21,7 +22,39 @@ It includes:
 
 ---
 
-## Files in This Repository
+## 📐 Forensic Metrics Defined
+
+### 1. Benefit Adequacy Index (BAI)
+`BAI = Max_WBA ÷ Weekly_Housing_Cost`
+
+Isolates whether the maximum weekly benefit cap forces a choice between rent and immediate survival. **Any BAI < 1.0 indicates systemic failure** — the benefit does not cover housing alone.
+
+### 2. Regressive Wage Base Index (WBI)
+`WBI = Taxable_Wage_Base ÷ Avg_Annual_Wage`
+
+Tracks how much of the average worker's wage is actually subject to unemployment insurance taxation. As wages rise and the wage base stays frozen, the WBI falls — meaning employers pay into a shrinking share of the wage pool, narrowing the trust fund.
+
+### 3. Multi-Income Penalty Index (MIPI)
+`MIPI = (Side_Hustle_Earnings − Disregard_Threshold) ÷ Max_WBA`
+
+Quantifies the institutional penalty on workers who earn supplementary income while receiving benefits. High MIPI = aggressive clawback that punishes resourcefulness and traps workers in dependency.
+
+### 4. Housing Gap
+`Housing_Gap = Weekly_Housing_Cost − Max_WBA`
+
+The raw weekly survival deficit: how many dollars short a claimant is after benefits, before any other expenses.
+
+---
+
+## 🔬 Methodology Note
+
+This analysis uses **comparative static baselines** (2010, 2018, 2026) rather than continuous time-series or live API polling. The choice is intentional: benefit caps, wage bases, and disregard thresholds change through discrete legislative acts, not gradual drift. Anchoring to the same three moments across all three jurisdictions makes the policy decay visible and comparable — a moving average would obscure the step-function nature of the neglect.
+
+Where live API data is used (FEC, Census ACS), the pipeline includes a self-healing client with caching and audit logging so rate limits don't corrupt the baseline record.
+
+---
+
+## 🗂️ Files in This Repository
 
 ### Python Scripts (12 files)
 
@@ -63,15 +96,15 @@ It includes:
 
 | File | Description |
 |------|-------------|
-| `figures/01_bai_decay_trajectory.png` | BAI decay 2010–2026 |
-| `figures/02_wbi_stagnation.png` | WBI stagnation |
-| `figures/03_mipi_clawback.png` | MIPI clawback severity |
-| `figures/04_housing_vs_wba_gap.png` | Housing cost vs. benefit gap |
-| `figures/05_employer_per_employee_gap.png` | Per-employee underpayment |
-| `figures/06_employer_aggregate_gap.png` | Annual trust fund shortfall |
-| `figures/07_statutory_vs_expected_wage_base.png` | Statutory vs. expected wage base |
+| `figures/01_bai_decay_trajectory.png` | BAI decay 2010–2026 — all three jurisdictions crossing below 1.0 |
+| `figures/02_wbi_stagnation.png` | WBI stagnation — wage base as share of average wage, frozen while wages rise |
+| `figures/03_mipi_clawback.png` | MIPI clawback severity — penalty rate on supplementary earnings |
+| `figures/04_housing_vs_wba_gap.png` | Housing cost vs. benefit gap — weekly survival deficit by state |
+| `figures/05_employer_per_employee_gap.png` | Per-employee underpayment ($84–$157/worker/year) |
+| `figures/06_employer_aggregate_gap.png` | Annual trust fund shortfall ($690.6M/year across DMV) |
+| `figures/07_statutory_vs_expected_wage_base.png` | Statutory vs. expected wage base — what employers would pay if the base tracked wages |
 | `figures/11_fec_total_receipts.png` | FEC total receipts by member |
-| `figures/12_fec_business_vs_labor.png` | Business vs. labor contributions |
+| `figures/12_fec_business_vs_labor.png` | Business vs. labor contributions — committee chairs skew heavily business |
 | `figures/13_fec_contribution_mix.png` | Contribution mix by category |
 
 ### Documentation
@@ -79,6 +112,7 @@ It includes:
 | File | Purpose |
 |------|---------|
 | `README.md` | This file |
+| `DATA_CATALOG.md` | Full file inventory with lineage map and metadata standard |
 | `ENVIRONMENT_ARCHITECTURE.md` | Future architecture proposal (not yet implemented) |
 | `Slicers_and_Drilldown_Strategy.md` | Interactive dashboard design specification (not yet implemented) |
 | `index.html` | Portfolio landing page — embeds all 10 figures with methodology notes |
@@ -93,9 +127,45 @@ It includes:
 
 ---
 
-## How to Run
+## 🔑 Key Findings
 
-### 1. Set up API keys
+| Jurisdiction | BAI 2010 | BAI 2026 | Δ BAI | Direction |
+|-------------|----------|----------|-------|-----------|
+| Maryland | 1.46 | 0.96 | **−0.50** | WORSENING |
+| Virginia | 1.40 | 0.90 | **−0.50** | WORSENING |
+| DC | 0.94 | 0.85 | **−0.09** | WORSENING |
+
+All three jurisdictions show declining benefit adequacy over the 16-year window. Maryland and Virginia crossed below the survival threshold (BAI < 1.0) by 2026. DC was already below threshold in 2010 and continues to deteriorate.
+
+### Employer Contribution Gap
+- **Per-employee underpayment:** $84–$157 per worker, per year
+- **Aggregate trust fund shortfall:** **$690.6M/year** across DMV
+  - Virginia: $332.2M/year
+  - Maryland: $239.0M/year
+  - DC: $119.4M/year
+- **Wage base erosion:** MD base is now 11.7% of average wage (down from 16.3% in 2010); VA 11.7% (down from 16.7%); DC 8.0% (down from 13.6%)
+
+### Political Accountability: Who Funds the Freeze
+- **7 priority members** analyzed across UI-relevant committees
+- **$46.6M** in total campaign receipts reviewed (2024 cycle)
+- Business contributions dominate committee chairs: Trone, Hoyer, and Warner each show $1M+ in business-linked funding
+
+---
+
+## 🚀 Quickstart
+
+### 1. Set up environment
+
+```bash
+# Create and activate the virtual environment
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2. Set up API keys
 
 ```bash
 cp .env.example .env
@@ -106,12 +176,6 @@ cp .env.example .env
 - **Census API key:** https://api.census.gov/data/key_signup.html
 
 Congress.gov uses `DEMO_KEY` (public, no signup required for basic use).
-
-### 2. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
 
 ### 3. Generate the base analysis
 
@@ -143,7 +207,7 @@ python delta_analyzer.py
 
 ---
 
-## Data Provenance
+## 🔧 Data Provenance
 
 Every JSON data file includes a `_metadata` block documenting:
 - **Generated by:** Which script produced it
@@ -157,18 +221,18 @@ See `DATA_CATALOG.md` for the full file inventory with lineage.
 
 ---
 
-## Key Metrics
+## 📊 Key Metrics
 
 | Index | Formula | What It Measures |
 |-------|---------|------------------|
-| **BAI** | Max WBA / Weekly Housing Cost | Can benefits cover rent? |
-| **WBI** | Taxable Wage Base / Avg Annual Wage | Is the tax base regressing? |
-| **MIPI** | (Earnings − Disregard) / Max WBA | Poverty trap for part-time workers |
+| **BAI** | Max WBA ÷ Weekly Housing Cost | Can benefits cover rent? |
+| **WBI** | Taxable Wage Base ÷ Avg Annual Wage | Is the tax base regressing? |
+| **MIPI** | (Earnings − Disregard) ÷ Max WBA | Poverty trap for part-time workers |
 | **Housing Gap** | Weekly Housing − Max WBA | Survival deficit per week |
 
 ---
 
-## Known Limitations
+## ⚠️ Known Limitations
 
 - **Campaign finance categorization** uses keyword matching on contributor names (approximate). For production use, official FEC committee IDs should be used.
 - **Business/labor categorization** is based on string patterns, not official industry codes.
@@ -178,7 +242,7 @@ See `DATA_CATALOG.md` for the full file inventory with lineage.
 
 ---
 
-## Portfolio
+## 📁 Portfolio
 
 The static portfolio landing page is at `index.html`. For interactive notebooks:
 
@@ -187,6 +251,10 @@ The static portfolio landing page is at `index.html`. For interactive notebooks:
 
 ---
 
-## Repository
+## 🔗 Repository
 
 https://github.com/gosidehustlesisi/UI_INDEX
+
+---
+
+*Built for policymakers, journalists, and anyone who believes a safety net should actually catch people.*

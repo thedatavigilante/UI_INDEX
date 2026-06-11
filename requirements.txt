@@ -4,3 +4,4 @@ matplotlib
 seaborn
 jupyter
 python-dotenv
+requests
