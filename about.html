@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About The Data Vigilante | Sierra Napier, MPA</title>
+<meta name="description" content="Sierra Napier, MPA — The Data Vigilante. Forensic data analyst, fractional CDO, currently living the unemployment data she audits. Work with me, or hire me.">
+<meta name="author" content="Sierra Napier, MPA — The Data Vigilante">
+<meta property="og:title" content="About The Data Vigilante | Sierra Napier, MPA">
+<meta property="og:description" content="Forensic data analyst and fractional Chief Data Officer. I built a $601M forensic audit in one day. Here's who I am and how to work with me.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thedatavigilante.github.io/UI_INDEX/about.html">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#121212; --bg2:#1a1a1a; --bg3:#1e1e1e; --fg:#e8e8e8; --muted:#888888;
+    --accent:#00FF41; --lime:#BFFF00; --gold:#D4AF37; --crimson:#DC143C; --blue:#4aa8d8;
+    --border:#2a2a2a; --mono:'Space Mono',monospace; --sans:'Inter',sans-serif;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); background:var(--bg); color:var(--fg); line-height:1.65; max-width:1100px; margin:0 auto; padding:0 1.5rem 4rem; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(18,18,18,0.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0.7rem 1.5rem; margin:0 -1.5rem; display:flex; align-items:center; flex-wrap:wrap; }
+  nav .nav-brand { font-family:var(--mono); font-size:0.78rem; color:var(--accent); font-weight:700; margin-right:1.5rem; white-space:nowrap; }
+  nav a { font-family:var(--mono); font-size:0.7rem; color:var(--muted); text-decoration:none; padding:0.25rem 0.6rem; border-radius:3px; white-space:nowrap; transition:color 0.15s, background 0.15s; }
+  nav a:hover { color:var(--accent); background:rgba(0,255,65,0.07); }
+  nav a.active { color:var(--accent); }
+  .nav-bmc { margin-left:auto; background:var(--gold) !important; color:#000 !important; font-weight:700 !important; padding:0.3rem 0.8rem !important; border-radius:4px !important; }
+  .nav-bmc:hover { background:#f0c040 !important; }
+  #theme-toggle { font-family:var(--mono); font-size:0.9rem; background:none; border:1px solid var(--border); color:var(--muted); padding:0.2rem 0.5rem; border-radius:4px; cursor:pointer; margin-left:0.3rem; }
+  #theme-toggle:hover { color:var(--accent); border-color:var(--accent); }
+
+  header { padding:2.5rem 0 2rem; border-bottom:1px solid var(--border); }
+  .badges { margin-bottom:1.2rem; display:flex; flex-wrap:wrap; gap:0.4rem; }
+  .badge { font-family:var(--mono); font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:0.22rem 0.55rem; border-radius:3px; }
+  .b-green{background:var(--accent);color:#000;} .b-gold{background:var(--gold);color:#000;}
+  .b-blue{background:var(--blue);color:#000;} .b-outline{border:1px solid var(--muted);color:var(--muted);background:transparent;}
+
+  .hero { display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+  .hero-avatar { width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid var(--accent); box-shadow:0 0 22px rgba(0,255,65,0.5), 0 0 60px rgba(0,255,65,0.12); flex-shrink:0; }
+  .hero-text { flex:1; min-width:260px; }
+  h1 { font-family:var(--mono); font-size:2.1rem; font-weight:700; color:var(--accent); text-shadow:0 0 25px rgba(0,255,65,0.4); line-height:1.2; }
+  .hero-tagline { font-family:var(--mono); font-size:0.78rem; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; margin-top:0.5rem; }
+  .hero-subtitle { font-size:1.05rem; font-weight:600; margin-top:0.4rem; color:var(--fg); }
+
+  h2 { font-family:var(--mono); font-size:1rem; font-weight:700; color:var(--lime); margin:3rem 0 1rem; padding:0.65rem 0 0.65rem 1rem; border-left:4px solid var(--accent); border-bottom:1px solid var(--border); letter-spacing:0.04em; text-transform:uppercase; }
+  h3 { font-family:var(--mono); font-size:0.88rem; font-weight:700; color:var(--accent); margin:1.5rem 0 0.5rem; letter-spacing:0.04em; }
+  p { font-size:0.95rem; color:var(--fg); margin-bottom:0.6rem; }
+  ul,ol { margin:0.5rem 0 0.8rem 1.5rem; }
+  li { font-size:0.92rem; color:var(--fg); margin-bottom:0.4rem; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { color:var(--lime); text-decoration:underline; }
+  strong { color:var(--fg); }
+
+  .card { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:1.4rem; margin:1.2rem 0; }
+  .quote-banner { background:linear-gradient(135deg,#1a0a0a 0%,#1e1e1e 100%); border-left:4px solid var(--crimson); border-radius:0 6px 6px 0; padding:1.4rem 1.8rem; margin:2rem 0; }
+  .quote-banner blockquote { font-family:var(--mono); font-size:1.05rem; color:var(--fg); font-style:italic; line-height:1.5; }
+  .quote-banner cite { display:block; font-family:var(--mono); font-size:0.72rem; color:var(--muted); margin-top:0.8rem; letter-spacing:0.06em; }
+
+  .offer { background:linear-gradient(135deg,#0d1a0d 0%,#1e1e1e 100%); border:1px solid var(--accent); border-radius:8px; padding:1.8rem; margin:1.5rem 0; }
+  .offer h3 { color:var(--accent); margin-top:0; }
+  .offer .price { font-family:var(--mono); font-size:1.6rem; font-weight:700; color:var(--lime); margin:0.5rem 0; }
+  .offer .price span { font-size:0.85rem; color:var(--muted); font-weight:400; }
+
+  .cta-row { display:flex; gap:1rem; flex-wrap:wrap; margin:1.5rem 0; }
+  .cta-btn { display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--mono); font-size:0.85rem; font-weight:700; text-decoration:none; padding:0.75rem 1.4rem; border-radius:6px; transition:transform 0.1s, background 0.15s; }
+  .cta-primary { background:var(--accent); color:#000; }
+  .cta-primary:hover { background:#33ff66; color:#000; transform:translateY(-1px); text-decoration:none; }
+  .cta-gold { background:var(--gold); color:#000; }
+  .cta-gold:hover { background:#f0c040; color:#000; transform:translateY(-1px); text-decoration:none; }
+  .cta-outline { border:1px solid var(--accent); color:var(--accent); }
+  .cta-outline:hover { background:rgba(0,255,65,0.08); transform:translateY(-1px); text-decoration:none; }
+
+  .skill-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0.8rem; margin:1rem 0; }
+  .skill-cell { background:var(--bg2); border:1px solid var(--border); border-radius:6px; padding:0.8rem 1rem; }
+  .skill-cell .sk-title { font-family:var(--mono); font-size:0.78rem; color:var(--accent); font-weight:700; margin-bottom:0.2rem; }
+  .skill-cell .sk-detail { font-size:0.78rem; color:var(--muted); }
+
+  footer { border-top:2px solid var(--accent); margin-top:4rem; padding-top:2rem; font-family:var(--mono); font-size:0.72rem; color:var(--muted); line-height:2; }
+  .footer-brand { color:var(--accent); font-size:1rem; font-weight:700; margin-bottom:0.3rem; }
+  .footer-tagline { color:var(--gold); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; }
+
+  body.light { --bg:#f5f5f5; --bg2:#fff; --bg3:#eee; --fg:#111; --muted:#555; --border:#ddd; --accent:#007a20; --lime:#5a8000; }
+  body.light nav { background:rgba(245,245,245,0.97); }
+  body.light .quote-banner { background:linear-gradient(135deg,#fff0f0 0%,#f8f8f8 100%); }
+  body.light .offer { background:linear-gradient(135deg,#f0fff4 0%,#f8f8f8 100%); }
+
+  @media (max-width:640px) { h1 { font-size:1.4rem; } .hero-avatar { width:80px; height:80px; } nav { gap:0.2rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">📊 DATA VIGILANTE</span>
+  <a href="index.html">Audit</a>
+  <a href="political.html">Political Layer</a>
+  <a href="methodology.html">Methodology</a>
+  <a href="about.html" class="active">About</a>
+  <a href="https://www.linkedin.com/in/sierran" target="_blank" rel="noopener">LinkedIn</a>
+  <button id="theme-toggle" aria-label="Toggle light/dark mode" onclick="toggleTheme()">◑</button>
+  <a href="https://buymeacoffee.com/thedatavigilante" target="_blank" rel="noopener" class="nav-bmc">☕ Support</a>
+</nav>
+
+<header>
+  <div class="badges">
+    <span class="badge b-green">MPA</span>
+    <span class="badge b-gold">Forensic Data Analyst</span>
+    <span class="badge b-blue">Fractional CDO</span>
+    <span class="badge b-outline">Open to Work</span>
+  </div>
+  <div class="hero">
+    <img class="hero-avatar" src="https://github.com/thedatavigilante.png" alt="Sierra Napier, MPA — The Data Vigilante" onerror="this.style.display='none'">
+    <div class="hero-text">
+      <h1>Sierra Napier, MPA</h1>
+      <div class="hero-tagline">The Robin Hood of AI · The Data Vigilante</div>
+      <div class="hero-subtitle">Forensic Data Analyst · Fractional Chief Data Officer</div>
+    </div>
+  </div>
+</header>
+
+<div class="quote-banner">
+  <blockquote>I'm not auditing the unemployment system from the outside. I'm living inside the dataset.</blockquote>
+  <cite>— The Data Vigilante</cite>
+</div>
+
+<!-- BIO -->
+<h2 id="bio">Who I Am</h2>
+<div class="card">
+  <p>
+    I'm Sierra Napier — a public-policy-trained data analyst (MPA) who turns public datasets into accountability. I built <a href="index.html">The Stagnant Safety Net</a>, a tri-state forensic audit of unemployment insurance decay across DC, Maryland, and Virginia, exposing a <strong>$601 million annual trust-fund shortfall</strong> and the campaign-finance patterns behind the policy freeze.
+  </p>
+  <p>
+    Here's the part that makes this work different: <strong>I'm currently unemployed.</strong> I'm not modeling the unemployment system from a comfortable distance — I'm a data point in it. When the BAI says a Maryland claimant is $20/week short of rent, I know exactly what that number feels like. That's not a weakness in the analysis. It's the reason the analysis exists.
+  </p>
+</div>
+
+<!-- WHAT I BUILT -->
+<h2 id="built">What I Built — In One Day</h2>
+<div class="card">
+  <p>The entire audit — data pipeline, four forensic indices, ten charts, live FEC API integration, a political accountability layer, two interactive notebooks, and a four-page portfolio — was architected and shipped in a single working session, AI-assisted with Claude (Anthropic). The skills it demonstrates:</p>
+  <div class="skill-grid">
+    <div class="skill-cell"><div class="sk-title">Python / Pandas</div><div class="sk-detail">Index engines, ETL, statistical baselines</div></div>
+    <div class="skill-cell"><div class="sk-title">Live API Integration</div><div class="sk-detail">FEC, Census ACS, Congress.gov with self-healing client</div></div>
+    <div class="skill-cell"><div class="sk-title">Data Governance</div><div class="sk-detail">Metadata standards, lineage maps, validation CI</div></div>
+    <div class="skill-cell"><div class="sk-title">Forensic Methodology</div><div class="sk-detail">Live-source verification, honest limitation disclosure</div></div>
+    <div class="skill-cell"><div class="sk-title">Data Visualization</div><div class="sk-detail">matplotlib, branded charts, web portfolio</div></div>
+    <div class="skill-cell"><div class="sk-title">Policy Translation</div><div class="sk-detail">Turning statute into measurable, comparable indices</div></div>
+  </div>
+  <p style="margin-top:0.8rem;"><a href="https://github.com/thedatavigilante/UI_INDEX" target="_blank">→ See the full source code on GitHub</a></p>
+</div>
+
+<!-- WORK WITH ME -->
+<h2 id="work">Work With Me — Fractional CDO</h2>
+<div class="offer">
+  <h3>// Fractional Chief Data Officer</h3>
+  <div class="price">$7,500–$10,000<span> / month · 2 days/week</span></div>
+  <p style="color:#bbb; font-size:0.9rem;">
+    For nonprofits, advocacy organizations, and mission-driven teams that have data but no one to make it tell the truth. I build the pipeline, define the metrics that matter, and turn your raw numbers into the kind of evidence that moves funders, journalists, and policymakers.
+  </p>
+  <ul style="font-size:0.88rem; color:#bbb;">
+    <li>Forensic data audits and accountability reporting</li>
+    <li>Public-dataset integration (Census, BLS, FEC, agency APIs)</li>
+    <li>Metric design, dashboards, and reproducible analysis</li>
+    <li>Data governance and lineage for small teams</li>
+  </ul>
+  <p style="font-size:0.85rem; color:var(--muted);">The audit on this site is the proof of work. That's what a week of me looks like.</p>
+</div>
+
+<!-- HIRE ME -->
+<h2 id="hire">Hire Me — Full-Time</h2>
+<div class="card">
+  <p>I'm also open to full-time and contract roles: <strong>Data Analytics Manager, Senior BI / Power BI Developer, Senior Strategy Consultant, Data Scientist / GenAI Engineer.</strong> DMV-based, remote-friendly, willing to relocate. Floor: $160K.</p>
+  <p>My differentiator is on this page: I don't just analyze data, I build the whole accountability artifact — pipeline to published portfolio — and I do it fast.</p>
+  <div class="cta-row">
+    <a class="cta-btn cta-primary" href="https://www.linkedin.com/in/sierran" target="_blank" rel="noopener">in · Connect on LinkedIn</a>
+    <a class="cta-btn cta-outline" href="https://github.com/thedatavigilante" target="_blank" rel="noopener">⌥ GitHub</a>
+    <a class="cta-btn cta-gold" href="https://buymeacoffee.com/thedatavigilante" target="_blank" rel="noopener">☕ Support the Work</a>
+  </div>
+</div>
+
+<p style="margin-top:1.5rem; font-size:0.88rem; color:var(--muted);">→ <a href="index.html">← Back to the audit</a> &nbsp;|&nbsp; → <a href="political.html">Political Layer</a> &nbsp;|&nbsp; → <a href="methodology.html">Methodology</a></p>
+
+<footer>
+  <div class="footer-brand">📊 The Data Vigilante</div>
+  <div class="footer-tagline">The Robin Hood of AI</div>
+  <p style="margin-top:0.8rem;">Sierra Napier, MPA &nbsp;|&nbsp; Forensic Data Analyst · Fractional CDO</p>
+  <p>Built using AI (Claude, Anthropic) · License: MIT</p>
+  <p>
+    <a href="index.html">← Main Audit</a> &nbsp;|&nbsp;
+    <a href="https://www.linkedin.com/in/sierran" target="_blank" rel="noopener">LinkedIn ↗</a> &nbsp;|&nbsp;
+    <a href="https://github.com/thedatavigilante" target="_blank">GitHub</a> &nbsp;|&nbsp;
+    <a href="https://buymeacoffee.com/thedatavigilante" target="_blank">☕ Support the work</a>
+  </p>
+</footer>
+
+<script>
+function toggleTheme() {
+  const light = document.body.classList.toggle('light');
+  localStorage.setItem('theme', light ? 'light' : 'dark');
+  document.getElementById('theme-toggle').textContent = light ? '☀' : '◑';
+}
+(function() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = '☀';
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methodology &amp; Data Validation | The Data Vigilante</title>
+<meta name="description" content="Full data transparency: index formulas, live-source validation table, housing cost methodology, and honest limitations for The Stagnant Safety Net forensic audit.">
+<meta name="author" content="Sierra Napier, MPA — The Data Vigilante">
+<meta property="og:title" content="Methodology &amp; Data Validation | The Data Vigilante">
+<meta property="og:description" content="Every statutory value verified against a live source. Formulas, housing cost methodology, and honest limitations — fully documented.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thedatavigilante.github.io/UI_INDEX/methodology.html">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#121212; --bg2:#1a1a1a; --bg3:#1e1e1e; --fg:#e8e8e8; --muted:#888888;
+    --accent:#00FF41; --lime:#BFFF00; --gold:#D4AF37; --crimson:#DC143C; --blue:#4aa8d8;
+    --border:#2a2a2a; --mono:'Space Mono',monospace; --sans:'Inter',sans-serif;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--sans); background:var(--bg); color:var(--fg); line-height:1.65; max-width:1100px; margin:0 auto; padding:0 1.5rem 4rem; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(18,18,18,0.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0.7rem 1.5rem; margin:0 -1.5rem; display:flex; align-items:center; flex-wrap:wrap; }
+  nav .nav-brand { font-family:var(--mono); font-size:0.78rem; color:var(--accent); font-weight:700; margin-right:1.5rem; white-space:nowrap; }
+  nav a { font-family:var(--mono); font-size:0.7rem; color:var(--muted); text-decoration:none; padding:0.25rem 0.6rem; border-radius:3px; white-space:nowrap; transition:color 0.15s, background 0.15s; }
+  nav a:hover { color:var(--accent); background:rgba(0,255,65,0.07); }
+  nav a.active { color:var(--gold); }
+  .nav-bmc { margin-left:auto; background:var(--gold) !important; color:#000 !important; font-weight:700 !important; padding:0.3rem 0.8rem !important; border-radius:4px !important; }
+  .nav-bmc:hover { background:#f0c040 !important; }
+  #theme-toggle { font-family:var(--mono); font-size:0.9rem; background:none; border:1px solid var(--border); color:var(--muted); padding:0.2rem 0.5rem; border-radius:4px; cursor:pointer; margin-left:0.3rem; }
+  #theme-toggle:hover { color:var(--accent); border-color:var(--accent); }
+
+  header { padding:2.5rem 0 2rem; border-bottom:1px solid var(--border); }
+  .badges { margin-bottom:1.2rem; display:flex; flex-wrap:wrap; gap:0.4rem; }
+  .badge { font-family:var(--mono); font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; padding:0.22rem 0.55rem; border-radius:3px; }
+  .b-green{background:var(--accent);color:#000;} .b-gold{background:var(--gold);color:#000;}
+  .b-blue{background:var(--blue);color:#000;} .b-outline{border:1px solid var(--muted);color:var(--muted);background:transparent;}
+
+  h1 { font-family:var(--mono); font-size:2.1rem; font-weight:700; color:var(--gold); text-shadow:0 0 25px rgba(212,175,55,0.3); line-height:1.2; }
+  h2 { font-family:var(--mono); font-size:1rem; font-weight:700; color:var(--lime); margin:3rem 0 1rem; padding:0.65rem 0 0.65rem 1rem; border-left:4px solid var(--gold); border-bottom:1px solid var(--border); letter-spacing:0.04em; text-transform:uppercase; }
+  h3 { font-family:var(--mono); font-size:0.88rem; font-weight:700; color:var(--accent); margin:1.5rem 0 0.5rem; letter-spacing:0.04em; }
+  p { font-size:0.95rem; color:var(--fg); margin-bottom:0.5rem; }
+  ul,ol { margin:0.5rem 0 0.8rem 1.5rem; }
+  li { font-size:0.92rem; color:var(--fg); margin-bottom:0.4rem; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { color:var(--lime); text-decoration:underline; }
+  code { font-family:var(--mono); font-size:0.82rem; color:var(--lime); background:#222; padding:0.1rem 0.35rem; border-radius:3px; }
+
+  .card { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:1.4rem; margin:1.2rem 0; }
+
+  .cite-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.84rem; }
+  .cite-table th { font-family:var(--mono); font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; border-bottom:2px solid var(--border); padding:0.55rem 0.7rem; text-align:left; }
+  .cite-table td { padding:0.55rem 0.7rem; border-bottom:1px solid var(--border); color:var(--fg); vertical-align:top; }
+  .cite-table tr:hover td { background:#1e1e1e; }
+  .cite-table .val { font-family:var(--mono); color:var(--fg); font-weight:700; }
+  .status-ok { color:var(--accent); font-family:var(--mono); font-size:0.78rem; font-weight:700; }
+  .status-warn { color:var(--gold); font-family:var(--mono); font-size:0.78rem; font-weight:700; }
+  .status-fail { color:var(--crimson); font-family:var(--mono); font-size:0.78rem; font-weight:700; }
+
+  .methodology { background:#181818; border-left:3px solid var(--gold); padding:1rem 1.2rem; margin:1rem 0; font-size:0.9rem; color:#bbb; border-radius:0 4px 4px 0; }
+  .methodology strong { color:var(--fg); }
+
+  footer { border-top:2px solid var(--gold); margin-top:4rem; padding-top:2rem; font-family:var(--mono); font-size:0.72rem; color:var(--muted); line-height:2; }
+  .footer-brand { color:var(--accent); font-size:1rem; font-weight:700; margin-bottom:0.3rem; }
+  .footer-tagline { color:var(--gold); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; }
+
+  body.light { --bg:#f5f5f5; --bg2:#fff; --bg3:#eee; --fg:#111; --muted:#555; --border:#ddd; --accent:#007a20; --lime:#5a8000; }
+  body.light nav { background:rgba(245,245,245,0.97); }
+
+  @media (max-width:640px) { h1 { font-size:1.4rem; } .cite-table { font-size:0.74rem; } nav { gap:0.2rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">📊 DATA VIGILANTE</span>
+  <a href="index.html">Audit</a>
+  <a href="political.html">Political Layer</a>
+  <a href="methodology.html" class="active">Methodology</a>
+  <a href="about.html">About</a>
+  <a href="https://www.linkedin.com/in/sierran" target="_blank" rel="noopener">LinkedIn</a>
+  <button id="theme-toggle" aria-label="Toggle light/dark mode" onclick="toggleTheme()">◑</button>
+  <a href="https://buymeacoffee.com/thedatavigilante" target="_blank" rel="noopener" class="nav-bmc">☕ Support</a>
+</nav>
+
+<header>
+  <div class="badges">
+    <span class="badge b-gold">Data Transparency</span>
+    <span class="badge b-green">Live-Source Verified</span>
+    <span class="badge b-blue">Reproducible</span>
+    <span class="badge b-outline">Verified 2026-06-11</span>
+  </div>
+  <h1>🔬 Methodology &amp; Data Validation</h1>
+  <div style="font-family:var(--mono); font-size:0.78rem; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; margin-top:0.5rem;">Show Your Work — The Data Vigilante</div>
+  <div style="font-size:1.05rem; font-weight:600; margin-top:0.4rem;">Every number in this audit, sourced and reproducible</div>
+</header>
+
+<!-- DATA VALIDATION -->
+<h2 id="validation">Data Validation — Live-Source Verified</h2>
+<p style="color:#aaa; font-size:0.9rem; margin-bottom:0.5rem;">Every statutory value driving the indices was checked against a live primary source on 2026-06-11. This is the assertion table the analysis notebook runs on load.</p>
+
+<div class="card" style="overflow-x:auto;">
+  <table class="cite-table">
+    <thead>
+      <tr><th>Data Point</th><th>Value Used</th><th>Live Source</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>MD max WBA 2026</td><td class="val">$430</td><td><a href="https://www.labor.maryland.gov/employment/ui-scheduleofbenefits.pdf" target="_blank">MD DLLR Benefits Schedule</a></td><td class="status-ok">✅ EXACT</td></tr>
+      <tr><td>VA max WBA 2026</td><td class="val">$430</td><td><a href="https://vec.virginia.gov/new-weekly-benefit-amounts-effective-january-4-2026" target="_blank">VEC SB 1056 (eff. Jan 4 2026)</a></td><td class="status-ok">✅ CORRECTED</td></tr>
+      <tr><td>DC max WBA 2026</td><td class="val">$444</td><td><a href="https://unemployment.dc.gov/page/information-claimants" target="_blank">DC.gov Unemployment</a></td><td class="status-ok">✅ EXACT</td></tr>
+      <tr><td>MD SUI wage base 2026</td><td class="val">$8,500</td><td><a href="https://taxnews.ey.com/news/2026-0124-2026-state-unemployment-insurance-taxable-wage-bases" target="_blank">EY Tax News</a></td><td class="status-ok">✅ EXACT</td></tr>
+      <tr><td>VA SUI wage base 2026</td><td class="val">$8,000</td><td><a href="https://taxnews.ey.com/news/2026-0124-2026-state-unemployment-insurance-taxable-wage-bases" target="_blank">EY Tax News</a></td><td class="status-ok">✅ EXACT</td></tr>
+      <tr><td>DC SUI wage base 2026</td><td class="val">$9,000</td><td><a href="https://taxnews.ey.com/news/2026-0124-2026-state-unemployment-insurance-taxable-wage-bases" target="_blank">EY Tax News</a></td><td class="status-ok">✅ EXACT</td></tr>
+      <tr><td>David Trone FEC receipts</td><td class="val">$63.83M</td><td><a href="https://www.fec.gov/data/candidate/S4MD00319/" target="_blank">FEC.gov S4MD00319</a></td><td class="status-ok">✅ EXACT</td></tr>
+      <tr><td>DC avg annual wage 2026</td><td class="val">$112,400</td><td><a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> (data vintage in employer gap calc)</td><td class="status-warn">⚠️ VINTAGE NOTE</td></tr>
+      <tr><td>Weekly housing cost</td><td class="val">see note</td><td><a href="https://www.huduser.gov/portal/datasets/fmr.html" target="_blank">HUD FMR</a> / market-rate proxy</td><td class="status-warn">⚠️ METHOD-SENSITIVE</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:0.8rem; font-size:0.8rem; color:var(--muted);">✅ EXACT = matches primary source to the dollar. ⚠️ = correct but methodology-dependent; see notes below.</p>
+</div>
+
+<!-- FORMULAS -->
+<h2 id="formulas">Index Formulas</h2>
+<div class="card">
+  <ul>
+    <li><code>BAI</code> = Max Weekly Benefit ÷ Median Weekly Housing Cost &nbsp;|&nbsp; <em style="color:var(--lime);">Below 1.0 = systemic failure</em></li>
+    <li><code>WBI</code> = Taxable Wage Base ÷ Average Annual Wage</li>
+    <li><code>MIPI</code> = (Earnings − Disregard Threshold) ÷ Max Weekly Benefit</li>
+    <li><code>Housing Gap</code> = Weekly Housing − Max Weekly Benefit &nbsp;($/week deficit)</li>
+    <li><code>Employer Gap</code> = (Expected Base − Statutory Base) × DOL Effective Rate × Covered Employment</li>
+  </ul>
+</div>
+
+<!-- COMPARATIVE STATICS -->
+<h2 id="statics">Why Comparative Static Baselines?</h2>
+<div class="card">
+  <p style="color:#bbb; font-size:0.92rem;">
+    This analysis anchors to three specific years — <strong>2010, 2018, 2026</strong> — rather than a continuous time-series. Benefit caps, wage bases, and disregard thresholds change through discrete legislative acts, not gradual drift. Anchoring to the same three moments across all three jurisdictions makes the policy decay visible and comparable. A moving average would obscure the step-function nature of the neglect — the whole point is that these numbers <em>don't move</em> for years at a time, then jump.
+  </p>
+</div>
+
+<!-- HOUSING -->
+<h2 id="housing">Housing Cost Methodology — The Most Consequential Choice</h2>
+<div class="methodology">
+  <p style="margin-bottom:0.6rem;"><strong>This is the single most important methodological decision in the audit, and it deserves explicit disclosure.</strong> The <code>Weekly_Housing</code> column determines whether a jurisdiction's BAI lands above or below the 1.0 survival threshold. With Virginia's corrected $430 cap, the VA 2026 outcome depends entirely on which housing source is used:</p>
+  <ul style="font-size:0.86rem; color:#bbb;">
+    <li><strong>HUD FMR 2-BR state median</strong> (~$293/wk): VA BAI = <strong style="color:var(--lime);">1.47</strong> (well above)</li>
+    <li><strong>Market-rate average (used in this audit, $420/wk):</strong> VA BAI = <strong style="color:var(--gold);">1.02</strong> (barely above)</li>
+    <li><strong>Northern VA market rate</strong> (~$550+/wk): VA BAI = <strong style="color:var(--crimson);">0.78</strong> (below)</li>
+  </ul>
+  <p style="margin-top:0.6rem; font-size:0.86rem; color:#bbb;">This audit uses a <strong>market-rate weekly proxy</strong> rather than HUD FMR, on the reasoning that claimants face market rents, not subsidized FMR ceilings. This is a deliberately conservative-to-middle choice. A HUD-only methodology would make every jurisdiction look better; a Northern VA / DC-metro methodology would make them look worse. The honest statement: <strong>the direction of decay is robust across all three methods; the exact threshold-crossing year for Virginia is methodology-sensitive.</strong></p>
+</div>
+
+<!-- LIMITATIONS -->
+<h2 id="limitations">Honest Limitations</h2>
+<div class="card">
+  <ul>
+    <li><strong>FEC contribution categorization</strong> uses keyword matching on contributor names — approximate, and captures only 0–30% of each member's total. See the <a href="political.html#disclosure">Political Layer methodology disclosure</a> for the full accounting and the correction roadmap.</li>
+    <li><strong>Self-funding detection</strong> currently uses last-name matching and over-excludes joint-committee transfers for Kaine, Warner, and Hoyer. Only David Trone has verified candidate self-loans. Correction logged in <a href="OPTIMIZATIONS.md">OPTIMIZATIONS.md</a> #23.</li>
+    <li><strong>Employer gap</strong> uses the 2010-ratio method (Method B). Alternative methodologies (full wage base, CPI-only, national peer average, wage-growth index) produce different dollar figures — see source code for scenarios A–E.</li>
+    <li><strong>BLS wage and employment data</strong> are 2024 annual averages; 2026 figures are projected forward.</li>
+    <li><strong>Committee assignments</strong> reflect the 119th Congress (2025–2027) and change each Congress.</li>
+    <li><strong>OpenSecrets API</strong> is blocked by Cloudflare challenge — official industry contribution codes were unavailable without manual registration.</li>
+    <li><strong>Off-cycle candidates:</strong> Warner (2026) and Van Hollen (~2028) were not 2024 candidates; their FEC figures reflect off-cycle committee maintenance.</li>
+  </ul>
+</div>
+
+<!-- SOURCES -->
+<h2 id="sources">Data Sources &amp; Citations</h2>
+<div class="card" style="overflow-x:auto;">
+  <table class="cite-table">
+    <thead><tr><th>Source</th><th>Data Used</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><strong>BLS QCEW</strong></td><td>Average annual wages, covered employment</td><td class="status-ok">✅ LIVE</td></tr>
+      <tr><td><strong>USDOL / State DOL Statutes</strong></td><td>SUI wage bases, max weekly benefits, disregard thresholds</td><td class="status-ok">✅ VERIFIED</td></tr>
+      <tr><td><strong>DOL UI Financial Data</strong></td><td>Historical effective SUI tax rates by state/year</td><td class="status-ok">✅ VERIFIED</td></tr>
+      <tr><td><strong>HUD Fair Market Rents</strong></td><td>FMR by metro → weekly housing proxies</td><td class="status-ok">✅ VERIFIED</td></tr>
+      <tr><td><strong>FEC Open API (v1)</strong></td><td>Campaign receipts, Schedule A itemized contributions</td><td class="status-ok">✅ LIVE</td></tr>
+      <tr><td><strong>Census ACS 2022</strong></td><td>Median household income by congressional district</td><td class="status-ok">✅ LIVE</td></tr>
+      <tr><td><strong>Congress.gov</strong></td><td>Committee assignments, member metadata (119th Congress)</td><td class="status-warn">⚠️ RATE-LIMITED</td></tr>
+      <tr><td><strong>OpenSecrets</strong></td><td>Industry codes, member net worth</td><td class="status-fail">❌ BLOCKED</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">
+    All sources are public record. Every figure is reproducible from the source code at
+    <a href="https://github.com/thedatavigilante/UI_INDEX" target="_blank">github.com/thedatavigilante/UI_INDEX</a>.
+    See <a href="DATA_CATALOG.md">DATA_CATALOG.md</a> for full file lineage and the <a href="OPTIMIZATIONS.md">OPTIMIZATIONS.md</a> running correction log.
+  </p>
+</div>
+
+<p style="margin-top:1.5rem; font-size:0.88rem; color:var(--muted);">→ <a href="index.html">← Back to the main audit</a> &nbsp;|&nbsp; → <a href="political.html">Political Layer analysis</a></p>
+
+<footer>
+  <div class="footer-brand">📊 The Data Vigilante</div>
+  <div class="footer-tagline">The Robin Hood of AI</div>
+  <p style="margin-top:0.8rem;">Sierra Napier, MPA &nbsp;|&nbsp; Methodology &amp; Data Validation</p>
+  <p>Data: BLS · USDOL · DOL UI Financial Data · FEC · Census ACS · HUD FMR</p>
+  <p>Built using AI (Claude, Anthropic) · Verified: 2026-06-11 · License: MIT</p>
+  <p>
+    <a href="index.html">← Main Audit</a> &nbsp;|&nbsp;
+    <a href="https://github.com/thedatavigilante/UI_INDEX" target="_blank">GitHub</a> &nbsp;|&nbsp;
+    <a href="https://buymeacoffee.com/thedatavigilante" target="_blank">☕ Support the work</a>
+  </p>
+</footer>
+
+<script>
+function toggleTheme() {
+  const light = document.body.classList.toggle('light');
+  localStorage.setItem('theme', light ? 'light' : 'dark');
+  document.getElementById('theme-toggle').textContent = light ? '☀' : '◑';
+}
+(function() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = '☀';
+  }
+})();
+</script>
+</body>
+</html>

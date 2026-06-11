@@ -153,10 +153,11 @@ Maryland and DC operate below the survival threshold with no scheduled correctio
 
 ### Political Accountability: Who Funds the Freeze
 - **7 members** with UI-relevant committee assignments analyzed using FEC 2023-2024 reporting period data
-- **$89.9M** in total committee activity ($26.1M excluding David Trone's $62.9M in personal loans to his campaign)
+- **$89.9M** in total committee activity; once David Trone's $62.9M in *verified candidate self-loans* are correctly removed, **$21.7M** is true outside money
 - **David Trone** co-founded Total Wine & More (~$2.4B company) and sat on the **Ways and Means Committee** while self-funding 98.7% of his Senate campaign
-- 4 of 7 members show **$0 in itemized labor contributions** at the ≥$500 FEC reporting threshold
-- Business contributions dominate itemized giving; Hoyer, Cline, and Ruppersberger show the clearest business-to-labor ratios
+- **No labor-affiliated PAC contribution above $500** reached Hoyer, Kaine, or Warner in the cycle
+- **Cline (13:1)** and **Ruppersberger (21:1)** are the only members with enough business/labor categorization coverage (7% and 30%) for a directionally meaningful ratio; others are honestly marked *insufficient coverage*
+- **Methodology honesty:** raw FEC categorization is misleading in three ways (self-funding contamination, weak business/labor coverage, no cycle normalization). The [Political Layer page](https://thedatavigilante.github.io/UI_INDEX/political.html) shows a **four-view comparison matrix** with every caveat labeled — see also the correction roadmap in [`OPTIMIZATIONS.md`](OPTIMIZATIONS.md) items 23–29.
 - **Note:** Mark Warner (VA, 2026 race) and Chris Van Hollen (MD, ~2028 race) were not 2024 candidates; their figures represent off-cycle committee fundraising
 
 ### Lawmaker Salary vs. UI Benefit: The Contrast
@@ -262,9 +263,18 @@ See `DATA_CATALOG.md` for the full file inventory with lineage.
 
 ---
 
-## 📁 Portfolio
+## 📁 Portfolio — Four-Page Static Site
 
-The static portfolio landing page is at `index.html`. For interactive notebooks:
+The portfolio is a four-page GitHub Pages site (pure HTML/CSS/JS, no build step):
+
+| Page | Purpose |
+|------|---------|
+| [`index.html`](https://thedatavigilante.github.io/UI_INDEX/) | The audit — 5 chapters, charts, investigative takes, cross-index severity banner, lawmaker salary contrast |
+| [`political.html`](https://thedatavigilante.github.io/UI_INDEX/political.html) | Political layer — four-view FEC comparison matrix, Trone profile, lawmaker deep-dive, methodology disclosure |
+| [`methodology.html`](https://thedatavigilante.github.io/UI_INDEX/methodology.html) | Data transparency — live-source validation table, formulas, housing cost methodology, limitations |
+| [`about.html`](https://thedatavigilante.github.io/UI_INDEX/about.html) | The Data Vigilante — bio, what was built, fractional CDO offer, hire me |
+
+The running correction log is in [`OPTIMIZATIONS.md`](OPTIMIZATIONS.md). For interactive notebooks:
 
 - [BAI/WBI/MIPI Analysis](https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/ui_index_analysis.ipynb)
 - [Political Layer Analysis](https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/political_layer_analysis.ipynb)

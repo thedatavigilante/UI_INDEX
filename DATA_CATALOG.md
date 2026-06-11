@@ -2,6 +2,18 @@
 
 Last updated: 2026-06-11
 
+## Portfolio Pages (Static Site, GitHub Pages)
+
+| File | Purpose |
+|------|---------|
+| `index.html` | The audit — 5 chapters, charts, investigative takes, cross-index severity banner, lawmaker salary contrast |
+| `political.html` | Political layer — four-view FEC comparison matrix, Trone profile, lawmaker deep-dive, methodology disclosure |
+| `methodology.html` | Data transparency — live-source validation table, formulas, housing cost methodology, limitations |
+| `about.html` | Author bio, fractional CDO offer, hire-me CTAs |
+| `OPTIMIZATIONS.md` | Running correction/optimization log (single source of truth for what changed) |
+
+**Figure numbering convention:** Slots `01–07` = index charts, `11–13` = FEC charts. Slots `08–10` are **reserved** for future CPI/real-value charts. New political/FEC charts start at `14`.
+
 ## Input Data (Committed)
 
 | File | Type | Source | Description |
