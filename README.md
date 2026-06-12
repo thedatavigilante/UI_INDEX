@@ -56,6 +56,19 @@ Quantifies the institutional penalty on workers who earn supplementary income wh
 
 The raw weekly survival deficit: how many dollars short a claimant is after benefits, before any other expenses.
 
+### 5. Real Value Index (RVI) — inflation-adjusted
+`RVI = Max_WBA ÷ (CPI₂₀₂₆ ÷ CPI_base_year)`
+
+Adjusts each frozen benefit by inflation (BLS CPI-U) to show its **real purchasing power today**. A frozen number isn't static — inflation cuts it every year, without a vote.
+
+| State | Frozen at | Since | Real value 2026 | Erosion |
+|-------|-----------|-------|-----------------|---------|
+| Maryland | $430 | 2014 | **~$306** | −29% |
+| Virginia | $378 | **2008** | **~$244** | −35% (worst) |
+| DC | $444 | 2018 | **~$335** | −25% |
+
+*Method: BLS CPI-U annual averages; 2014→2026 anchor = 40.67% ([in2013dollars/BLS](https://www.in2013dollars.com/us/inflation/2014?amount=430)). Chart: `figures/08_real_value_index.png`. Confirm exact figures against the BLS calculator before citing to the dollar. (Added 2026-06-12 — additive.)*
+
 ---
 
 ## 🔬 Methodology Note
@@ -104,7 +117,7 @@ Where live API data is used (FEC, Census ACS), the pipeline includes a self-heal
 | `data/political/political_layer_report.json` | `political_layer_builder.py` | Congress.gov members enriched with Census median income + committees |
 | `data/political/fec_audit_log.json` | `api_client.py` | All API calls with status, timestamps, and cache hits |
 
-### Figures (10 PNGs)
+### Figures (11 PNGs)
 
 | File | Description |
 |------|-------------|
@@ -115,6 +128,7 @@ Where live API data is used (FEC, Census ACS), the pipeline includes a self-heal
 | `figures/05_employer_per_employee_gap.png` | Per-employee underpayment ($84–$157/worker/year) |
 | `figures/06_employer_aggregate_gap.png` | Annual trust fund shortfall ($601.3M/year across DMV) |
 | `figures/07_statutory_vs_expected_wage_base.png` | Statutory vs. expected wage base — what employers would pay if the base tracked wages |
+| `figures/08_real_value_index.png` | **Real Value Index — frozen benefits vs. their inflation-adjusted 2026 value (MD ~$306, VA ~$244, DC ~$335)** |
 | `figures/11_fec_total_receipts.png` | FEC total receipts by member |
 | `figures/12_fec_business_vs_labor.png` | Business vs. labor contributions — committee chairs skew heavily business |
 | `figures/13_fec_contribution_mix.png` | Contribution mix by category |
