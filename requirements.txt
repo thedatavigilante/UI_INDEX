@@ -1,7 +1,32 @@
+# Core data
 pandas
+numpy
 tabulate
+
+# Static figures
 matplotlib
 seaborn
+
+# Interactive figures
+plotly
+nbformat
+
+# GIS / mapping
+folium
+geopandas
+shapely
+
+# Dashboard
+streamlit
+
+# Notebooks
 jupyter
+ipywidgets
+
+# API / env
 python-dotenv
 requests
+
+# Code quality
+pytest
+black
