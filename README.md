@@ -81,29 +81,69 @@ Where live API data is used (FEC, Census ACS), the pipeline includes a self-heal
 
 ## 🗂️ Files in This Repository
 
-### Python Scripts (12 files)
+### Python Scripts (22 files)
+
+**Data fetch pipeline** (run in this order to refresh data):
 
 | File | Purpose |
 |------|---------|
-| `ui_index_engine.py` | Reads `dmv_macro_baselines.csv`, calculates BAI/WBI/MIPI/Housing Gap indices |
-| `generate_figures.py` | Generates the 4 base charts (01–04) from the CSV data |
-| `employer_contribution_gap.py` | Calculates per-state employer contribution gap (frozen SUI wage bases vs. expected) |
-| `generate_employer_gap_charts.py` | Generates the 3 employer gap charts (05–07) |
-| `fec_integration_v251d.py` | FEC API integration (2024 cycle-filtered, production) — generates `fec_funding_profiles.json` |
-| `fec_integration_raw_investigative.py` | FEC API integration (multi-cycle, raw) — for corruption anomaly detection |
-| `fec_quick_test.py` | Quick FEC API connectivity test — diagnostic only, no cycle filter |
-| `generate_fec_charts.py` | Generates the 3 FEC funding charts (11–13) from `fec_funding_profiles.json` |
-| `political_layer_builder.py` | Congress.gov + Census ACS enrichment — generates member metadata with committee assignments and median income |
-| `political_layer_analyzer.py` | Analyzes `political_layer_report.json` for political patterns |
-| `delta_analyzer.py` | Compares cycle-filtered vs. multi-cycle FEC data to generate corruption delta flags |
+| `fetch_fred_inflation.py` | FRED API — CPI-U + DC metro CPI + PCE; saves `data/inflation_crosscheck.json` |
+| `fetch_bls_baselines.py` | BLS QCEW wages + CPI-U + LAUS unemployment rates; updates `dmv_macro_baselines.csv` |
+| `fetch_housing.py` | HUD FMR API — 2BR Fair Market Rents → weekly housing proxies |
+| `fetch_dol_sui_rates.py` | DOL ETA-5159 CSV — effective SUI tax rates; saves `data/sui_rates.json` |
+| `fetch_usaspending.py` | USASpending.gov CFDA 17.225 — federal UI grants by state |
+| `fetch_county_data.py` | BLS LAUS county unemployment + Census ACS county income |
+
+**Visualization scripts**:
+
+| File | Purpose |
+|------|---------|
+| `generate_figures.py` | Generates the 4 base charts (01–04) from CSV data |
+| `generate_rvi_figure.py` | Real Value Index figure (08) — inflation-adjusted benefit values |
+| `generate_employer_gap_charts.py` | Employer gap charts (05–07) |
+| `generate_fec_charts.py` | FEC funding charts (11–13) |
+| `generate_context_figure.py` | Figure 09 — unemployment context (BLS LAUS + USASpending) |
+| `generate_spending_accountability.py` | Figure 10 — employer money vs. federal UI investment scatter |
+| `generate_county_map.py` | Folium choropleth → `maps/dmv_counties.html` |
+| `generate_plotly_charts.py` | 11 interactive Plotly HTML charts → `interactive/` |
+
+**Analysis scripts**:
+
+| File | Purpose |
+|------|---------|
+| `ui_index_engine.py` | Calculates BAI/WBI/MIPI/Housing Gap indices |
+| `employer_contribution_gap.py` | Per-state employer contribution gap (frozen SUI vs. expected) |
+| `fec_integration_v251d.py` | FEC API integration (2024 cycle-filtered, production) |
+| `political_layer_builder.py` | Congress.gov + Census ACS enrichment |
+| `political_layer_analyzer.py` | Analyzes political patterns from `political_layer_report.json` |
+| `delta_analyzer.py` | Corruption delta flags comparing cycle-filtered vs. multi-cycle FEC |
 | `api_client.py` | Self-healing API client with caching, retry, and audit logging |
 
-### Notebooks (2 files)
+**Dashboard**:
+
+```bash
+streamlit run dashboard/app.py
+```
+Runs a live Streamlit dashboard with 5 tabs: BAI/WBI/MIPI indices, employer gap, FEC funding,
+county map, and data refresh controls. Requires API keys in environment.
+
+### Notebooks (6 files)
+
+**Root-level (legacy, linked via nbviewer):**
 
 | File | Purpose |
 |------|---------|
 | `ui_index_analysis.ipynb` | BAI/WBI/MIPI/Housing Gap analysis — interactive exploration |
 | `political_layer_analysis.ipynb` | Political funding + committee analysis — interactive exploration |
+
+**`/notebooks/` directory (rebuilt elite stack):**
+
+| File | Purpose |
+|------|---------|
+| `notebooks/01_data_pipeline.ipynb` | End-to-end data pipeline walkthrough — fetch, validate, cache |
+| `notebooks/02_ui_index_analysis.ipynb` | Deep-dive on BAI/WBI/MIPI with Plotly charts |
+| `notebooks/03_political_layer.ipynb` | FEC + Census + committee analysis |
+| `notebooks/04_county_gis.ipynb` | County-level GIS: Folium map + choropleth generation |
 
 ### Data Files (6 JSON + 1 CSV)
 
@@ -117,7 +157,7 @@ Where live API data is used (FEC, Census ACS), the pipeline includes a self-heal
 | `data/political/political_layer_report.json` | `political_layer_builder.py` | Congress.gov members enriched with Census median income + committees |
 | `data/political/fec_audit_log.json` | `api_client.py` | All API calls with status, timestamps, and cache hits |
 
-### Figures (11 PNGs)
+### Figures (13 PNGs) + 11 Interactive Charts + County Map
 
 | File | Description |
 |------|-------------|
@@ -128,10 +168,14 @@ Where live API data is used (FEC, Census ACS), the pipeline includes a self-heal
 | `figures/05_employer_per_employee_gap.png` | Per-employee underpayment ($84–$157/worker/year) |
 | `figures/06_employer_aggregate_gap.png` | Annual trust fund shortfall ($601.3M/year across DMV) |
 | `figures/07_statutory_vs_expected_wage_base.png` | Statutory vs. expected wage base — what employers would pay if the base tracked wages |
-| `figures/08_real_value_index.png` | **Real Value Index — frozen benefits vs. their inflation-adjusted 2026 value (MD ~$306, VA ~$244, DC ~$335)** |
+| `figures/08_real_value_index.png` | Real Value Index — frozen benefits vs. inflation-adjusted 2026 value (MD ~$306, VA ~$244, DC ~$335) |
+| `figures/09_unemployment_context.png` | Unemployment rate trends + federal UI spending — who is exposed |
+| `figures/10_spending_accountability.png` | Scatter: employer campaign money vs. federal UI investment per lawmaker's state |
 | `figures/11_fec_total_receipts.png` | FEC total receipts by member |
 | `figures/12_fec_business_vs_labor.png` | Business vs. labor contributions — committee chairs skew heavily business |
-| `figures/13_fec_contribution_mix.png` | Contribution mix by category |
+| `figures/13_fec_contribution_mix.png` | Contribution mix by category (100% stacked) |
+
+All 13 figures are also available as interactive Plotly charts in `interactive/` (11 files) and embedded in `index.html` behind a toggle button. The county choropleth map is at `maps/dmv_counties.html`.
 
 ### Documentation
 
@@ -149,7 +193,8 @@ Where live API data is used (FEC, Census ACS), the pipeline includes a self-heal
 
 | File | Purpose |
 |------|---------|
-| `.github/workflows/validate.yml` | GitHub Actions — validates JSON, CSV, figures, and script syntax on every push |
+| `.github/workflows/validate.yml` | Validates JSON, CSV, figures (13 PNGs), script syntax, and runs `pytest tests/ -v` on every push/PR |
+| `.github/workflows/data_refresh.yml` | Monthly cron (1st of month, 06:00 UTC) — fetches live data from all 6 APIs, regenerates all figures and charts, auto-commits |
 
 ---
 
@@ -256,7 +301,7 @@ Every JSON data file includes a `_metadata` block documenting:
 - **Generated by:** Which script produced it
 - **Generated at:** Timestamp
 - **Cycle:** Election year (for FEC data) or analysis year
-- **Data sources:** BLS, USDOL, FEC, Census, Congress.gov
+- **Data sources:** BLS QCEW, BLS LAUS, USDOL, HUD FMR, FEC, Census ACS, Congress.gov, USASpending.gov, FRED (St. Louis Fed — independent inflation cross-validator)
 - **Methodology:** How the numbers were calculated
 - **Caveat:** Known limitations and approximations
 
