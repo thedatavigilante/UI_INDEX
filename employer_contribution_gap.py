@@ -21,15 +21,31 @@ from pathlib import Path
 from dataclasses import dataclass, asdict
 from typing import List, Dict
 
+ROOT = Path(__file__).parent
+SUI_RATES_PATH = ROOT / "data" / "sui_rates.json"
 
-# Historical average effective SUI tax rates by jurisdiction and year
-# Source: DOL UI Financial Data summaries (average employer effective rates)
-SUI_RATE_MATRIX = {
+# Documented fallback values (DOL averages) — used when sui_rates.json is absent
+_HARDCODED_FALLBACK = {
     "MD": {2010: 0.031, 2018: 0.023, 2026: 0.026},
     "VA": {2010: 0.028, 2018: 0.014, 2026: 0.019},
     "DC": {2010: 0.024, 2018: 0.019, 2026: 0.021},
 }
-DEFAULT_SUI_RATE = 0.025  # Fallback if state/year not in matrix
+DEFAULT_SUI_RATE = 0.025  # Fallback if state/year not found
+
+
+def _load_sui_rates() -> Dict[str, Dict[int, float]]:
+    """Load SUI rates from data/sui_rates.json, falling back to hardcoded values."""
+    if SUI_RATES_PATH.exists():
+        with open(SUI_RATES_PATH) as f:
+            data = json.load(f)
+        raw = data.get("rates", {})
+        # JSON keys are strings; convert year keys to int
+        return {state: {int(yr): rate for yr, rate in year_rates.items()}
+                for state, year_rates in raw.items()}
+    return _HARDCODED_FALLBACK
+
+
+SUI_RATE_MATRIX = _load_sui_rates()
 
 
 @dataclass
