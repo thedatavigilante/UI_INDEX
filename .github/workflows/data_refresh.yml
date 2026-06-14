@@ -92,6 +92,8 @@ jobs:
           python generate_rvi_figure.py
           python generate_employer_gap_charts.py
           python generate_fec_charts.py
+          python generate_context_figure.py
+          python generate_spending_accountability.py
         continue-on-error: true
 
       # ── Phase 8: Regenerate county map ────────────────────────────────────────

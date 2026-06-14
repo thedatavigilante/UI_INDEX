@@ -80,8 +80,14 @@ jobs:
           python3 -m py_compile generate_rvi_figure.py
           python3 -m py_compile generate_county_map.py
           python3 -m py_compile generate_plotly_charts.py
+          python3 -m py_compile generate_context_figure.py
+          python3 -m py_compile generate_spending_accountability.py
           rm -rf __pycache__
           echo "✅ All Python scripts compile successfully"
+      - name: Run data integrity tests
+        run: |
+          python -m pytest tests/ -v
+          echo "✅ All data integrity tests passed"
       - name: Verify no __pycache__ committed
         run: |
           if find . -name "__pycache__" -type d | grep -q .; then
