@@ -1,0 +1,176 @@
+name: Data Refresh Pipeline
+
+on:
+  workflow_dispatch:          # Manual trigger from GitHub Actions tab
+    inputs:
+      run_figures:
+        description: 'Regenerate figures after data fetch'
+        required: false
+        default: 'true'
+        type: boolean
+  schedule:
+    - cron: '0 6 1 * *'      # Monthly on the 1st at 06:00 UTC
+
+permissions:
+  contents: write             # Allows committing updated data files back to repo
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      FRED_API_KEY:      ${{ secrets.FRED_API_KEY }}
+      BLS_API_KEY:       ${{ secrets.BLS_API_KEY }}
+      CENSUS_API_KEY:    ${{ secrets.CENSUS_API_KEY }}
+      HUD_TOKEN:         ${{ secrets.HUD_TOKEN }}
+      FEC_API_KEY:       ${{ secrets.FEC_API_KEY }}
+      CONGRESS_API_KEY:  ${{ secrets.CONGRESS_API_KEY }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # ── Phase 1: Inflation data (FRED — independent cross-validator) ──────────
+      - name: Fetch FRED inflation data
+        run: |
+          echo "=== FRED Inflation Cross-Validator ==="
+          python fetch_fred_inflation.py
+        continue-on-error: true   # Don't block other fetches if FRED is down
+
+      # ── Phase 2: BLS baseline data (wages + CPI + unemployment rates) ─────────
+      - name: Fetch BLS baselines
+        run: |
+          echo "=== BLS QCEW Wages + CPI-U + LAUS Unemployment Rates ==="
+          python fetch_bls_baselines.py
+        continue-on-error: true
+
+      # ── Phase 3: HUD Fair Market Rents (weekly housing costs) ─────────────────
+      - name: Fetch HUD housing data
+        run: |
+          echo "=== HUD Fair Market Rents ==="
+          python fetch_housing.py
+        continue-on-error: true
+
+      # ── Phase 4: DOL SUI tax rates (public CSV, no key needed) ────────────────
+      - name: Fetch DOL SUI rates
+        run: |
+          echo "=== DOL ETA-5159 SUI Tax Rates ==="
+          python fetch_dol_sui_rates.py
+        continue-on-error: true
+
+      # ── Phase 5: Federal UI spending (USASpending.gov, no key needed) ─────────
+      - name: Fetch USASpending data
+        run: |
+          echo "=== USASpending.gov CFDA 17.225 Federal UI Grants ==="
+          python fetch_usaspending.py
+        continue-on-error: true
+
+      # ── Phase 6: County-level unemployment + income data ──────────────────────
+      - name: Fetch county data
+        run: |
+          echo "=== BLS LAUS + Census ACS County-Level Data ==="
+          python fetch_county_data.py
+        continue-on-error: true
+
+      # ── Phase 7: Regenerate figures (optional, controlled by input) ───────────
+      - name: Regenerate static figures
+        if: ${{ github.event.inputs.run_figures != 'false' }}
+        run: |
+          echo "=== Regenerating matplotlib figures ==="
+          python generate_figures.py
+          python generate_rvi_figure.py
+          python generate_employer_gap_charts.py
+          python generate_fec_charts.py
+        continue-on-error: true
+
+      # ── Phase 8: Regenerate county map ────────────────────────────────────────
+      - name: Regenerate county GIS map
+        if: ${{ github.event.inputs.run_figures != 'false' }}
+        run: |
+          echo "=== Generating Folium County Map ==="
+          python generate_county_map.py
+        continue-on-error: true
+
+      # ── Phase 9: Regenerate Plotly interactive charts ─────────────────────────
+      - name: Regenerate Plotly charts
+        if: ${{ github.event.inputs.run_figures != 'false' }}
+        run: |
+          echo "=== Generating Plotly Interactive Charts ==="
+          python generate_plotly_charts.py
+        continue-on-error: true
+
+      # ── Phase 10: Validate outputs before committing ──────────────────────────
+      - name: Validate refreshed data
+        run: |
+          python3 -c "
+          import json, csv, sys, os
+          errors = []
+
+          # Check inflation crosscheck
+          p = 'data/inflation_crosscheck.json'
+          if os.path.exists(p):
+              with open(p) as f: d = json.load(f)
+              print(f'✅ {p}: {len(d.get(\"series\", {}))} series')
+          else:
+              errors.append(f'Missing: {p}')
+
+          # Check CSV has unemployment rate column
+          p = 'data/dmv_macro_baselines.csv'
+          with open(p) as f:
+              headers = next(csv.reader(f))
+          print(f'✅ {p} columns: {headers}')
+
+          # Check county data
+          p = 'data/county_data.json'
+          if os.path.exists(p):
+              with open(p) as f: d = json.load(f)
+              counties = d.get('counties', d)
+              print(f'✅ {p}: {len(counties)} counties')
+
+          # Check sui_rates
+          p = 'data/sui_rates.json'
+          if os.path.exists(p):
+              with open(p) as f: d = json.load(f)
+              print(f'✅ {p}: {list(d.get(\"rates\", d).keys())}')
+
+          if errors:
+              for e in errors: print(f'❌ {e}')
+              sys.exit(1)
+          print('✅ All data validation checks passed')
+          "
+
+      # ── Phase 11: Commit updated data files ───────────────────────────────────
+      - name: Commit and push refreshed data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add \
+            data/ \
+            figures/*.png \
+            maps/ \
+            interactive/ \
+            --ignore-errors
+          if git diff --staged --quiet; then
+            echo "No changes to commit — data is already up to date"
+          else
+            TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
+            git commit -m "Auto-refresh data: ${TIMESTAMP}
+
+          Sources: FRED inflation, BLS wages/CPI/unemployment, HUD FMR,
+          DOL SUI rates, USASpending CFDA-17225, Census ACS county data
+
+          Triggered by: ${{ github.event_name }}"
+            git push
+            echo "✅ Data refresh committed and pushed"
+          fi

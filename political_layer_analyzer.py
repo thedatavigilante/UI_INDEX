@@ -1,8 +1,14 @@
 import json
+import os
+import urllib.request
+import urllib.error
 from pathlib import Path
 from datetime import datetime
 from dataclasses import dataclass, asdict
 from typing import List, Optional, Dict
+
+from dotenv import load_dotenv
+load_dotenv()
 
 
 @dataclass
@@ -60,30 +66,103 @@ DC_MEMBER = [
 
 ALL_MEMBERS = MD_MEMBERS + VA_MEMBERS + DC_MEMBER
 
-# Census ACS 2022 Median Household Income by Congressional District (B19013_001E)
-# Source: api.census.gov/data/2022/acs/acs5 (verified 2026-06-10)
-CENSUS_INCOME = {
-    "MD-01": 88691,
-    "MD-02": 95710,
-    "MD-03": 124187,
-    "MD-04": 88498,
-    "MD-05": 124709,
-    "MD-06": 96438,
-    "MD-07": 59876,
-    "MD-08": 131468,
-    "VA-01": 99506,
-    "VA-02": 88833,
-    "VA-03": 63317,
-    "VA-04": 65195,
-    "VA-05": 67225,
-    "VA-06": 67266,
-    "VA-07": 106405,
-    "VA-08": 125652,
-    "VA-09": 54576,
-    "VA-10": 151061,
-    "VA-11": 152845,
+CENSUS_BASE = "https://api.census.gov/data/2022/acs/acs5"
+CENSUS_KEY = os.environ.get("CENSUS_API_KEY", "DEMO_KEY")
+
+# State FIPS codes for Census API
+FIPS_MAP = {"MD": "24", "VA": "51", "DC": "11"}
+
+# Verified fallback values (Census ACS 2022, B19013_001E) used when API is unavailable
+_CENSUS_INCOME_FALLBACK = {
+    "MD-01": 88691,  "MD-02": 95710,  "MD-03": 124187, "MD-04": 88498,
+    "MD-05": 124709, "MD-06": 96438,  "MD-07": 59876,  "MD-08": 131468,
+    "VA-01": 99506,  "VA-02": 88833,  "VA-03": 63317,  "VA-04": 65195,
+    "VA-05": 67225,  "VA-06": 67266,  "VA-07": 106405, "VA-08": 125652,
+    "VA-09": 54576,  "VA-10": 151061, "VA-11": 152845,
     "DC-98": 101722,
 }
+
+_CENSUS_CACHE_PATH = Path(__file__).parent / "data" / "political" / "census_income.json"
+
+
+def _fetch_census_income_api() -> Optional[Dict[str, int]]:
+    """Fetch median household income by congressional district from Census ACS API."""
+    state_fips = ",".join(FIPS_MAP.values())
+    url = (
+        f"{CENSUS_BASE}?get=B19013_001E"
+        f"&for=congressional%20district:*"
+        f"&in=state:{state_fips}"
+        f"&key={CENSUS_KEY}"
+    )
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "UI-Index/1.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        print(f"  Census API HTTP {e.code} — falling back to verified 2022 values")
+        return None
+    except Exception as e:
+        print(f"  Census API error: {e} — falling back to verified 2022 values")
+        return None
+
+    if not data or len(data) < 2:
+        return None
+
+    # Invert FIPS map for lookup
+    fips_to_state = {v: k for k, v in FIPS_MAP.items()}
+    income_map: Dict[str, int] = {}
+
+    for row in data[1:]:  # Skip header row
+        income_val, state_fips_code, district = row[0], row[1], row[2]
+        state = fips_to_state.get(state_fips_code)
+        if not state or not income_val or income_val.strip() in ("", "-666666666"):
+            continue
+        district_num = district.zfill(2) if district.isdigit() else district
+        # DC has district "98" for at-large
+        if state == "DC":
+            district_num = "98"
+        key = f"{state}-{district_num}"
+        try:
+            income_map[key] = int(income_val)
+        except ValueError:
+            pass
+
+    return income_map if income_map else None
+
+
+def load_census_income() -> Dict[str, int]:
+    """
+    Load Census income data: try API first, then cached file, then hardcoded fallback.
+    Saves successful API results to cache.
+    """
+    # Try live API
+    fetched = _fetch_census_income_api()
+    if fetched and len(fetched) >= 15:
+        _CENSUS_CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(_CENSUS_CACHE_PATH, "w") as f:
+            json.dump({
+                "source": "Census ACS 2022 5-Year (B19013_001E)",
+                "fetched_at": datetime.now().isoformat(),
+                "data": fetched,
+            }, f, indent=2)
+        print(f"  Census API: fetched {len(fetched)} district income records")
+        return fetched
+
+    # Try cache
+    if _CENSUS_CACHE_PATH.exists():
+        with open(_CENSUS_CACHE_PATH) as f:
+            cached = json.load(f)
+        data = cached.get("data", {})
+        if data:
+            print(f"  Census income: using cached data ({cached.get('fetched_at', 'unknown date')})")
+            return data
+
+    # Hardcoded fallback
+    print("  Census income: using verified 2022 fallback values (API and cache unavailable)")
+    return _CENSUS_INCOME_FALLBACK
+
+
+CENSUS_INCOME = load_census_income()
 
 
 def enrich_income():
