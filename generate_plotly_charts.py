@@ -194,8 +194,9 @@ def fig_fec():
 
     names = [p.get("name", "Unknown")[:20] for p in profiles]
     totals = [p.get("total_receipts", 0) or 0 for p in profiles]
-    biz = [p.get("business_total", 0) or 0 for p in profiles]
-    labor = [p.get("labor_total", 0) or 0 for p in profiles]
+    biz = [(p.get("business_contributions") or 0) + (p.get("pac_committee_contributions") or 0)
+           for p in profiles]
+    labor = [p.get("labor_contributions", 0) or 0 for p in profiles]
 
     # Fig 11: total receipts
     fig = go.Figure(go.Bar(
@@ -217,6 +218,117 @@ def fig_fec():
     _save(fig2, "fig12_fec_biz_labor", "Business vs Labor Contributions by Member")
 
 
+def fig07_wage_base():
+    path = DATA_DIR / "political" / "employer_contribution_gap.json"
+    if not path.exists():
+        print(f"  ⚠️  {path} not found — skipping fig07")
+        return
+    with open(path) as f:
+        gaps = json.load(f)
+
+    states   = [g["state"] for g in gaps]
+    statutory = [g["statutory_wage_base"] for g in gaps]
+    expected  = [g["expected_wage_base"] for g in gaps]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        name="Statutory (frozen)", x=states, y=statutory,
+        marker_color=[STATE_COLORS.get({"MD": "Maryland", "VA": "Virginia", "DC": "District of Columbia"}[s], MUTED)
+                      for s in states],
+        text=[f"${v:,.0f}" for v in statutory], textposition="outside",
+    ))
+    fig.add_trace(go.Bar(
+        name="Expected (2010 ratio)", x=states, y=expected,
+        marker_color=CRIMSON, opacity=0.75,
+        text=[f"${v:,.0f}" for v in expected], textposition="outside",
+    ))
+    fig.update_layout(**LAYOUT_BASE, barmode="group")
+    fig.update_yaxes(title_text="Taxable Wage Base ($)", tickprefix="$")
+    _save(fig, "fig07_wage_base", "Statutory vs. Expected SUI Taxable Wage Base")
+
+
+def fig08_rvi():
+    crosscheck_path = DATA_DIR / "inflation_crosscheck.json"
+    NOMINAL = {"Maryland": 430, "Virginia": 378, "District of Columbia": 444}
+    FALLBACK_RATIOS = {"Maryland": 1.4052, "Virginia": 1.5492, "District of Columbia": 1.3254}
+    FREEZE_YEARS   = {"Maryland": 2014, "Virginia": 2008, "District of Columbia": 2018}
+
+    ratios = dict(FALLBACK_RATIOS)
+    source = "BLS CPI-U fallback"
+    if crosscheck_path.exists():
+        with open(crosscheck_path) as f:
+            cc = json.load(f)
+        for jur in NOMINAL:
+            rec = cc.get("crosscheck", {}).get(jur, {})
+            r = rec.get("preferred_ratio")
+            if r:
+                ratios[jur] = r
+        source = "FRED inflation crosscheck"
+
+    jurs     = list(NOMINAL)
+    nominal  = [NOMINAL[j] for j in jurs]
+    real     = [round(NOMINAL[j] / ratios[j]) for j in jurs]
+    labels   = [f"{j.split()[0]}<br>frozen {FREEZE_YEARS[j]}" for j in jurs]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        name="On paper (nominal)", x=labels, y=nominal,
+        marker_color=GOLD,
+        text=[f"${v}" for v in nominal], textposition="outside",
+    ))
+    fig.add_trace(go.Bar(
+        name="Real value (2026 $)", x=labels, y=real,
+        marker_color=CRIMSON,
+        text=[f"${v}" for v in real], textposition="outside",
+    ))
+    fig.update_layout(**LAYOUT_BASE, barmode="group", yaxis_range=[0, 520])
+    fig.update_yaxes(title_text="Max Weekly Benefit ($)", tickprefix="$")
+    _save(fig, "fig08_rvi", f"The Real Value Index — what frozen benefits are worth in 2026 $ [{source}]")
+
+
+def fig13_fec_mix():
+    path = DATA_DIR / "political" / "fec_funding_profiles.json"
+    if not path.exists():
+        print(f"  ⚠️  {path} not found — skipping fig13")
+        return
+    with open(path) as f:
+        profiles = json.load(f)
+    if isinstance(profiles, dict) and "data" in profiles:
+        profiles = profiles["data"]
+
+    names = [p.get("name", "Unknown")[:20] for p in profiles]
+    indiv = [p.get("individual_contributions", 0) or 0 for p in profiles]
+    pac   = [p.get("pac_contributions", 0) or 0 for p in profiles]
+    biz   = [(p.get("business_contributions") or 0) + (p.get("pac_committee_contributions") or 0)
+             for p in profiles]
+    labor = [p.get("labor_contributions", 0) or 0 for p in profiles]
+
+    # Compute percentages of itemized total per member
+    totals_item = [max(indiv[i] + pac[i] + biz[i] + labor[i], 1) for i in range(len(names))]
+    pct_indiv   = [indiv[i] / totals_item[i] * 100 for i in range(len(names))]
+    pct_pac     = [pac[i]   / totals_item[i] * 100 for i in range(len(names))]
+    pct_biz     = [biz[i]   / totals_item[i] * 100 for i in range(len(names))]
+    pct_labor   = [labor[i] / totals_item[i] * 100 for i in range(len(names))]
+
+    fig = go.Figure()
+    for label, pcts, color in [
+        ("Individual",     pct_indiv, FG),
+        ("PAC",            pct_pac,   MUTED),
+        ("Business/PAC",   pct_biz,   ORANGE),
+        ("Labor",          pct_labor, BLUE),
+    ]:
+        fig.add_trace(go.Bar(
+            name=label, y=names, x=pcts, orientation="h",
+            marker_color=color, opacity=0.85,
+            text=[f"{v:.0f}%" if v > 3 else "" for v in pcts],
+            textposition="inside", textfont=dict(color=BG, size=9),
+        ))
+
+    fig.update_layout(**LAYOUT_BASE, barmode="stack", yaxis_autorange="reversed")
+    fig.update_xaxes(title_text="% of Itemized Contributions", ticksuffix="%", range=[0, 105])
+    _save(fig, "fig13_fec_mix", "FEC Contribution Source Mix — 2024 Cycle (% of itemized total)")
+
+
 def main():
     print("=" * 60)
     print("PLOTLY INTERACTIVE CHART GENERATOR")
@@ -232,9 +344,14 @@ def main():
 
     print("\nGenerating employer gap figures...")
     fig_employer_gap()
+    fig07_wage_base()
+
+    print("\nGenerating Real Value Index...")
+    fig08_rvi()
 
     print("\nGenerating FEC figures...")
     fig_fec()
+    fig13_fec_mix()
 
     html_files = list(OUT_DIR.glob("*.html"))
     print(f"\n✅ {len(html_files)} interactive figures in {OUT_DIR}/")
