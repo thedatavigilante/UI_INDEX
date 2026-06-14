@@ -71,6 +71,15 @@ jobs:
           python3 -m py_compile fec_integration_v251d.py
           python3 -m py_compile ui_index_engine.py
           python3 -m py_compile generate_figures.py
+          python3 -m py_compile fetch_bls_baselines.py
+          python3 -m py_compile fetch_fred_inflation.py
+          python3 -m py_compile fetch_housing.py
+          python3 -m py_compile fetch_dol_sui_rates.py
+          python3 -m py_compile fetch_usaspending.py
+          python3 -m py_compile fetch_county_data.py
+          python3 -m py_compile generate_rvi_figure.py
+          python3 -m py_compile generate_county_map.py
+          python3 -m py_compile generate_plotly_charts.py
           rm -rf __pycache__
           echo "✅ All Python scripts compile successfully"
       - name: Verify no __pycache__ committed
