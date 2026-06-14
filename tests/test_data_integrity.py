@@ -24,6 +24,8 @@ EXPECTED_FIGS = [
     "06_employer_aggregate_gap.png",
     "07_statutory_vs_expected_wage_base.png",
     "08_real_value_index.png",
+    "09_unemployment_context.png",
+    "10_spending_accountability.png",
     "11_fec_total_receipts.png",
     "12_fec_business_vs_labor.png",
     "13_fec_contribution_mix.png",
