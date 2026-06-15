@@ -1,0 +1,545 @@
+{
+  "_metadata": {
+    "sources": {
+      "unemployment": "BLS LAUS (Local Area Unemployment Statistics)",
+      "income": "Census ACS 2022 5-Year (B19013_001E)"
+    },
+    "years_fetched": [
+      2010,
+      2018,
+      2023
+    ],
+    "county_count": 48,
+    "fetched_at": "2026-06-15T07:20:31.242303"
+  },
+  "counties": [
+    {
+      "fips": "24001",
+      "name": "Allegany County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24003",
+      "name": "Anne Arundel County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24005",
+      "name": "Baltimore County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24009",
+      "name": "Calvert County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24011",
+      "name": "Caroline County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24013",
+      "name": "Carroll County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24015",
+      "name": "Cecil County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24017",
+      "name": "Charles County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24019",
+      "name": "Dorchester County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24021",
+      "name": "Frederick County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24023",
+      "name": "Garrett County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24025",
+      "name": "Harford County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24027",
+      "name": "Howard County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24029",
+      "name": "Kent County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24031",
+      "name": "Montgomery County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24033",
+      "name": "Prince George's County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24035",
+      "name": "Queen Anne's County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24037",
+      "name": "St. Mary's County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24039",
+      "name": "Somerset County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24041",
+      "name": "Talbot County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24043",
+      "name": "Washington County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24045",
+      "name": "Wicomico County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24047",
+      "name": "Worcester County, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "24510",
+      "name": "Baltimore City, MD",
+      "state": "MD",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51013",
+      "name": "Arlington County, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51059",
+      "name": "Fairfax County, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51061",
+      "name": "Fauquier County, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51107",
+      "name": "Loudoun County, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51153",
+      "name": "Prince William County, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51177",
+      "name": "Spotsylvania County, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51179",
+      "name": "Stafford County, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51510",
+      "name": "Alexandria City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51600",
+      "name": "Fairfax City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51610",
+      "name": "Falls Church City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51683",
+      "name": "Manassas City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51685",
+      "name": "Manassas Park City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51087",
+      "name": "Henrico County, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51041",
+      "name": "Chesterfield County, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51760",
+      "name": "Richmond City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51650",
+      "name": "Hampton City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51700",
+      "name": "Newport News City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51710",
+      "name": "Norfolk City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51735",
+      "name": "Poquoson City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51740",
+      "name": "Portsmouth City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51800",
+      "name": "Suffolk City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51810",
+      "name": "Virginia Beach City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "51550",
+      "name": "Chesapeake City, VA",
+      "state": "VA",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    },
+    {
+      "fips": "11001",
+      "name": "District of Columbia",
+      "state": "DC",
+      "median_income": null,
+      "unemployment_by_year": {
+        "2010": null,
+        "2018": null,
+        "2023": null
+      }
+    }
+  ]
+}

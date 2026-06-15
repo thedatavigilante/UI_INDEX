@@ -282,11 +282,11 @@ class FECAnalyzer:
                 "indicator": "Leadership PACs, joint fundraising committees, or party committees funneling money to candidate"
             })
         
-        if excluded_by_reason.get("self_funding", 0) > total * 0.5:
+        if excluded_by_reason.get("self_funding", 0) > receipts * 0.5:
             corruption_flags.append({
                 "type": "excessive_self_funding",
                 "severity": "MEDIUM",
-                "description": f"Self-funding exceeds 50% of total: ${excluded_by_reason['self_funding']:,.0f} / ${total:,.0f}",
+                "description": f"Self-funding exceeds 50% of total: ${excluded_by_reason['self_funding']:,.0f} / ${receipts:,.0f}",
                 "indicator": "Candidate may be using personal wealth to avoid donor transparency or create appearance of grassroots support"
             })
         

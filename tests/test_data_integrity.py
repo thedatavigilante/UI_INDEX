@@ -24,6 +24,8 @@ EXPECTED_FIGS = [
     "06_employer_aggregate_gap.png",
     "07_statutory_vs_expected_wage_base.png",
     "08_real_value_index.png",
+    "09_unemployment_context.png",
+    "10_spending_accountability.png",
     "11_fec_total_receipts.png",
     "12_fec_business_vs_labor.png",
     "13_fec_contribution_mix.png",
@@ -107,15 +109,17 @@ def test_fec_itemized_not_exceeds_total():
     profiles = raw.get("data", raw) if isinstance(raw, dict) else raw
     for p in profiles:
         total = p.get("total_receipts") or 0
+        # Keyword-categorized Schedule A slice only (matches validate_profile logic).
+        # individual_contributions is an F3 summary field, not a categorized itemized field,
+        # so it is NOT included here to avoid double-counting.
         itemized = sum([
             p.get("business_contributions") or 0,
             p.get("labor_contributions") or 0,
             p.get("pac_committee_contributions") or 0,
             p.get("other_contributions") or 0,
-            p.get("individual_contributions") or 0,
         ])
-        assert itemized <= total * 1.5, \
-            f"{p.get('name')}: itemized ({itemized:,.0f}) > total ({total:,.0f}) × 1.5"
+        assert itemized <= total * 1.1, \
+            f"{p.get('name')}: itemized ({itemized:,.0f}) > total ({total:,.0f}) × 1.1"
 
 
 # ── Employer gap tests ────────────────────────────────────────────────────────
@@ -124,7 +128,8 @@ def test_employer_gap_positive():
     path = DATA / "political" / "employer_contribution_gap.json"
     assert path.exists(), "employer_contribution_gap.json not found"
     with open(path) as f:
-        gaps = json.load(f)
+        raw = json.load(f)
+    gaps = raw.get("data", raw) if isinstance(raw, dict) else raw
     for g in gaps:
         state = g.get("state")
         gap   = g.get("per_employee_gap", 0)
@@ -134,7 +139,8 @@ def test_employer_gap_positive():
 def test_employer_aggregate_positive():
     path = DATA / "political" / "employer_contribution_gap.json"
     with open(path) as f:
-        gaps = json.load(f)
+        raw = json.load(f)
+    gaps = raw.get("data", raw) if isinstance(raw, dict) else raw
     total = sum(g.get("aggregate_gap", 0) for g in gaps)
     assert total > 1e8, f"Total aggregate gap ${total:,.0f} seems too low (expected > $100M)"
 

@@ -53,7 +53,7 @@ WEEKS_PER_MONTH = 4.33
 
 
 def _fetch_hud(path: str) -> dict | None:
-    """GET a HUD API endpoint with Bearer token."""
+    """GET a HUD API endpoint with Bearer token. 3-attempt retry with exponential backoff."""
     url = f"{HUD_BASE}/{path.lstrip('/')}"
     req = urllib.request.Request(
         url,
@@ -62,16 +62,20 @@ def _fetch_hud(path: str) -> dict | None:
             "User-Agent": "UI-Index-HUD-Fetcher/1.0",
         },
     )
-    try:
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            return json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        body = e.read().decode("utf-8", errors="replace")[:200]
-        print(f"  HUD HTTP {e.code}: {body}")
-        return None
-    except Exception as e:
-        print(f"  HUD fetch error: {e}")
-        return None
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            body = e.read().decode("utf-8", errors="replace")[:200]
+            print(f"  HUD HTTP {e.code} (attempt {attempt + 1}/3): {body}")
+            if e.code in (401, 403, 404):
+                return None  # Auth/not-found errors won't improve on retry
+        except Exception as e:
+            print(f"  HUD fetch error (attempt {attempt + 1}/3): {e}")
+        if attempt < 2:
+            time.sleep(2 ** (attempt + 1))
+    return None
 
 
 def get_fmr_for_metro(entityid: str, year: int = None) -> dict | None:

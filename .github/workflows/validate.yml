@@ -25,6 +25,42 @@ jobs:
           python3 -c "import json; json.load(open('data/political/fec_funding_profiles.json')); print('fec_funding_profiles.json OK')"
           python3 -c "import json; json.load(open('data/political/fec_audit_log.json')); print('fec_audit_log.json OK')"
           echo "✅ All JSON files valid"
+      - name: Validate metadata schema compliance
+        run: |
+          python3 -c "
+          import json, sys
+          files = [
+            'data/political/fec_funding_profiles.json',
+            'data/political/fec_excluded_self_funding.json',
+            'data/political/fec_quick_results.json',
+            'data/political/fec_audit_log.json',
+            'data/political/political_layer_report.json',
+            'data/political/employer_contribution_gap.json',
+          ]
+          required = ['generated_by','generated_at','cycle','api_version','reconciliation_status','purpose','methodology','caveat']
+          valid_status = ['VALIDATED','INVESTIGATIVE','CALCULATED','ENRICHED','AUDIT']
+          errors = []
+          for fpath in files:
+            try:
+              d = json.load(open(fpath))
+            except FileNotFoundError:
+              print(f'  SKIP {fpath} (not generated yet)')
+              continue
+            if '_metadata' not in d:
+              errors.append(f'{fpath}: missing _metadata wrapper')
+              continue
+            meta = d['_metadata']
+            for field in required:
+              if field not in meta:
+                errors.append(f'{fpath}: missing required field: {field}')
+            status = meta.get('reconciliation_status','')
+            if status not in valid_status:
+              errors.append(f'{fpath}: invalid reconciliation_status: {status!r}')
+          if errors:
+            for e in errors: print(f'  ERROR: {e}')
+            sys.exit(1)
+          print('✅ All metadata schema checks passed')
+          "
       - name: Validate CSV data files
         run: |
           python3 -c "import pandas as pd; df = pd.read_csv('data/dmv_macro_baselines.csv'); print(f'✅ CSV valid: {len(df)} rows, {len(df.columns)} columns')"
@@ -80,8 +116,14 @@ jobs:
           python3 -m py_compile generate_rvi_figure.py
           python3 -m py_compile generate_county_map.py
           python3 -m py_compile generate_plotly_charts.py
+          python3 -m py_compile generate_context_figure.py
+          python3 -m py_compile generate_spending_accountability.py
           rm -rf __pycache__
           echo "✅ All Python scripts compile successfully"
+      - name: Run data integrity tests
+        run: |
+          python -m pytest tests/ -v
+          echo "✅ All data integrity tests passed"
       - name: Verify no __pycache__ committed
         run: |
           if find . -name "__pycache__" -type d | grep -q .; then
