@@ -126,8 +126,8 @@ jobs:
           echo "✅ All data integrity tests passed"
       - name: Verify no __pycache__ committed
         run: |
-          if find . -name "__pycache__" -type d | grep -q .; then
-            echo "❌ __pycache__ directories found in repo"
+          if git ls-files | grep -q __pycache__; then
+            echo "❌ __pycache__ files are tracked by git"
             exit 1
           fi
           echo "✅ No __pycache__ committed"
