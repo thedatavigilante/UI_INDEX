@@ -135,9 +135,22 @@ def save_report(gaps: List[SUIContributionGap], output_dir: Path = None):
         output_dir = Path(__file__).parent / "data" / "political"
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    data = [asdict(g) for g in gaps]
+    from datetime import datetime
+    output = {
+        "_metadata": {
+            "generated_by": "employer_contribution_gap.py",
+            "generated_at": datetime.now().isoformat(),
+            "cycle": 2026,
+            "api_version": "v1",
+            "reconciliation_status": "CALCULATED",
+            "purpose": "Per-state gap between frozen statutory SUI wage base and expected wage-indexed base",
+            "methodology": "Gap = (expected_wage_base - statutory_wage_base) × covered_employment. Expected base derived from 2010 wage-base-to-avg-wage ratio applied to 2026 avg wages.",
+            "caveat": "2026 projection; statutory wage bases from state DOL statutes. Covered employment estimates from BLS QCEW. All values are annual."
+        },
+        "data": [asdict(g) for g in gaps]
+    }
     with open(output_dir / "employer_contribution_gap.json", "w") as f:
-        json.dump(data, f, indent=2)
+        json.dump(output, f, indent=2)
     
     print(f"💾 Saved employer contribution gap report to {output_dir / 'employer_contribution_gap.json'}")
     return output_dir

@@ -12,7 +12,7 @@ Last updated: 2026-06-11
 | `about.html` | Author bio, fractional CDO offer, hire-me CTAs |
 | `OPTIMIZATIONS.md` | Running correction/optimization log (single source of truth for what changed) |
 
-**Figure numbering convention:** Slots `01–07` = index charts, `11–13` = FEC charts. Slots `08–10` are **reserved** for future CPI/real-value charts. New political/FEC charts start at `14`.
+**Figure numbering convention:** Slots `01–07` = index charts, `11–13` = FEC charts. Slots `08–10` are now in use: `08` = Real Value Index (RVI/inflation cross-check), `09` = Unemployment Context, `10` = Federal Spending Accountability. New political/FEC charts start at `14`.
 
 ## Input Data (Committed)
 
@@ -81,6 +81,20 @@ All JSON output files follow this `_metadata` block structure:
   "data": [...]
 }
 ```
+
+**`reconciliation_status` enum definitions:**
+| Value | Meaning |
+|---|---|
+| `VALIDATED` | Data fetched from live API, cross-checked, all records pass validation |
+| `INVESTIGATIVE` | Data excluded from primary analysis but preserved for forensic review |
+| `CALCULATED` | Derived from inputs via formula (no live API call) |
+| `ENRICHED` | API data augmented with additional sources (e.g., Census join) |
+| `AUDIT` | Diagnostic or logging artifact — not a data source for analysis |
+
+**Optional fields (recommended for API-sourced data):**
+- `query_params`: dict — all parameters passed to the API, enables reproducibility
+- `record_count`: int — number of records in `data` array
+- `fallback_applied`: bool — set to `true` when hardcoded values replace live API data
 
 ## Data Quality Checks
 

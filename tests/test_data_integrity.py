@@ -126,7 +126,8 @@ def test_employer_gap_positive():
     path = DATA / "political" / "employer_contribution_gap.json"
     assert path.exists(), "employer_contribution_gap.json not found"
     with open(path) as f:
-        gaps = json.load(f)
+        raw = json.load(f)
+    gaps = raw.get("data", raw) if isinstance(raw, dict) else raw
     for g in gaps:
         state = g.get("state")
         gap   = g.get("per_employee_gap", 0)
@@ -136,7 +137,8 @@ def test_employer_gap_positive():
 def test_employer_aggregate_positive():
     path = DATA / "political" / "employer_contribution_gap.json"
     with open(path) as f:
-        gaps = json.load(f)
+        raw = json.load(f)
+    gaps = raw.get("data", raw) if isinstance(raw, dict) else raw
     total = sum(g.get("aggregate_gap", 0) for g in gaps)
     assert total > 1e8, f"Total aggregate gap ${total:,.0f} seems too low (expected > $100M)"
 
