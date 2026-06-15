@@ -1,5 +1,5 @@
 # AUDIT_v1 — Data Pipeline Versioning Matrix
-**Branch:** claude/data-source-improvement-ysj9mv | **Audit Date:** 2026-06-15  
+**Branch:** claude/data-source-improvement-ysj9mv | **Audit Date:** 2026-06-15 | **Last updated:** 2026-06-15  
 **Scope:** All 13 sections of the portfolio site — data source integrity, pipeline state, open burns
 
 ---
@@ -67,8 +67,8 @@ Live fetch requires GitHub Actions run with secrets set, or local run with `.env
 | `reconciliation_status` enum validity | fec_quick_results.json fixed: "DEPRECATED" → "AUDIT" (DG-01) |
 | `DATA_CATALOG.md` figure slots current | Fixed: slots 08–10 documented as in-use (DG-06) |
 | CI metadata validation | Added to `validate.yml` (DG-07) |
-| API retry coverage | fetch_housing.py and Census calls in fetch_county_data.py have no retry (deferred DG-05) |
-| Fallback logging | Only fetch_dol_sui_rates.py logs `fallback_applied: true` (deferred DG-04) |
+| API retry coverage | fetch_housing.py `_fetch_hud()` and `fetch_census_county_income()` both now have 3-attempt retry with exponential backoff (DG-05 ✅) |
+| Fallback logging | `fallback_applied` flag added to fetch_fred_inflation.py, fetch_county_data.py, fetch_usaspending.py (DG-04 ✅); fetch_bls_baselines.py updates CSV not JSON — flag deferred |
 
 ---
 
@@ -78,8 +78,7 @@ Live fetch requires GitHub Actions run with secrets set, or local run with `.env
 |---|---|---|---|
 | DG-02 | fec_audit_log.json data structure: summary object instead of call-record array | `data/political/fec_audit_log.json` + `api_client.py` | Medium |
 | DG-03 | Add `data_sources` field to 4 FEC files | `fec_funding_profiles.json` + 3 others | Low |
-| DG-04 | Add `fallback_applied` flag to 4 fetch scripts | `fetch_fred_inflation.py`, `fetch_bls_baselines.py`, `fetch_usaspending.py`, `fetch_county_data.py` | Low |
-| DG-05 | Add retry to `fetch_housing.py` and Census calls in `fetch_county_data.py` | Both scripts | Medium |
+| DG-04 | Add `fallback_applied` flag — 3 of 4 done (fred/county/usaspending). fetch_bls_baselines.py writes CSV not JSON | `fetch_bls_baselines.py` | Low |
 | DG-08 | Create `datapackage.json` Frictionless Data manifest | Repo root | Low |
 
 ---

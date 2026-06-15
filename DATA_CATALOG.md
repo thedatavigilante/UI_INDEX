@@ -1,6 +1,6 @@
 # Data Catalog — UI_INDEX
 
-Last updated: 2026-06-11
+Last updated: 2026-06-15
 
 ## Portfolio Pages (Static Site, GitHub Pages)
 
@@ -91,10 +91,13 @@ All JSON output files follow this `_metadata` block structure:
 | `ENRICHED` | API data augmented with additional sources (e.g., Census join) |
 | `AUDIT` | Diagnostic or logging artifact — not a data source for analysis |
 
-**Optional fields (recommended for API-sourced data):**
-- `query_params`: dict — all parameters passed to the API, enables reproducibility
+**Required fields (all 8 above + these for API-sourced files):**
+- `data_sources`: dict — maps each source name to its endpoint/description (enables reproducibility and lineage auditing)
+- `fallback_applied`: bool — **required** when hardcoded values replace live API data; omit only for static-calculation scripts
+
+**Optional fields:**
+- `query_params`: dict — all parameters passed to the API
 - `record_count`: int — number of records in `data` array
-- `fallback_applied`: bool — set to `true` when hardcoded values replace live API data
 
 ## Data Quality Checks
 

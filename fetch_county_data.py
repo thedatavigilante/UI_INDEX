@@ -91,18 +91,24 @@ YEARS_TO_FETCH = [2010, 2018, 2023]  # 2023 = latest full LAUS year
 
 
 def fetch_census_county_income() -> dict[str, int]:
-    """Fetch median household income by county for MD, VA, DC."""
+    """Fetch median household income by county for MD, VA, DC. 3-attempt retry."""
     url = (
         f"{CENSUS_BASE}?get=B19013_001E,NAME"
         f"&for=county:*&in=state:11,24,51"
         f"&key={CENSUS_KEY}"
     )
-    try:
-        req = urllib.request.Request(url, headers={"User-Agent": "UI-Index/1.0"})
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            data = json.loads(resp.read().decode())
-    except Exception as e:
-        print(f"  Census county income fetch failed: {e}")
+    data = None
+    for attempt in range(3):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "UI-Index/1.0"})
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                data = json.loads(resp.read().decode())
+            break
+        except Exception as e:
+            print(f"  Census county income fetch failed (attempt {attempt + 1}/3): {e}")
+            if attempt < 2:
+                time.sleep(2 ** (attempt + 1))
+    if not data:
         return {}
 
     income = {}
@@ -211,6 +217,8 @@ def main():
         }
         counties.append(record)
 
+    income_fallback = len(income_by_fips) == 0
+    unemp_fallback = all(len(v) == 0 for v in unemp_by_year.values())
     result = {
         "_metadata": {
             "sources": {
@@ -220,6 +228,11 @@ def main():
             "years_fetched": YEARS_TO_FETCH,
             "county_count": len(counties),
             "fetched_at": datetime.now().isoformat(),
+            "fallback_applied": income_fallback or unemp_fallback,
+            "fallback_detail": {
+                "census_income": income_fallback,
+                "bls_laus": unemp_fallback,
+            },
         },
         "counties": counties,
     }

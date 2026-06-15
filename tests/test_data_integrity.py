@@ -109,15 +109,17 @@ def test_fec_itemized_not_exceeds_total():
     profiles = raw.get("data", raw) if isinstance(raw, dict) else raw
     for p in profiles:
         total = p.get("total_receipts") or 0
+        # Keyword-categorized Schedule A slice only (matches validate_profile logic).
+        # individual_contributions is an F3 summary field, not a categorized itemized field,
+        # so it is NOT included here to avoid double-counting.
         itemized = sum([
             p.get("business_contributions") or 0,
             p.get("labor_contributions") or 0,
             p.get("pac_committee_contributions") or 0,
             p.get("other_contributions") or 0,
-            p.get("individual_contributions") or 0,
         ])
-        assert itemized <= total * 1.5, \
-            f"{p.get('name')}: itemized ({itemized:,.0f}) > total ({total:,.0f}) × 1.5"
+        assert itemized <= total * 1.1, \
+            f"{p.get('name')}: itemized ({itemized:,.0f}) > total ({total:,.0f}) × 1.1"
 
 
 # ── Employer gap tests ────────────────────────────────────────────────────────

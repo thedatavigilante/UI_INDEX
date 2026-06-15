@@ -161,6 +161,10 @@ def main():
         dol_budgets[str(fy)] = budget
         time.sleep(0.4)
 
+    spending_fallback = all(
+        all((fy_data.get("obligated_amount") or 0) == 0 for fy_data in fy_map.values())
+        for fy_map in spending.values()
+    )
     result = {
         "_metadata": {
             "source": "USASpending.gov Public API v2",
@@ -168,6 +172,7 @@ def main():
             "programs": PROGRAMS,
             "fiscal_years": FISCAL_YEARS,
             "fetched_at": datetime.now().isoformat(),
+            "fallback_applied": spending_fallback,
             "note": (
                 "CFDA 17.225 = Unemployment Insurance grants to states. "
                 "Amounts are federal obligations to state UI agencies."

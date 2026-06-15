@@ -112,7 +112,8 @@ def main():
             "_metadata": {
                 "source": "FRED not configured",
                 "fetched_at": datetime.now().isoformat(),
-                "note": "Set FRED_API_KEY in .env to enable cross-validation",
+                "fallback_applied": True,
+                "note": "Set FRED_API_KEY in .env to enable cross-validation. Hardcoded CPI ratios active in generate_rvi_figure.py.",
             },
             "series": {},
             "crosscheck": {},
@@ -178,6 +179,7 @@ def main():
             "series_fetched": list(series_data.keys()),
             "fetched_at": datetime.now().isoformat(),
             "current_year": CURRENT_YEAR,
+            "fallback_applied": len(series_data) == 0,
             "note": (
                 "CUURA311SA0 (DC metro CPI) preferred over national CPI for DMV accuracy. "
                 "PCEPI provides methodologically independent cross-check."
