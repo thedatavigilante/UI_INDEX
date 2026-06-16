@@ -66,13 +66,14 @@ jobs:
           print(f'✅ All {len(profiles)} profiles passed data quality validation')
           EOF
           python3 /tmp/fec_check.py
-      - name: Check script syntax
+      - name: Check package syntax
         run: |
-          python3 -m py_compile fec_integration_v251d.py
-          python3 -m py_compile ui_index_engine.py
-          python3 -m py_compile generate_figures.py
-          rm -rf __pycache__
-          echo "✅ All Python scripts compile successfully"
+          python3 -m py_compile src/*.py src/charts/*.py
+          find . -name "__pycache__" -type d -exec rm -rf {} +
+          echo "✅ src/ package compiles successfully"
+      - name: Run test suite
+        run: |
+          python3 -m pytest tests/ -q
       - name: Verify no __pycache__ committed
         run: |
           if find . -name "__pycache__" -type d | grep -q .; then

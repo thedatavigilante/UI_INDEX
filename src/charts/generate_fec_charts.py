@@ -1,4 +1,5 @@
 import json
+from src import DATA, POLITICAL, FIGURES  # repo-root-anchored paths
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -35,10 +36,10 @@ def apply_dark_style(ax, title, xlabel=None, ylabel=None):
         spine.set_edgecolor(GRID)
     ax.grid(color=GRID, linewidth=0.5, linestyle="--", alpha=0.6)
 
-output_dir = Path("figures")
+output_dir = FIGURES
 output_dir.mkdir(exist_ok=True)
 
-with open("data/political/fec_funding_profiles.json") as f:
+with open(POLITICAL / "fec_funding_profiles.json") as f:
     raw = json.load(f)
 
 # Handle _metadata-wrapped format

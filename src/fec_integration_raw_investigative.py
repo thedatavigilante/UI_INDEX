@@ -22,6 +22,7 @@ Output: `fec_funding_profiles_raw.json` (DO NOT overwrite cycle-filtered data)
 ================================================================================
 """
 import urllib.request
+from src import DATA, POLITICAL, FIGURES  # repo-root-anchored paths
 import urllib.parse
 import json
 import time
@@ -213,7 +214,7 @@ class FECAnalyzer:
             time.sleep(1)  # Rate limit politeness
         
         # Save results
-        out_dir = Path("data/political")
+        out_dir = POLITICAL
         out_dir.mkdir(parents=True, exist_ok=True)
         
         with open(out_dir / "fec_funding_profiles.json", "w") as f:
@@ -236,7 +237,7 @@ class FECAnalyzer:
 
 if __name__ == "__main__":
     # Load political layer data
-    report_path = Path("data/political/political_layer_report.json")
+    report_path = POLITICAL / "political_layer_report.json"
     if not report_path.exists():
         print("❌ No political layer data. Run political_layer_analyzer.py first.")
         exit(1)
