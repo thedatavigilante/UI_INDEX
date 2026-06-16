@@ -30,5 +30,13 @@ Thumbs.db
 # Jupyter
 .ipynb_checkpoints/
 
+# Test / tooling caches
+.pytest_cache/
+.ruff_cache/
+
+# NOTE: data/political/*.json are INTENTIONALLY committed — they are the
+# forensic receipts (CI validates them; README/DATA_CATALOG document them).
+# Do not gitignore them.
+
 # Keep figures in repo (they are exported assets)
 !figures/*.png

@@ -9,6 +9,7 @@ Fixes:
 6. Self-healing: retry with backoff, audit logging
 """
 import urllib.request
+from src import DATA, POLITICAL, FIGURES  # repo-root-anchored paths
 import urllib.parse
 import json
 import time
@@ -378,7 +379,7 @@ class FECAnalyzer:
             self.analyze_member(m["name"], m["state"], office, ui_committees, m["bioguide_id"])
             time.sleep(1)
         
-        out_dir = Path("data/political")
+        out_dir = POLITICAL
         out_dir.mkdir(parents=True, exist_ok=True)
         
         with open(out_dir / "fec_funding_profiles.json", "w") as f:
@@ -409,7 +410,7 @@ class FECAnalyzer:
 
 
 if __name__ == "__main__":
-    report_path = Path("data/political/political_layer_report.json")
+    report_path = POLITICAL / "political_layer_report.json"
     if not report_path.exists():
         print("❌ No political layer data.")
         exit(1)

@@ -1,11 +1,12 @@
 import json
+from src import DATA, POLITICAL, FIGURES  # repo-root-anchored paths
 import os
 from dotenv import load_dotenv
 from pathlib import Path
 from typing import Dict, List, Optional
 from dataclasses import dataclass, asdict
 
-from api_client import APIClient
+from src.api_client import APIClient
 
 load_dotenv()
 
@@ -194,7 +195,7 @@ class PoliticalLayerBuilder:
 
     def save(self, output_dir: Path = None):
         if output_dir is None:
-            output_dir = Path(__file__).parent / "data" / "political"
+            output_dir = POLITICAL
         output_dir.mkdir(parents=True, exist_ok=True)
 
         data = [m.to_dict() for m in self.members]

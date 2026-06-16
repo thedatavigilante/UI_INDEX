@@ -3,6 +3,7 @@
 Additive: brand-matched to figures 01-07. Method: real = nominal / (CPI2026/CPIbase),
 BLS CPI-U annual averages; 2014->2026 anchor = 40.67% (in2013dollars/BLS)."""
 import matplotlib
+from src import DATA, POLITICAL, FIGURES  # repo-root-anchored paths
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -40,5 +41,5 @@ leg = ax.legend(facecolor=BG, edgecolor="#2a2a2a", labelcolor=FG, fontsize=10)
 ax.text(0, -0.16, "Method: nominal / (CPI2026/CPIbase), BLS CPI-U annual avgs - 2014->2026 anchor 40.67% (in2013dollars/BLS)  -  The Data Vigilante",
         transform=ax.transAxes, color="#555555", fontsize=8, family="monospace")
 plt.tight_layout()
-plt.savefig("figures/08_real_value_index.png", facecolor=BG, bbox_inches="tight")
+plt.savefig(FIGURES / "08_real_value_index.png", facecolor=BG, bbox_inches="tight")
 print("wrote figures/08_real_value_index.png")

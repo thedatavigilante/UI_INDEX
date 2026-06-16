@@ -106,7 +106,7 @@ This is a **continuous work in progress**. The items below are designed and scop
 
 ### Phase 8 — Continuous baselines & live rates (📋 planned)
 - 📋 **Rolling Annual Baseline Model** — evaluate cost denominators (HUD FMR, BLS AWW) on a rolling year-over-year window to remove inflation-lag bias. Statutory ceilings (Max WBA, wage base) stay step-function; only the cost vectors go continuous. *Current engine uses static 2010/2018/2026 baselines — this is the planned enhancement, not the shipped state.*
-- 📋 **Dynamic SUI Tax Rate Matrix** — add a `fetch_dol_sui_rates.py` to pull live state experience-rating schedules from DOL, replacing the current static effective-rate assumption in `employer_contribution_gap.py`. *(Script does not exist yet.)*
+- 📋 **Dynamic SUI Tax Rate Matrix** — add a `fetch_dol_sui_rates.py` to pull live state experience-rating schedules from DOL, replacing the current static effective-rate assumption in `src/employer_models.py`. *(Script does not exist yet.)*
 
 ### Phase 6 — FEC methodology corrections (🔄 in progress; honest interim matrix already shipped)
 - 📋 **Conduit / `memo_code` filter** (#24) — drop FEC pass-through (ActBlue/WinRed bundled) contributions that currently inflate business totals. *Not yet filtered — see `political.html` disclosure.*
@@ -115,7 +115,8 @@ This is a **continuous work in progress**. The items below are designed and scop
 - ✅ **Four-section comparison matrix** — Raw / Self-Fund-Corrected / Verified B:L / Per-Month Normalized, shipped in `political.html` as the honest interim view pending the script fixes above.
 
 ### Phase 7 — Data governance (🔄 in progress)
-- 📋 Metadata-wrapper standardization, figure-numbering convention, script rename (`fec_integration_v251d.py` → `fec_integration.py`), data-placement cleanup (#30–33).
+- ✅ **Package migration** — scripts moved into the `src/` package (the old `fec_integration_v251d.py` is now `src/fec_pipelines.py`), tests added under `tests/`, deps pinned.
+- 📋 Still open: `employer_contribution_gap.json` metadata-wrapper standardization, figure-numbering convention, data-placement cleanup (#30–33).
 
 > When a roadmap item ships, it moves to ✅ here **and** the README prose that depends on it is updated in the same commit — code first, claim second. Nothing on this list should be described in the present tense elsewhere until it's checked off.
 
@@ -123,42 +124,44 @@ This is a **continuous work in progress**. The items below are designed and scop
 
 ## 🗂️ Files in This Repository
 
-### Python Scripts (13 files)
+### Package layout (`src/`)
 
-| File | Purpose |
-|------|---------|
-| `ui_index_engine.py` | Reads `dmv_macro_baselines.csv`, calculates BAI/WBI/MIPI/Housing Gap indices |
-| `generate_figures.py` | Generates the 4 base charts (01–04) from the CSV data |
-| `employer_contribution_gap.py` | Calculates per-state employer contribution gap (frozen SUI wage bases vs. expected) |
-| `generate_employer_gap_charts.py` | Generates the 3 employer gap charts (05–07) |
-| `generate_rvi_figure.py` | Generates the Real Value Index chart (08) — inflation-adjusted frozen benefits |
-| `fec_integration_v251d.py` | FEC API integration (2024 cycle-filtered, production) — generates `fec_funding_profiles.json` |
-| `fec_integration_raw_investigative.py` | FEC API integration (multi-cycle, raw) — for corruption anomaly detection |
-| `fec_quick_test.py` | Quick FEC API connectivity test — diagnostic only, no cycle filter |
-| `generate_fec_charts.py` | Generates the 3 FEC funding charts (11–13) from `fec_funding_profiles.json` |
-| `political_layer_builder.py` | Congress.gov + Census ACS enrichment — generates member metadata with committee assignments and median income |
-| `political_layer_analyzer.py` | Analyzes `political_layer_report.json` for political patterns |
-| `delta_analyzer.py` | Compares cycle-filtered vs. multi-cycle FEC data to generate corruption delta flags |
-| `api_client.py` | Self-healing API client with caching, retry, and audit logging |
+The pipeline is a Python package; every module runs from the repo root as `python -m src.<module>` and resolves paths via the root-anchored constants in `src/__init__.py` (`ROOT`, `DATA`, `POLITICAL`, `FIGURES`).
 
-### Notebooks (2 files)
+```
+src/
+├── __init__.py                          # repo-root-anchored path constants
+├── core_engine.py                       # BAI/WBI/MIPI/Housing Gap indices from the CSV baselines
+├── employer_models.py                   # per-state employer contribution gap (frozen SUI base vs. expected)
+├── fec_pipelines.py                     # FEC API (2024 cycle-filtered) → fec_funding_profiles.json
+├── fec_integration_raw_investigative.py # multi-cycle raw pull for anomaly detection
+├── fec_quick_test.py                    # FEC API connectivity diagnostic (NOT a data source)
+├── political_layer_builder.py           # Congress.gov + Census ACS member enrichment
+├── political_layer_analyzer.py          # pattern analysis over political_layer_report.json
+├── delta_analyzer.py                    # cycle-filtered vs. multi-cycle corruption delta flags
+├── api_client.py                        # self-healing API client (cache, retry, audit log)
+└── charts/
+    ├── generate_figures.py              # base index charts 01–04
+    ├── generate_employer_gap_charts.py  # employer gap charts 05–07
+    ├── generate_rvi_figure.py           # Real Value Index chart 08
+    └── generate_fec_charts.py           # FEC funding charts 11–13
 
-| File | Purpose |
-|------|---------|
-| `ui_index_analysis.ipynb` | BAI/WBI/MIPI/Housing Gap analysis — interactive exploration |
-| `political_layer_analysis.ipynb` | Political funding + committee analysis — interactive exploration |
+tests/        # pytest suite — test_core_math · test_political · test_data_integrity (locks the published numbers)
+notebooks/    # 01_ui_index_analysis.ipynb · 02_political_layer_analysis.ipynb
+docs/         # design specs — ENVIRONMENT_ARCHITECTURE.md · Slicers_and_Drilldown_Strategy.md
+```
 
 ### Data Files (6 JSON + 1 CSV)
 
 | File | Generated By | Content |
 |------|-------------|---------|
 | `data/dmv_macro_baselines.csv` | Manual / BLS | Base input data: wages, housing, benefit caps by jurisdiction and year |
-| `data/political/fec_funding_profiles.json` | `fec_integration_v251d.py` | Cycle-filtered (2024) funding profiles with corruption flags |
-| `data/political/fec_excluded_self_funding.json` | `fec_integration_v251d.py` | Excluded contributions (self-funding, multi-cycle, transfers) |
-| `data/political/fec_quick_results.json` | `fec_quick_test.py` | Diagnostic test — **multi-cycle, NOT a data source** |
-| `data/political/employer_contribution_gap.json` | `employer_contribution_gap.py` | Per-state gap: frozen base vs. expected wage-indexed base |
-| `data/political/political_layer_report.json` | `political_layer_builder.py` | Congress.gov members enriched with Census median income + committees |
-| `data/political/fec_audit_log.json` | `api_client.py` | All API calls with status, timestamps, and cache hits |
+| `data/political/fec_funding_profiles.json` | `src/fec_pipelines.py` | Cycle-filtered (2024) funding profiles with corruption flags |
+| `data/political/fec_excluded_self_funding.json` | `src/fec_pipelines.py` | Excluded contributions (self-funding, multi-cycle, transfers) |
+| `data/political/fec_quick_results.json` | `src/fec_quick_test.py` | Diagnostic test — **multi-cycle, NOT a data source** |
+| `data/political/employer_contribution_gap.json` | `src/employer_models.py` | Per-state gap: frozen base vs. expected wage-indexed base |
+| `data/political/political_layer_report.json` | `src/political_layer_builder.py` | Congress.gov members enriched with Census median income + committees |
+| `data/political/fec_audit_log.json` | `src/api_client.py` | All API calls with status, timestamps, and cache hits |
 
 ### Figures (11 PNGs)
 
@@ -182,11 +185,12 @@ This is a **continuous work in progress**. The items below are designed and scop
 |------|---------|
 | `README.md` | This file |
 | `DATA_CATALOG.md` | Full file inventory with lineage map and metadata standard |
-| `ENVIRONMENT_ARCHITECTURE.md` | Future architecture proposal (not yet implemented) |
-| `Slicers_and_Drilldown_Strategy.md` | Interactive dashboard design specification (not yet implemented) |
+| `OPTIMIZATIONS.md` | Running correction/burndown log (the authoritative roadmap) |
+| `docs/ENVIRONMENT_ARCHITECTURE.md` | Future architecture proposal (not yet implemented) |
+| `docs/Slicers_and_Drilldown_Strategy.md` | Interactive dashboard design specification (not yet implemented) |
 | `index.html` | Portfolio landing page — embeds all 11 figures with methodology notes |
 | `.env.example` | API key template (copy to `.env` and fill in your keys) |
-| `requirements.txt` | Python dependencies |
+| `requirements.txt` | Pinned Python dependencies |
 
 ### CI/CD
 
@@ -263,34 +267,40 @@ cp .env.example .env
 
 Congress.gov uses `DEMO_KEY` (public, no signup required for basic use).
 
+All modules run as packages from the repo root (`python -m src.<module>`), so paths resolve regardless of working directory.
+
 ### 3. Generate the base analysis
 
 ```bash
-python ui_index_engine.py
-python generate_figures.py
+python -m src.core_engine
+python -m src.charts.generate_figures
 ```
 
 ### 4. Generate the employer contribution gap
 
 ```bash
-python employer_contribution_gap.py
-python generate_employer_gap_charts.py
+python -m src.employer_models
+python -m src.charts.generate_employer_gap_charts
 ```
 
 ### 5. Generate the political funding layer
 
 ```bash
-python fec_integration_v251d.py
-python generate_fec_charts.py
-python political_layer_builder.py
+python -m src.fec_pipelines
+python -m src.charts.generate_fec_charts
+python -m src.political_layer_builder
 ```
-
-> *`fec_integration_v251d.py` keeps its version suffix today; the rename to `fec_integration.py` is scoped as Roadmap #32.*
 
 ### 6. Run the delta analysis (corruption detection)
 
 ```bash
-python delta_analyzer.py
+python -m src.delta_analyzer
+```
+
+### 7. Run the tests
+
+```bash
+python -m pytest tests/ -q
 ```
 
 ---
@@ -345,8 +355,8 @@ The portfolio is a four-page GitHub Pages site (pure HTML/CSS/JS, no build step)
 
 The running correction log is in [`OPTIMIZATIONS.md`](OPTIMIZATIONS.md). For interactive notebooks:
 
-- [BAI/WBI/MIPI Analysis](https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/ui_index_analysis.ipynb)
-- [Political Layer Analysis](https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/political_layer_analysis.ipynb)
+- [BAI/WBI/MIPI Analysis](https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/notebooks/01_ui_index_analysis.ipynb)
+- [Political Layer Analysis](https://nbviewer.org/github/thedatavigilante/UI_INDEX/blob/main/notebooks/02_political_layer_analysis.ipynb)
 
 ---
 

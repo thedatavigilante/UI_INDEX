@@ -6,6 +6,7 @@ The delta IS the corruption signal.
 """
 
 import json
+from src import DATA, POLITICAL, FIGURES  # repo-root-anchored paths
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -126,8 +127,8 @@ def analyze_delta(cycle_path: Path, raw_path: Path) -> Dict:
 
 
 if __name__ == "__main__":
-    cycle_path = Path("data/political/fec_funding_profiles.json")
-    raw_path = Path("data/political/fec_funding_profiles_raw.json")
+    cycle_path = POLITICAL / "fec_funding_profiles.json"
+    raw_path = POLITICAL / "fec_funding_profiles_raw.json"
     
     if not raw_path.exists():
         print(f"⚠️  Raw multi-cycle data not found at {raw_path}")
@@ -137,7 +138,7 @@ if __name__ == "__main__":
     
     result = analyze_delta(cycle_path, raw_path)
     
-    output_path = Path("data/political/corruption_delta_analysis.json")
+    output_path = POLITICAL / "corruption_delta_analysis.json"
     with open(output_path, "w") as f:
         json.dump(result, f, indent=2)
     

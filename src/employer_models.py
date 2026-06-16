@@ -17,6 +17,7 @@ Data sources:
 - BLS covered employment counts
 """
 import json
+from src import DATA, POLITICAL, FIGURES  # repo-root-anchored paths
 from pathlib import Path
 from dataclasses import dataclass, asdict
 from typing import List, Dict
@@ -116,7 +117,7 @@ def generate_dmv_gaps() -> List[SUIContributionGap]:
 
 def save_report(gaps: List[SUIContributionGap], output_dir: Path = None):
     if output_dir is None:
-        output_dir = Path(__file__).parent / "data" / "political"
+        output_dir = POLITICAL
     output_dir.mkdir(parents=True, exist_ok=True)
     
     data = [asdict(g) for g in gaps]

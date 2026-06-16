@@ -1,4 +1,5 @@
 import json
+from src import DATA, POLITICAL, FIGURES  # repo-root-anchored paths
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -32,10 +33,10 @@ def apply_dark_style(ax, title, xlabel=None, ylabel=None):
     ax.spines[:].set_color(GRID)
     ax.grid(color=GRID, linewidth=0.6, linestyle="--", alpha=0.7, axis="y")
 
-output_dir = Path("figures")
+output_dir = FIGURES
 output_dir.mkdir(exist_ok=True)
 
-with open("data/political/employer_contribution_gap.json") as f:
+with open(POLITICAL / "employer_contribution_gap.json") as f:
     raw = json.load(f)
 
 # Handle both plain list and _metadata-wrapped formats

@@ -1,4 +1,5 @@
 import json
+from src import DATA, POLITICAL, FIGURES  # repo-root-anchored paths
 from pathlib import Path
 from datetime import datetime
 from dataclasses import dataclass, asdict
@@ -149,7 +150,7 @@ if __name__ == "__main__":
         print(f"   - {m['name']} ({m['state']}) - {relevant}")
         print(f"     Constituent income: ${m['constituent_median_income']:,}")
     print("\n💾 Saving report...")
-    output_dir = Path(__file__).parent / "data" / "political"
+    output_dir = POLITICAL
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / "political_layer_report.json", "w") as f:
         json.dump(report, f, indent=2)

@@ -1,5 +1,6 @@
 """Quick FEC test for 3 priority members using urllib (no requests dependency)"""
 import urllib.request
+from src import DATA, POLITICAL, FIGURES  # repo-root-anchored paths
 import urllib.parse
 import json
 import time
@@ -75,7 +76,7 @@ for m in members:
         })
     time.sleep(0.5)
 
-out = Path("data/political/fec_quick_results.json")
+out = POLITICAL / "fec_quick_results.json"
 out.parent.mkdir(parents=True, exist_ok=True)
 with open(out, "w") as f:
     json.dump(results, f, indent=2)
