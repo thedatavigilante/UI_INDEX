@@ -36,35 +36,45 @@ It includes:
 
 ## 📐 Forensic Metrics Defined
 
-> *Notation: subscript $t$ denotes a discrete comparative-static anchor year (2010, 2018, 2026) — see the Methodology Note below — not a continuous series.*
+> *Notation: subscript `t` denotes a discrete comparative-static anchor year (2010, 2018, 2026) — see the Methodology Note below — not a continuous series.*
 
 ### 1. Benefit Adequacy Index (BAI)
 
-$$BAI_t = \frac{\text{Max WBA}_t}{\text{Weekly Housing Cost}_t}$$
+$$
+BAI_t = \frac{\text{Max WBA}_t}{\text{Weekly Housing Cost}_t}
+$$
 
 Isolates whether the maximum weekly benefit cap forces a choice between rent and immediate survival. **Any BAI < 1.0 indicates systemic failure** — the benefit does not cover housing alone.
 
 ### 2. Regressive Wage Base Index (WBI)
 
-$$WBI_t = \frac{\text{Taxable Wage Base}_t}{\text{Avg Annual Wage}_t}$$
+$$
+WBI_t = \frac{\text{Taxable Wage Base}_t}{\text{Avg Annual Wage}_t}
+$$
 
 Tracks how much of the average worker's wage is actually subject to unemployment insurance taxation. As wages rise and the wage base stays frozen, the WBI falls — meaning employers pay into a shrinking share of the wage pool, narrowing the trust fund.
 
 ### 3. Multi-Income Penalty Index (MIPI)
 
-$$MIPI = \frac{\text{Side-Hustle Earnings} - \text{Disregard Threshold}}{\text{Max WBA}}$$
+$$
+MIPI = \frac{\text{Side-Hustle Earnings} - \text{Disregard Threshold}}{\text{Max WBA}}
+$$
 
 Quantifies the institutional penalty on workers who earn supplementary income while receiving benefits. High MIPI = aggressive clawback that punishes resourcefulness and traps workers in dependency.
 
 ### 4. Housing Gap
 
-$$\text{Housing Gap}_t = \text{Weekly Housing Cost}_t - \text{Max WBA}_t$$
+$$
+\text{Housing Gap}_t = \text{Weekly Housing Cost}_t - \text{Max WBA}_t
+$$
 
 The raw weekly survival deficit: how many dollars short a claimant is after benefits, before any other expenses.
 
 ### 5. Real Value Index (RVI) — inflation-adjusted
 
-$$RVI = \frac{\text{Max WBA}}{\left(\text{CPI}_{2026} / \text{CPI}_{\text{base}}\right)}$$
+$$
+RVI = \frac{\text{Max WBA}}{\left(\text{CPI}_{2026} / \text{CPI}_{\text{base}}\right)}
+$$
 
 Adjusts each frozen benefit by inflation (BLS CPI-U) to show its **real purchasing power today**. A frozen number isn't static — inflation cuts it every year, without a vote.
 
