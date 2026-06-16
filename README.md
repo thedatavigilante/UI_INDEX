@@ -220,7 +220,7 @@ Maryland and DC operate below the survival threshold with no scheduled correctio
 
 ### Political Accountability: Who Funds the Freeze
 - **7 members** with UI-relevant committee assignments analyzed using FEC 2023-2024 reporting period data
-- **$89.9M** in total committee activity; once David Trone's $62.9M in *verified candidate self-loans* are correctly removed, **$21.7M** is true outside money
+- **$89.9M** in total committee activity; once David Trone's $62.9M in *verified candidate self-loans* are correctly removed, **$27.0M** is true outside money
 - **David Trone** co-founded Total Wine & More (~$2.4B company) and sat on the **Ways and Means Committee** while self-funding 98.7% of his Senate campaign
 - **No labor-affiliated PAC contribution above $500** reached Hoyer, Kaine, or Warner in the cycle
 - **Cline (13:1)** and **Ruppersberger (21:1)** are the only members with enough business/labor categorization coverage (7% and 30%) for a directionally meaningful ratio; others are honestly marked *insufficient coverage*
