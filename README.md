@@ -77,6 +77,31 @@ This analysis uses **comparative static baselines** (2010, 2018, 2026) rather th
 
 Where live API data is used (FEC, Census ACS), the pipeline includes a self-healing client with caching and audit logging so rate limits don't corrupt the baseline record.
 
+> **Current vs. planned:** the static-baseline approach above is what ships today and what every published figure reflects. A *rolling annual baseline* for the cost denominators (FMR, AWW) — designed to strip residual inflation-lag bias while preserving the step-function treatment of statutory ceilings — is **scoped but not yet implemented**. See the Roadmap below before citing any "rolling" or "dynamic" capability.
+
+---
+
+## 🛣️ Roadmap — Next Phase (scoped, in progress)
+
+This is a **continuous work in progress**. The items below are designed and scoped but **not yet live** — they are listed here so the methodology stays honest about the line between what ships today and what's coming. The authoritative, itemized burndown is [`OPTIMIZATIONS.md`](OPTIMIZATIONS.md) (items #23–33); this is the human-readable summary.
+
+**Status key:** ✅ done · 🔄 in progress · 📋 planned/scoped
+
+### Phase 8 — Continuous baselines & live rates (📋 planned)
+- 📋 **Rolling Annual Baseline Model** — evaluate cost denominators (HUD FMR, BLS AWW) on a rolling year-over-year window to remove inflation-lag bias. Statutory ceilings (Max WBA, wage base) stay step-function; only the cost vectors go continuous. *Current engine uses static 2010/2018/2026 baselines — this is the planned enhancement, not the shipped state.*
+- 📋 **Dynamic SUI Tax Rate Matrix** — add a `fetch_dol_sui_rates.py` to pull live state experience-rating schedules from DOL, replacing the current static effective-rate assumption in `employer_contribution_gap.py`. *(Script does not exist yet.)*
+
+### Phase 6 — FEC methodology corrections (🔄 in progress; honest interim matrix already shipped)
+- 📋 **Conduit / `memo_code` filter** (#24) — drop FEC pass-through (ActBlue/WinRed bundled) contributions that currently inflate business totals. *Not yet filtered — see `political.html` disclosure.*
+- 📋 **Self-funding via transaction types** (#23) — use FEC loan codes (`15C/16C/15E/16E`) instead of name matching, which over-excludes Kaine/Warner/Hoyer joint-committee transfers.
+- 📋 **B:L via `committee_type`** (#25) · **vendor exclusion** (#26) · **cycle normalization** (#27).
+- ✅ **Four-section comparison matrix** — Raw / Self-Fund-Corrected / Verified B:L / Per-Month Normalized, shipped in `political.html` as the honest interim view pending the script fixes above.
+
+### Phase 7 — Data governance (🔄 in progress)
+- 📋 Metadata-wrapper standardization, figure-numbering convention, script rename (`fec_integration_v251d.py` → `fec_integration.py`), data-placement cleanup (#30–33).
+
+> When a roadmap item ships, it moves to ✅ here **and** the README prose that depends on it is updated in the same commit — code first, claim second. Nothing on this list should be described in the present tense elsewhere until it's checked off.
+
 ---
 
 ## 🗂️ Files in This Repository
