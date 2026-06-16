@@ -9,7 +9,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/build-passing-success?style=flat-square" alt="Build Status">
   <img src="https://img.shields.io/badge/Data%20Validation-Verified-blue?style=flat-square" alt="Data Validation">
-  <img src="https://img.shields.io/badge/Version-1.0.0--Production-blue?style=flat-square" alt="Version">
+  <img src="https://img.shields.io/badge/Version-1.1.0-blue?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/License-MIT-orange?style=flat-square" alt="License">
 </p>
 
@@ -26,38 +26,45 @@
 This repository contains the data, code, and analysis behind an investigation into how unemployment insurance safety net adequacy has eroded across three jurisdictions — and who funds the legislators holding the policy levers.
 
 It includes:
-- **4 macroeconomic indices** (BAI, WBI, MIPI, Housing Gap) calculated from BLS and Census data
-- **7 static visualization charts** (matplotlib) exported as PNGs
-- **3 political funding charts** (FEC data, 2024 cycle) exported as PNGs
+- **5 macroeconomic indices** (BAI, WBI, MIPI, Housing Gap, RVI) calculated from BLS, HUD, and Census data
+- **8 economic/forensic charts** (matplotlib, figures 01–08, including the inflation-adjusted RVI) exported as PNGs
+- **3 political funding charts** (FEC data, 2024 cycle) exported as PNGs — **11 figures total**
 - **2 interactive Jupyter notebooks** for exploration and scenario analysis
-- **A portfolio landing page** (`index.html`) that embeds all figures
+- **A four-page portfolio site** (`index.html` + political/methodology/about) that embeds all 11 figures
 
 ---
 
 ## 📐 Forensic Metrics Defined
 
+> *Notation: subscript $t$ denotes a discrete comparative-static anchor year (2010, 2018, 2026) — see the Methodology Note below — not a continuous series.*
+
 ### 1. Benefit Adequacy Index (BAI)
-`BAI = Max_WBA ÷ Weekly_Housing_Cost`
+
+$$BAI_t = \frac{\text{Max WBA}_t}{\text{Weekly Housing Cost}_t}$$
 
 Isolates whether the maximum weekly benefit cap forces a choice between rent and immediate survival. **Any BAI < 1.0 indicates systemic failure** — the benefit does not cover housing alone.
 
 ### 2. Regressive Wage Base Index (WBI)
-`WBI = Taxable_Wage_Base ÷ Avg_Annual_Wage`
+
+$$WBI_t = \frac{\text{Taxable Wage Base}_t}{\text{Avg Annual Wage}_t}$$
 
 Tracks how much of the average worker's wage is actually subject to unemployment insurance taxation. As wages rise and the wage base stays frozen, the WBI falls — meaning employers pay into a shrinking share of the wage pool, narrowing the trust fund.
 
 ### 3. Multi-Income Penalty Index (MIPI)
-`MIPI = (Side_Hustle_Earnings − Disregard_Threshold) ÷ Max_WBA`
+
+$$MIPI = \frac{\text{Side-Hustle Earnings} - \text{Disregard Threshold}}{\text{Max WBA}}$$
 
 Quantifies the institutional penalty on workers who earn supplementary income while receiving benefits. High MIPI = aggressive clawback that punishes resourcefulness and traps workers in dependency.
 
 ### 4. Housing Gap
-`Housing_Gap = Weekly_Housing_Cost − Max_WBA`
+
+$$\text{Housing Gap}_t = \text{Weekly Housing Cost}_t - \text{Max WBA}_t$$
 
 The raw weekly survival deficit: how many dollars short a claimant is after benefits, before any other expenses.
 
 ### 5. Real Value Index (RVI) — inflation-adjusted
-`RVI = Max_WBA ÷ (CPI₂₀₂₆ ÷ CPI_base_year)`
+
+$$RVI = \frac{\text{Max WBA}}{\left(\text{CPI}_{2026} / \text{CPI}_{\text{base}}\right)}$$
 
 Adjusts each frozen benefit by inflation (BLS CPI-U) to show its **real purchasing power today**. A frozen number isn't static — inflation cuts it every year, without a vote.
 
@@ -106,7 +113,7 @@ This is a **continuous work in progress**. The items below are designed and scop
 
 ## 🗂️ Files in This Repository
 
-### Python Scripts (12 files)
+### Python Scripts (13 files)
 
 | File | Purpose |
 |------|---------|
@@ -114,6 +121,7 @@ This is a **continuous work in progress**. The items below are designed and scop
 | `generate_figures.py` | Generates the 4 base charts (01–04) from the CSV data |
 | `employer_contribution_gap.py` | Calculates per-state employer contribution gap (frozen SUI wage bases vs. expected) |
 | `generate_employer_gap_charts.py` | Generates the 3 employer gap charts (05–07) |
+| `generate_rvi_figure.py` | Generates the Real Value Index chart (08) — inflation-adjusted frozen benefits |
 | `fec_integration_v251d.py` | FEC API integration (2024 cycle-filtered, production) — generates `fec_funding_profiles.json` |
 | `fec_integration_raw_investigative.py` | FEC API integration (multi-cycle, raw) — for corruption anomaly detection |
 | `fec_quick_test.py` | Quick FEC API connectivity test — diagnostic only, no cycle filter |
@@ -166,7 +174,7 @@ This is a **continuous work in progress**. The items below are designed and scop
 | `DATA_CATALOG.md` | Full file inventory with lineage map and metadata standard |
 | `ENVIRONMENT_ARCHITECTURE.md` | Future architecture proposal (not yet implemented) |
 | `Slicers_and_Drilldown_Strategy.md` | Interactive dashboard design specification (not yet implemented) |
-| `index.html` | Portfolio landing page — embeds all 10 figures with methodology notes |
+| `index.html` | Portfolio landing page — embeds all 11 figures with methodology notes |
 | `.env.example` | API key template (copy to `.env` and fill in your keys) |
 | `requirements.txt` | Python dependencies |
 
@@ -192,7 +200,7 @@ Maryland and DC operate below the survival threshold with no scheduled correctio
 
 ### Employer Contribution Gap
 - **Per-employee underpayment:** $84–$157 per worker, per year
-- **Aggregate trust fund shortfall:** **$601.3M/year** across DMV (using DOL historical effective SUI rates)
+- **Aggregate trust fund shortfall:** **$601.3M/year** across DMV (using DOL historical effective SUI rates; a live experience-rating fetch is scoped in the [Roadmap](#️-roadmap--next-phase-scoped-in-progress) Phase 8)
   - Virginia: $252.4M/year
   - Maryland: $248.6M/year
   - DC: $100.3M/year
@@ -200,7 +208,7 @@ Maryland and DC operate below the survival threshold with no scheduled correctio
 
 ### Political Accountability: Who Funds the Freeze
 - **7 members** with UI-relevant committee assignments analyzed using FEC 2023-2024 reporting period data
-- **$89.9M** in total committee activity; once David Trone's $62.9M in *verified candidate self-loans* are correctly removed, **$21.7M** is true outside money
+- **$89.9M** in total committee activity; once David Trone's $62.9M in *verified candidate self-loans* are correctly removed (98.7% of his $63.83M cycle receipts), **$27.0M** is true outside money
 - **David Trone** co-founded Total Wine & More (~$2.4B company) and sat on the **Ways and Means Committee** while self-funding 98.7% of his Senate campaign
 - **No labor-affiliated PAC contribution above $500** reached Hoyer, Kaine, or Warner in the cycle
 - **Cline (13:1)** and **Ruppersberger (21:1)** are the only members with enough business/labor categorization coverage (7% and 30%) for a directionally meaningful ratio; others are honestly marked *insufficient coverage*
@@ -216,7 +224,7 @@ Maryland and DC operate below the survival threshold with no scheduled correctio
 | DC Council | +CPI auto-linked (~+15%) | +$85 (+23.7%) — still below survival threshold |
 | U.S. Congress | $0 (0%) — $174K frozen since 2009 | N/A (federal FUTA floor only) |
 
-Sources: [MD Compensation Commission 2026](https://mgaleg.maryland.gov/Pubs/Other/2026-Report-of-the-General-Assembly-Compensation-Commission.pdf) · [CRS RL30064 Congressional Salaries](https://www.congress.gov/crs-product/RL30064) · [WSET VA 278% raise](https://wset.com/news/local/virginia-senate-democrats-pass-state-budget-add-nearly-300-percent-pay-increase-for-legislators-money-taxes-richmond-republicans-amendments-affordability) · [DC Code §1-611.09](https://code.dccouncil.gov/us/dc/council/code/sections/1-611.09)
+Sources: [MD Compensation Commission 2026](https://mgaleg.maryland.gov/Pubs/Other/2026-Report-of-the-General-Assembly-Compensation-Commission.pdf) · [CRS RL30064 Congressional Salaries](https://www.congress.gov/crs-product/RL30064) · [WSET — VA legislator pay raise](https://wset.com/news/local/virginia-senate-democrats-pass-state-budget-add-nearly-300-percent-pay-increase-for-legislators-money-taxes-richmond-republicans-amendments-affordability) (headline says "nearly 300%" off a different baseline; the $17,640→$50,000 figure = **+183%**) · [DC Code §1-611.09](https://code.dccouncil.gov/us/dc/council/code/sections/1-611.09)
 
 ---
 
@@ -267,6 +275,8 @@ python generate_fec_charts.py
 python political_layer_builder.py
 ```
 
+> *`fec_integration_v251d.py` keeps its version suffix today; the rename to `fec_integration.py` is scoped as Roadmap #32.*
+
 ### 6. Run the delta analysis (corruption detection)
 
 ```bash
@@ -297,6 +307,7 @@ See `DATA_CATALOG.md` for the full file inventory with lineage.
 | **WBI** | Taxable Wage Base ÷ Avg Annual Wage | Is the tax base regressing? |
 | **MIPI** | (Earnings − Disregard) ÷ Max WBA | Poverty trap for part-time workers |
 | **Housing Gap** | Weekly Housing − Max WBA | Survival deficit per week |
+| **RVI** | Max WBA ÷ (CPI₂₀₂₆ ÷ CPI_base) | Real purchasing power of a frozen benefit today |
 
 ---
 
@@ -307,6 +318,7 @@ See `DATA_CATALOG.md` for the full file inventory with lineage.
 - **Self-funding detection** uses last-name matching and may include false positives.
 - **Avg wages and covered employment** in the employer gap are approximate BLS estimates.
 - **The employer gap methodology** uses the 2010-ratio approach (Method B). Alternative methodologies (full wage base, CPI-only, national peer average, wage growth index) would produce different dollar figures. See the source code for scenario definitions.
+- **Several of these are scoped fixes, not permanent gaps** — the transaction-type self-funding detection, conduit/`memo_code` filter, and `committee_type` categorization are tracked in the [Roadmap](#️-roadmap--next-phase-scoped-in-progress) and [`OPTIMIZATIONS.md`](OPTIMIZATIONS.md) #23–33. Disclosed openly rather than hidden.
 
 ---
 
