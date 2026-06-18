@@ -38,5 +38,13 @@ Thumbs.db
 # forensic receipts (CI validates them; README/DATA_CATALOG document them).
 # Do not gitignore them.
 
-# Keep figures in repo (they are exported assets)
+# Keep figures in repo (they are exported assets committed for the portfolio)
 !figures/*.png
+
+# Generated interactive HTML charts and county map
+# These are regenerated artifacts (not committed assets).
+# Run: python -m src.charts.generate_plotly_charts
+#      python -m src.generate_county_map
+# to rebuild them locally.
+interactive/*.html
+maps/*.html
