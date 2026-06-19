@@ -24,6 +24,14 @@ load_dotenv()
 
 KEY = os.environ.get("FEC_API_KEY", "")
 if not KEY:
+    # REQUIRE_API_KEY (any non-empty value) hard-fails when FEC_API_KEY is absent —
+    # set it in the data-refresh CI to prevent silent DEMO_KEY rate-limit data corruption.
+    if os.environ.get("REQUIRE_API_KEY", ""):
+        raise EnvironmentError(
+            "FEC_API_KEY is required in the data-refresh workflow but was not found. "
+            "Set it as a GitHub Actions secret (env: FEC_API_KEY: ${{ secrets.FEC_API_KEY }}). "
+            "Aborting to prevent silent rate-limit data corruption via DEMO_KEY."
+        )
     print("⚠️  FEC_API_KEY not found in environment. Set it in .env file or export FEC_API_KEY=your_key")
     print("   Get a key at: https://api.open.fec.gov/developers/")
     KEY = "DEMO_KEY"  # Fallback for limited testing
