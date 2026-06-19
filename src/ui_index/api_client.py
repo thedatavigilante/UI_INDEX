@@ -79,10 +79,13 @@ class APIClient:
         total = len(self.audit_log)
         successes = sum(1 for e in self.audit_log if e["status"] == 200)
         failures = total - successes
+        by_status: Dict[int, int] = {}
+        for entry in self.audit_log:
+            by_status[entry["status"]] = by_status.get(entry["status"], 0) + 1
         return {
             "total_calls": total,
             "successes": successes,
             "failures": failures,
             "success_rate": round(successes / total * 100, 1) if total > 0 else 0,
-            "by_status": {},
+            "by_status": dict(sorted(by_status.items())),
         }
