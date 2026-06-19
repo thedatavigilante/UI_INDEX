@@ -21,7 +21,7 @@ from pathlib import Path
 from dataclasses import dataclass, asdict
 from typing import List, Dict
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[2]
 SUI_RATES_PATH = ROOT / "data" / "sui_rates.json"
 
 # Documented fallback values (DOL averages) — used when sui_rates.json is absent
@@ -132,7 +132,7 @@ def generate_dmv_gaps() -> List[SUIContributionGap]:
 
 def save_report(gaps: List[SUIContributionGap], output_dir: Path = None):
     if output_dir is None:
-        output_dir = Path(__file__).parent / "data" / "political"
+        output_dir = Path(__file__).resolve().parents[2] / "data" / "political"
     output_dir.mkdir(parents=True, exist_ok=True)
     
     from datetime import datetime

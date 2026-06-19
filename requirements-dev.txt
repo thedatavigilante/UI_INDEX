@@ -1,0 +1,11 @@
+# Development / notebook dependencies (not required for CI core validation).
+# Install with: pip install -r requirements-dev.txt
+-r requirements.txt
+
+pytest>=8.0
+jupyter>=1.0,<2
+nbconvert>=7.0
+ipykernel>=6.0
+folium>=0.14
+plotly>=5.18
+streamlit>=1.30

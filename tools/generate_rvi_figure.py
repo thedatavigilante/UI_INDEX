@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 CPI_CACHE = ROOT / "data" / "cpi_annual.json"
 FIG_DIR = ROOT / "figures"
 FIG_DIR.mkdir(exist_ok=True)

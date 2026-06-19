@@ -40,47 +40,48 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install -e .
 
       # ── Phase 1: Inflation data (FRED — independent cross-validator) ──────────
       - name: Fetch FRED inflation data
         run: |
           echo "=== FRED Inflation Cross-Validator ==="
-          python fetch_fred_inflation.py
+          python tools/fetch_fred_inflation.py
         continue-on-error: true   # Don't block other fetches if FRED is down
 
       # ── Phase 2: BLS baseline data (wages + CPI + unemployment rates) ─────────
       - name: Fetch BLS baselines
         run: |
           echo "=== BLS QCEW Wages + CPI-U + LAUS Unemployment Rates ==="
-          python fetch_bls_baselines.py
+          python tools/fetch_bls_baselines.py
         continue-on-error: true
 
       # ── Phase 3: HUD Fair Market Rents (weekly housing costs) ─────────────────
       - name: Fetch HUD housing data
         run: |
           echo "=== HUD Fair Market Rents ==="
-          python fetch_housing.py
+          python tools/fetch_housing.py
         continue-on-error: true
 
       # ── Phase 4: DOL SUI tax rates (public CSV, no key needed) ────────────────
       - name: Fetch DOL SUI rates
         run: |
           echo "=== DOL ETA-5159 SUI Tax Rates ==="
-          python fetch_dol_sui_rates.py
+          python tools/fetch_dol_sui_rates.py
         continue-on-error: true
 
       # ── Phase 5: Federal UI spending (USASpending.gov, no key needed) ─────────
       - name: Fetch USASpending data
         run: |
           echo "=== USASpending.gov CFDA 17.225 Federal UI Grants ==="
-          python fetch_usaspending.py
+          python tools/fetch_usaspending.py
         continue-on-error: true
 
       # ── Phase 6: County-level unemployment + income data ──────────────────────
       - name: Fetch county data
         run: |
           echo "=== BLS LAUS + Census ACS County-Level Data ==="
-          python fetch_county_data.py
+          python tools/fetch_county_data.py
         continue-on-error: true
 
       # ── Phase 7: Regenerate figures (optional, controlled by input) ───────────
@@ -88,12 +89,12 @@ jobs:
         if: ${{ github.event.inputs.run_figures != 'false' }}
         run: |
           echo "=== Regenerating matplotlib figures ==="
-          python generate_figures.py
-          python generate_rvi_figure.py
-          python generate_employer_gap_charts.py
-          python generate_fec_charts.py
-          python generate_context_figure.py
-          python generate_spending_accountability.py
+          python tools/generate_figures.py
+          python tools/generate_rvi_figure.py
+          python tools/generate_employer_gap_charts.py
+          python tools/generate_fec_charts.py
+          python tools/generate_context_figure.py
+          python tools/generate_spending_accountability.py
         continue-on-error: true
 
       # ── Phase 8: Regenerate county map ────────────────────────────────────────
@@ -101,7 +102,7 @@ jobs:
         if: ${{ github.event.inputs.run_figures != 'false' }}
         run: |
           echo "=== Generating Folium County Map ==="
-          python generate_county_map.py
+          python tools/generate_county_map.py
         continue-on-error: true
 
       # ── Phase 9: Regenerate Plotly interactive charts ─────────────────────────
@@ -109,7 +110,7 @@ jobs:
         if: ${{ github.event.inputs.run_figures != 'false' }}
         run: |
           echo "=== Generating Plotly Interactive Charts ==="
-          python generate_plotly_charts.py
+          python tools/generate_plotly_charts.py
         continue-on-error: true
 
       # ── Phase 10: Validate outputs before committing ──────────────────────────

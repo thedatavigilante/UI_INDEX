@@ -82,7 +82,7 @@ _CENSUS_INCOME_FALLBACK = {
     "DC-98": 101722,
 }
 
-_CENSUS_CACHE_PATH = Path(__file__).parent / "data" / "political" / "census_income.json"
+_CENSUS_CACHE_PATH = Path(__file__).resolve().parents[2] / "data" / "political" / "census_income.json"
 
 
 def _fetch_census_income_api() -> Optional[Dict[str, int]]:
@@ -228,7 +228,7 @@ if __name__ == "__main__":
         print(f"   - {m['name']} ({m['state']}) - {relevant}")
         print(f"     Constituent income: ${m['constituent_median_income']:,}")
     print("\n💾 Saving report...")
-    output_dir = Path(__file__).parent / "data" / "political"
+    output_dir = Path(__file__).resolve().parents[2] / "data" / "political"
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(output_dir / "political_layer_report.json", "w") as f:
         json.dump(report, f, indent=2)

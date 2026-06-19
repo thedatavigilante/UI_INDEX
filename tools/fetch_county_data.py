@@ -24,7 +24,7 @@ load_dotenv()
 BLS_API_KEY = os.environ.get("BLS_API_KEY", "")
 CENSUS_KEY = os.environ.get("CENSUS_API_KEY", "DEMO_KEY")
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 OUTPUT_PATH = DATA_DIR / "county_data.json"
 

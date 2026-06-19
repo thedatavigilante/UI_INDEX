@@ -29,7 +29,7 @@ from pathlib import Path
 HUD_TOKEN = os.environ.get("HUD_TOKEN", "")
 HUD_BASE = "https://www.huduser.gov/hudapi/public/fmr"
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 CSV_PATH = ROOT / "data" / "dmv_macro_baselines.csv"
 
 # HUD metro entity IDs for target areas (FY2024 identifiers)

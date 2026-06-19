@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 from dataclasses import dataclass, asdict
 
-from api_client import APIClient
+from ui_index.api_client import APIClient
 
 load_dotenv()
 
@@ -194,7 +194,7 @@ class PoliticalLayerBuilder:
 
     def save(self, output_dir: Path = None):
         if output_dir is None:
-            output_dir = Path(__file__).parent / "data" / "political"
+            output_dir = Path(__file__).resolve().parents[2] / "data" / "political"
         output_dir.mkdir(parents=True, exist_ok=True)
 
         data = [m.to_dict() for m in self.members]

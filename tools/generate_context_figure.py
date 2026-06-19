@@ -22,7 +22,7 @@ import matplotlib.ticker as mticker
 import numpy as np
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 
 BG, BG2, GRID = "#121212", "#1e1e1e", "#2a2a2a"
 FG, MUTED     = "#e8e8e8", "#888888"

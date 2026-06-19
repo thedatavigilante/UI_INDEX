@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ui-index"
+version = "1.1.0"
+description = "UI_INDEX forensic analytics — The Stagnant Safety Net (DMV unemployment-insurance audit)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Sierra Napier (The Data Vigilante)" }]
+dependencies = [
+    "pandas>=2.1,<3.0",
+    "numpy>=1.26",
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "tabulate>=0.9",
+    "python-dotenv>=1.0",
+    "requests>=2.31",
+]
+
+[project.urls]
+Homepage = "https://github.com/thedatavigilante/UI_INDEX"
+
+# Proper src layout: importable package lives at src/ui_index/
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["ui_index*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--tb=short"

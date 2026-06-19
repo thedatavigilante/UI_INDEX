@@ -18,7 +18,7 @@ import urllib.error
 from datetime import datetime
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = ROOT / "data" / "political" / "federal_spending.json"
 
 BASE = "https://api.usaspending.gov/api/v2"
