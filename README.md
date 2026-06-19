@@ -268,29 +268,29 @@ Congress.gov uses `DEMO_KEY` (public, no signup required for basic use).
 ### 3. Generate the base analysis
 
 ```bash
-python ui_index_engine.py
-python generate_figures.py
+python -m ui_index.core_engine
+python tools/generate_figures.py
 ```
 
 ### 4. Generate the employer contribution gap
 
 ```bash
-python employer_contribution_gap.py
-python generate_employer_gap_charts.py
+python -m ui_index.employer_models
+python tools/generate_employer_gap_charts.py
 ```
 
 ### 5. Generate the political funding layer
 
 ```bash
-python fec_integration_v251d.py
-python generate_fec_charts.py
-python political_layer_builder.py
+python -m ui_index.fec_pipelines
+python tools/generate_fec_charts.py
+python -m ui_index.political_layer_builder
 ```
 
 ### 6. Run the delta analysis (corruption detection)
 
 ```bash
-python delta_analyzer.py
+python -m ui_index.delta_analyzer
 ```
 
 ---

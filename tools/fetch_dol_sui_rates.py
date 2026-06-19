@@ -22,7 +22,7 @@ import urllib.error
 from datetime import datetime
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 OUTPUT_PATH = DATA_DIR / "sui_rates.json"
 

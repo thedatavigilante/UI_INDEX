@@ -22,7 +22,7 @@ from pathlib import Path
 
 BLS_API_KEY = os.environ.get("BLS_API_KEY", "")
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 DATA_DIR.mkdir(exist_ok=True)
 

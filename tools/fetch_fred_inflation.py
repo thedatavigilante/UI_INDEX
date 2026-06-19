@@ -30,7 +30,7 @@ load_dotenv()
 FRED_API_KEY = os.environ.get("FRED_API_KEY", "")
 FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 OUTPUT_PATH = DATA_DIR / "inflation_crosscheck.json"
 

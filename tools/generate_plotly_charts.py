@@ -16,7 +16,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 OUT_DIR = ROOT / "interactive"
 OUT_DIR.mkdir(exist_ok=True)

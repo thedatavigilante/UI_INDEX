@@ -31,7 +31,7 @@ try:
 except ImportError:
     HAS_URLLIB = False
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parents[1]
 MAPS_DIR = ROOT / "maps"
 MAPS_DIR.mkdir(exist_ok=True)
 

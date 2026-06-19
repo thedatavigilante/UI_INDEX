@@ -6,7 +6,7 @@ Run: python generate_notebooks.py
 import json
 from pathlib import Path
 
-NB_DIR = Path(__file__).parent / "notebooks"
+NB_DIR = Path(__file__).resolve().parents[1] / "notebooks"
 NB_DIR.mkdir(exist_ok=True)
 
 

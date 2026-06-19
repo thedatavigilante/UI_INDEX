@@ -19,7 +19,7 @@ class UIIndexEngine:
     Reads documented baselines from CSV and computes safety net decay indices.
     """
 
-    DATA_PATH = Path(__file__).parent / "data" / "dmv_macro_baselines.csv"
+    DATA_PATH = Path(__file__).resolve().parents[2] / "data" / "dmv_macro_baselines.csv"
 
     def __init__(self, data_path=None):
         self.data_path = data_path or self.DATA_PATH

@@ -32,3 +32,6 @@ Thumbs.db
 
 # Keep figures in repo (they are exported assets)
 !figures/*.png
+
+# Editable-install metadata
+*.egg-info/

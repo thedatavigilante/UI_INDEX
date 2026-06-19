@@ -42,7 +42,7 @@ def apply_dark_style(ax, title, xlabel=None, ylabel=None):
         spine.set_edgecolor(GRID)
 
 # ── Load data ──────────────────────────────────────────────────────────────────
-DATA_PATH = Path(__file__).parent / "data" / "dmv_macro_baselines.csv"
+DATA_PATH = Path(__file__).resolve().parents[1] / "data" / "dmv_macro_baselines.csv"
 records = []
 with open(DATA_PATH, "r", newline="") as f:
     reader = csv.DictReader(f)
@@ -65,7 +65,7 @@ for rec in records:
 
 df = pd.DataFrame(records)
 
-FIG_DIR = Path(__file__).parent / "figures"
+FIG_DIR = Path(__file__).resolve().parents[1] / "figures"
 FIG_DIR.mkdir(exist_ok=True)
 
 # ── Figure 01: BAI Decay Trajectory ───────────────────────────────────────────

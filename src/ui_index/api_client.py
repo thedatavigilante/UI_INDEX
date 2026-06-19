@@ -13,7 +13,7 @@ class APIClient:
     """
 
     def __init__(self, cache_dir: Path = None, max_retries: int = 3, backoff: float = 2.0):
-        self.cache_dir = cache_dir or Path(__file__).parent / "data" / "raw"
+        self.cache_dir = cache_dir or Path(__file__).resolve().parents[2] / "data" / "raw"
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.max_retries = max_retries
         self.backoff = backoff

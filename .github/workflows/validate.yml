@@ -19,6 +19,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install -e .
       - name: Validate JSON data files
         run: |
           python3 -c "import json; json.load(open('data/political/political_layer_report.json')); print('political_layer_report.json OK')"
@@ -104,22 +105,9 @@ jobs:
           python3 /tmp/fec_check.py
       - name: Check script syntax
         run: |
-          python3 -m py_compile fec_integration_v251d.py
-          python3 -m py_compile ui_index_engine.py
-          python3 -m py_compile generate_figures.py
-          python3 -m py_compile fetch_bls_baselines.py
-          python3 -m py_compile fetch_fred_inflation.py
-          python3 -m py_compile fetch_housing.py
-          python3 -m py_compile fetch_dol_sui_rates.py
-          python3 -m py_compile fetch_usaspending.py
-          python3 -m py_compile fetch_county_data.py
-          python3 -m py_compile generate_rvi_figure.py
-          python3 -m py_compile generate_county_map.py
-          python3 -m py_compile generate_plotly_charts.py
-          python3 -m py_compile generate_context_figure.py
-          python3 -m py_compile generate_spending_accountability.py
-          rm -rf __pycache__
-          echo "✅ All Python scripts compile successfully"
+          python3 -m py_compile src/ui_index/*.py tools/*.py
+          find . -name __pycache__ -type d -prune -exec rm -rf {} +
+          echo "✅ All Python modules and tools compile successfully"
       - name: Run data integrity tests
         run: |
           python -m pytest tests/ -v
