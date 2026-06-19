@@ -573,6 +573,7 @@
   <a href="#county-map">Map</a>
   <a href="#interactive-charts">Interactive</a>
   <a href="#ch5">FEC</a>
+  <a href="#glossary">Glossary</a>
   <a href="political.html">Political Layer</a>
   <a href="methodology.html">Methodology</a>
   <a href="about.html">About</a>
@@ -587,7 +588,7 @@
     <span class="badge b-green">Forensic Audit</span>
     <span class="badge b-gold">Public Data</span>
     <span class="badge b-red">Political Accountability</span>
-    <span class="badge b-blue">DMV 2010–2026</span>
+    <span class="badge b-blue"><abbr title="DC, Maryland, and Virginia — the tri-state region analyzed in this audit">DMV</abbr> 2010–2026</span>
     <span class="badge b-outline">Built in 1 Day · AI-Assisted</span>
   </div>
 
@@ -600,7 +601,7 @@
       <h1>📊 The Stagnant Safety Net</h1>
       <div class="hero-tagline">The Robin Hood of AI &nbsp;·&nbsp; The Data Vigilante</div>
       <div class="hero-subtitle">A Tri-State Forensic Audit of Unemployment Insurance Decay</div>
-      <div class="hero-meta">Sierra Napier, MPA &nbsp;|&nbsp; DC · Maryland · Virginia &nbsp;|&nbsp; 2010 → 2026 &nbsp;|&nbsp; BLS · USDOL · FEC · Census · HUD</div>
+      <div class="hero-meta">Sierra Napier, MPA &nbsp;|&nbsp; DC · Maryland · Virginia &nbsp;|&nbsp; 2010 → 2026 &nbsp;|&nbsp; <abbr title="Bureau of Labor Statistics — the federal agency that publishes wage, employment, and inflation data">BLS</abbr> · USDOL · <abbr title="Federal Election Commission — the agency that regulates campaign finance and publishes all donor and spending data">FEC</abbr> · Census · <abbr title="U.S. Department of Housing and Urban Development — sets annual Fair Market Rents used to define affordable housing costs">HUD</abbr></div>
     </div>
   </div>
 
@@ -615,6 +616,10 @@
     Funded by the same industries that profit from keeping your floor low.
     This isn't a coincidence. <strong style="color:var(--lime)">This is the policy.</strong> Here are the receipts.
   </p>
+
+  <div class="methodology">
+    <strong>What is unemployment insurance (UI)?</strong> When you lose your job through no fault of your own — layoffs, company closures, hours cuts — the government pays you a temporary weekly benefit while you look for work. Every employer pays a small tax on worker wages to fund this system. The amount you receive, how long you can receive it, and what triggers cuts to your check are all set by state law. This audit examines three jurisdictions — DC, Maryland, and Virginia (the DMV region) — and measures whether those laws are working.
+  </div>
 </header>
 
 <!-- ── BMC SUPPORT ─────────────────────────────────────────────── -->
@@ -648,7 +653,7 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- CHAPTER 1 -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<h2 id="ch1">Chapter 1 — Worker Insolvency: The BAI</h2>
+<h2 id="ch1">Chapter 1 — Worker Insolvency: The Benefit Adequacy Index</h2>
 
 <div class="callout-plain">Your unemployment check can't pay your rent — and it hasn't kept pace with housing for sixteen years running.</div>
 
@@ -656,7 +661,7 @@
   <p>
     The <strong><abbr title="Can your UI check cover your rent? Below 1.0 = no.">Benefit Adequacy Index (BAI)</abbr></strong> answers one question:
     <em>can a laid-off worker still pay rent?</em>
-    <code>BAI = Max WBA ÷ Weekly Housing Cost</code>.
+    <code>BAI = Max <abbr title="Weekly Benefit Amount — the maximum dollar amount a state pays an unemployed worker per week">WBA</abbr> ÷ Weekly Housing Cost</code>.
     Below 1.0 is systemic failure — the benefit cannot cover housing alone,
     before food, utilities, childcare, or transportation enter the equation.
   </p>
@@ -666,9 +671,12 @@
     Meanwhile weekly housing costs in Maryland climbed from $295 to $450 —
     a 52% increase. The safety net did not move. The cost of survival did.
   </p>
+  <div class="methodology">
+    <strong>In plain English:</strong> If your unemployment check is $430/week and your cheapest available 2-bedroom apartment runs $450/week, your BAI is 0.956 — below 1.0, which means the safety net has a hole in it. Maryland has been below this threshold since at least 2018. No one voted to put it there; the benefit cap just never moved while rents did.
+  </div>
   <img src="figures/01_bai_decay_trajectory.png" alt="BAI Decay Trajectory 2010–2026">
   <div class="caption">
-    Figure 1 — BAI decay across DC, Maryland, and Virginia (2010–2026). Source: <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> + <a href="https://www.hud.gov/program_offices/comm_planning/affordablehousing/programs/home/fmr" target="_blank">HUD Fair Market Rents</a> + State DOL benefit schedules.<br>
+    Figure 1 — BAI decay across DC, Maryland, and Virginia (2010–2026). Source: <a href="https://www.bls.gov/cew/" target="_blank">BLS <abbr title="Quarterly Census of Employment and Wages — the BLS dataset tracking wages and employment by industry and geography">QCEW</abbr></a> + <a href="https://www.hud.gov/program_offices/comm_planning/affordablehousing/programs/home/fmr" target="_blank">HUD Fair Market Rents</a> + State DOL benefit schedules.<br>
     <em>Maryland crossed below the 1.0 survival threshold by 2026. Virginia passed SB 1056 in January 2026 (+$52/week, first increase since 2014), bringing BAI to 1.02 — barely above the line. DC was already below threshold in 2010 and has no scheduled correction.</em>
   </div>
 </div>
@@ -703,16 +711,19 @@
 </div>
 
 <!-- ── REAL VALUE INDEX (added 2026-06-12, additive) ── -->
-<h3 style="margin: 2rem 0 0.8rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">The Real Value Index — inflation did the cutting</h3>
+<h3 style="margin: 2rem 0 0.8rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">The Real Value Index (RVI) — inflation did the cutting</h3>
 <div class="callout-plain">They didn't even have to take a vote. A $430 check frozen since 2014 is worth about <strong style="color:var(--crimson)">$300</strong> today — inflation quietly carved off nearly a third. Virginia froze all the way back in 2008, so its check sank to ~$244 in real money before the 2026 bump.</div>
 <div class="card">
   <p>
-    The <strong>Real Value Index (RVI)</strong> converts each jurisdiction's nominal frozen maximum weekly benefit into 2026 constant dollars using BLS CPI-U cumulative inflation.
+    The <strong><abbr title="Real Value Index — the inflation-adjusted purchasing power of the maximum UI benefit in today's dollars">Real Value Index (RVI)</abbr></strong> converts each jurisdiction's nominal frozen maximum weekly benefit into 2026 constant dollars using BLS <abbr title="Consumer Price Index for All Urban Consumers — the BLS measure of inflation used to track how far a dollar goes over time">CPI-U</abbr> cumulative inflation.
     <code>RVI = Nominal WBA ÷ (1 + Cumulative CPI%)</code>.
     The result is the purchasing power a claimant actually holds — not the number on the check.
     A benefit frozen since 2014 has lost 29% of its real value by 2026.
     A benefit frozen since 2008 has lost 35%. Nobody voted to cut it. The clock did.
   </p>
+  <div class="methodology">
+    <strong>In plain English:</strong> The Real Value Index answers: what is that frozen $430 check actually worth today, after years of inflation? If you haven't gotten a raise in ten years, your purchasing power has fallen — same amount on the paycheck, less you can buy. That's exactly what happened to UI benefits. Maryland's $430 cap was set in 2014; in 2026 dollars, it's worth about $300.
+  </div>
   <img src="figures/08_real_value_index.png" alt="Real Value Index — frozen benefits vs. their real 2026 value">
   <div class="caption">
     Figure 8 — The Real Value Index: what each frozen maximum benefit is actually worth in 2026 dollars.
@@ -729,7 +740,7 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- CHAPTER 2 -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<h2 id="ch2">Chapter 2 — The Corporate Tax Escape: WBI</h2>
+<h2 id="ch2">Chapter 2 — The Corporate Tax Escape: Wage Base Index</h2>
 
 <div class="callout-plain">The cap on what your employer pays into unemployment hasn't moved in over 30 years. Your wages have. Theirs haven't.</div>
 
@@ -738,12 +749,15 @@
     The <strong><abbr title="What % of your wage is actually taxed for UI? Falling = system starves.">Regressive Wage Base Index (WBI)</abbr></strong> is where it gets deliberately boring —
     which is exactly how they want it.
     <code>WBI = Taxable Wage Base ÷ Avg Annual Wage</code>.
-    Employers only pay SUI tax on wages <em>up to the statutory cap</em>.
+    Employers only pay <abbr title="State Unemployment Insurance tax — the payroll tax employers pay on each worker's wages to fund the unemployment system">SUI</abbr> tax on wages <em>up to the statutory cap</em>.
     Maryland's cap: <strong>$8,500 — frozen since 1992</strong>.
     A cap set when the median Maryland wage was around $32,000.
     It is now $72,800. The math is not complicated.
     The politics is.
   </p>
+  <div class="methodology">
+    <strong>In plain English:</strong> Every employer pays unemployment tax on the first X dollars of each worker's annual wages — not the whole salary. That X is the "taxable wage base." Maryland's has been frozen at $8,500 since 1992. The average Maryland wage is now $72,800. So employers only pay UI tax on the first 11.8 cents of every dollar their workers earn. In 1992, the ratio was 16 cents. No one voted to cut their tax rate — the freeze did it automatically.
+  </div>
   <img src="figures/02_wbi_stagnation.png" alt="WBI Stagnation">
   <div class="caption">
     Figure 2 — WBI stagnation. Source: <a href="https://www.dol.gov/agencies/eta/unemployment-insurance/financing" target="_blank">DOL UI Financial Data</a> + <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> + State DOL statutory wage base schedules.<br>
@@ -770,7 +784,7 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- CHAPTER 3 -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<h2 id="ch3">Chapter 3 — The Poverty Trap: MIPI & Housing Gap</h2>
+<h2 id="ch3">Chapter 3 — The Poverty Trap: Multi-Income Penalty & Housing Gap</h2>
 
 <div class="callout-plain">Drove Uber to make ends meet while on unemployment? The government sees that $250 and takes most of it back out of your check. The system punishes you for surviving.</div>
 
@@ -780,9 +794,12 @@
     does exactly what every think-piece tells them to do: hustle.
     <code>MIPI = (Earnings − Disregard) ÷ Max WBA</code>.
     Earn $250/week in part-time work? The system claws back most of it in benefit reductions.
-    The disregard threshold — the amount you can earn before the penalty kicks in —
+    The <abbr title="The amount of money you can earn while collecting UI without a reduction in benefits — money above this threshold is partially clawed back">disregard threshold</abbr> — the amount you can earn before the penalty kicks in —
     was set decades ago and frozen there. Shocking, I know.
   </p>
+  <div class="methodology">
+    <strong>In plain English:</strong> The disregard threshold is how much extra money you're allowed to earn while on unemployment without losing benefits. In Virginia, it's $100/week. If you pick up a gig shift and make $400 that week, the state takes most of that back out of your check — because you earned $300 over the threshold. The MIPI score tells you how hard the system punishes you for trying to survive while looking for work.
+  </div>
   <img src="figures/03_mipi_clawback.png" alt="MIPI Clawback Severity">
   <div class="caption">
     Figure 3 — MIPI clawback severity across jurisdictions. Source: State DOL benefit calculation schedules + <a href="https://www.dol.gov/agencies/eta/unemployment-insurance" target="_blank">DOL UI Program</a>.<br>
@@ -819,7 +836,7 @@
 </div>
 
 <!-- ── CROSS-INDEX SEVERITY BANNER ───────────────────────────── -->
-<h3 style="margin: 2rem 0 0.8rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Cross-Index Severity Assessment — 2026</h3>
+<h3 style="margin: 2rem 0 0.8rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Cross-Index Severity Assessment — What the Numbers Say Together</h3>
 <div class="severity-banner">
   <div class="sev-cell sev-critical">
     <div class="sev-label">District of Columbia</div>
@@ -853,6 +870,9 @@
     The difference is the structural shortfall. It is not speculative.
     It is arithmetic.
   </p>
+  <div class="methodology">
+    <strong>In plain English:</strong> If Maryland's unemployment tax had simply kept pace with rising wages since 2010 (same percentage, not the same dollar cap), employers would be paying $87.53 more per worker per year into the fund. Multiply that by 2.84 million covered workers and you get $248.6 million per year — just in Maryland. That's money that should be in the trust fund but isn't, because the wage base was frozen while the economy grew around it.
+  </div>
   <img src="figures/05_employer_per_employee_gap.png" alt="Per-Employee Underpayment">
   <div class="caption">
     Figure 5 — Per-employee structural underpayment ($/worker/year).
@@ -889,7 +909,7 @@
   <img src="figures/06_employer_aggregate_gap.png" alt="Aggregate Trust Fund Shortfall">
   <div class="caption">
     Figure 6 — Annual aggregate trust fund shortfall by state ($ millions).
-    Source: <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> (covered employment) + <a href="https://www.dol.gov/agencies/eta/unemployment-insurance/financing" target="_blank">DOL UI Financial Data</a>.<br>
+    Source: <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> (<abbr title="Workers whose jobs are subject to unemployment insurance taxation — the denominator used to calculate total trust fund impact">covered employment</abbr>) + <a href="https://www.dol.gov/agencies/eta/unemployment-insurance/financing" target="_blank">DOL UI Financial Data</a>.<br>
     <em>$601.3 million per year, every year, disappearing from the trust fund because of a number that hasn't moved since George H.W. Bush was president.</em>
   </div>
 </div>
@@ -931,7 +951,7 @@
 
 <div class="card">
   <p>
-    Figure 9 presents a dual-panel context view: state unemployment rate trajectories from 2010 through 2026 (left) alongside federal UI administrative grant allocations under CFDA 17.225 (right).
+    Figure 9 presents a dual-panel context view: state unemployment rate trajectories from 2010 through 2026 (left) alongside federal UI administrative grant allocations under <abbr title="Federal UI administrative grant program — the specific federal funding code for unemployment insurance administration grants to states">CFDA 17.225</abbr> (right).
     Together these panels establish the human scale of the system being audited —
     how many workers are exposed across each jurisdiction, and whether the federal infrastructure investment
     that administers their benefits has tracked that exposure over time.
@@ -940,7 +960,7 @@
   <img src="figures/09_unemployment_context.png" alt="Unemployment Context: Rates 2010–2026 and Federal UI Investment">
   <div class="caption">
     Figure 9 — Left: State unemployment rate trends 2010–2026. Right: Federal UI administrative grants (CFDA 17.225, $M/year) by state.
-    Source: <a href="https://www.bls.gov/lau/" target="_blank">BLS LAUS</a> + <a href="https://www.usaspending.gov/" target="_blank">USASpending.gov</a>.<br>
+    Source: <a href="https://www.bls.gov/lau/" target="_blank">BLS <abbr title="Local Area Unemployment Statistics — the BLS program that produces monthly unemployment rates at the county level">LAUS</abbr></a> + <a href="https://www.usaspending.gov/" target="_blank">USASpending.gov</a>.<br>
     <em>DC's unemployment rate peaked at 9.9% in 2010 and has declined to 4.1% — yet the maximum benefit is unchanged in real terms. Federal UI grants have not tracked changes in unemployed worker populations across the DMV.</em>
   </div>
 </div>
@@ -955,15 +975,14 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <h2 id="county-map">Geographic Distribution — Benefit Adequacy by County</h2>
 
-<div class="callout-plain">Two of three DMV jurisdictions cannot cover housing on maximum UI benefits. DC's BAI of 0.854 means even a worker receiving the full $444/week benefit faces a $76 weekly housing shortfall. Maryland's $430 cap falls $20/week short of a 2-bedroom FMR. These are not marginal misses — they are structural failures built into the statutory benefit caps.</div>
+<div class="callout-plain">Two of three DMV jurisdictions cannot cover housing on maximum UI benefits. DC's BAI of 0.854 means even a worker receiving the full $444/week benefit faces a $76 weekly housing shortfall. Maryland's $430 cap falls $20/week short of a 2-bedroom <abbr title="Fair Market Rent — HUD's published estimate of what a 2-bedroom apartment costs to rent in a given metro area">FMR</abbr>. These are not marginal misses — they are structural failures built into the statutory benefit caps.</div>
 
 <div class="card">
   <p>
     The interactive choropleth shows the Benefit Adequacy Index (BAI) — the ratio of maximum weekly
     UI benefits to the 2-bedroom Fair Market Rent — applied to every county in the DMV region.
     Counties are colored by their state's BAI: crimson where benefits cannot cover housing, gold where
-    they barely pass. Hover over any county to see the full policy picture: housing gap, wage
-    replacement rate, WBI (the share of wages taxable for UI), and the per-worker annual SUI gap.
+    they barely pass. Hover over any county to see the full policy picture: housing gap, <abbr title="The percentage of a worker's previous average wages that the maximum UI benefit replaces — a low rate means UI covers only a fraction of what you were earning">wage replacement rate</abbr>, WBI (the share of wages taxable for UI), and the per-worker annual SUI gap.
     The map makes visible what state averages compress: the safety net floor was set without reference
     to local housing markets, and the damage is geographically concentrated in the communities
     already carrying the region's highest cost burden.
@@ -990,7 +1009,11 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <h2 id="ch5">Chapter 5 — Who Funds the Freeze</h2>
 
-<div class="callout-plain">The legislators who control your unemployment benefits raised $89.9M in committee activity — and once David Trone's $63.8M in total receipts are correctly removed, $26.1M is true outside money. Not one labor-affiliated PAC contribution above $500 reached Hoyer, Kaine, or Warner. The workers whose benefits they set aren't in the donor file. Follow the money.</div>
+<div class="methodology">
+  <strong>Understanding the campaign finance data:</strong> The FEC (Federal Election Commission) requires all federal candidates to report who donates to their campaigns and how much. This data is public. A PAC (Political Action Committee) is an organization that collects money from businesses, unions, or individuals and donates it collectively to candidates. Schedule A is the FEC form that lists individual itemized contributions of $200 or more. When we say "business contributions," we mean donations from corporate PACs and individuals whose employer or industry we identified as business-linked. "Labor contributions" means union PACs and labor-affiliated donors. The imbalance between these two categories is the story.
+</div>
+
+<div class="callout-plain">The legislators who control your unemployment benefits raised $89.9M in committee activity — and once David Trone's $63.8M in total receipts are correctly removed, $26.1M is true outside money. Not one labor-affiliated <abbr title="Political Action Committee — an organization that pools campaign contributions and donates them to candidates">PAC</abbr> contribution above $500 reached Hoyer, Kaine, or Warner. The workers whose benefits they set aren't in the donor file. Follow the money.</div>
 
 <div class="methodology" style="margin-bottom:1rem;">
   <strong>⚠ A note on these numbers:</strong> The raw FEC categorization is misleading in three specific ways (self-funding contamination, weak business/labor coverage, no cycle normalization). Rather than hide that, the <a href="political.html">Political Layer page</a> shows a four-view comparison matrix — raw, self-funding-corrected, verified business-to-labor, and per-month normalized — with every caveat labeled. <strong>That transparency is the point.</strong>
@@ -1100,7 +1123,7 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- INTERACTIVE CHARTS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<h2 id="interactive-charts">Interactive Charts</h2>
+<h2 id="interactive-charts">Interactive Charts — Explore the Data Yourself</h2>
 
 <div class="callout-plain">All 11 charts are available as interactive Plotly figures — hover to inspect individual data points, zoom in on specific years, or download a PNG directly from the chart toolbar.</div>
 
@@ -1267,6 +1290,80 @@
 <p style="margin-top:1rem; font-size:0.88rem; color:var(--muted);">
   → <a href="political.html">Full political accountability analysis including conflict of interest matrix →</a>
 </p>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- GLOSSARY -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="glossary">Key Terms — Plain English Definitions</h2>
+<div class="card">
+  <dl style="margin:0; line-height:2;">
+    <dt style="color:var(--lime);font-weight:700;">UI (Unemployment Insurance)</dt>
+    <dd>The government program that pays workers a temporary weekly cash benefit after job loss. Funded by employer payroll taxes; administered by states; rates and caps set by state law.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">WBA — Weekly Benefit Amount</dt>
+    <dd>The maximum dollar amount a state pays an unemployed worker per week. In Maryland and Virginia: $430/week. In DC: $444/week. These caps haven't changed in over a decade.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">BAI — Benefit Adequacy Index</dt>
+    <dd>Our measure of whether the maximum UI benefit can cover housing. BAI = Max WBA ÷ Weekly Housing Cost (2-bedroom HUD Fair Market Rent). Below 1.0 = the check doesn't cover rent.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">WBI — Wage Base Index</dt>
+    <dd>The share of average wages that is actually subject to unemployment tax. WBI = Taxable Wage Base ÷ Average Annual Wage. When this falls over time, employers pay a smaller effective tax rate without any vote ever happening.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">MIPI — Multi-Income Penalty Index</dt>
+    <dd>How aggressively the UI system takes back benefits when you earn side income. Higher score = more punishment for trying to earn while on unemployment.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">RVI — Real Value Index</dt>
+    <dd>The inflation-adjusted purchasing power of the maximum UI benefit. RVI = Max WBA ÷ CPI adjustment. When RVI falls, the frozen check buys less every year.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">SUI — State Unemployment Insurance Tax</dt>
+    <dd>The payroll tax employers pay on each worker's wages to fund the unemployment system. The tax is applied only up to the "taxable wage base" — not on full annual salaries.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">Taxable Wage Base</dt>
+    <dd>The cap on wages subject to SUI tax. Maryland's has been $8,500 since 1992. Employers pay zero SUI tax on anything a worker earns above this cap. As wages grow, the effective tax rate falls — automatically, without a vote.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">FMR — Fair Market Rent</dt>
+    <dd>HUD's published estimate of the cost to rent a modest apartment in a given metro area. Used here as the housing cost benchmark in BAI calculations. 2-bedroom FMR for the DC metro area: ~$2,250/month ($520/week).</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">Covered Employment</dt>
+    <dd>Workers in positions subject to unemployment insurance taxation. The denominator used to scale per-worker gaps into regional trust fund totals.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">Wage Replacement Rate</dt>
+    <dd>The percentage of a worker's average wages that the maximum UI benefit replaces. DC: 20.5% — meaning a maximum benefit covers barely one-fifth of what the average DC worker earned. Virginia: 32.9%. Maryland: 31.1%.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">Disregard Threshold</dt>
+    <dd>The amount you can earn from work while still collecting full UI benefits. Earnings above this threshold are partially clawed back from your check. The MIPI measures how punishing this clawback is.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">Trust Fund</dt>
+    <dd>The state-held reserve of SUI tax revenue used to pay unemployment benefits. When the taxable wage base is frozen and wages grow, less money flows into the fund — creating a structural shortfall even without a recession.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">FEC — Federal Election Commission</dt>
+    <dd>The federal agency that regulates campaign finance and publishes all donor and spending data. All contributions to federal candidates are publicly reported.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">PAC — Political Action Committee</dt>
+    <dd>An organization that pools contributions from businesses, unions, or individuals and donates collectively to candidates. "Business PAC" money flows from corporate trade associations and employer groups. "Labor PAC" money flows from unions.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">Schedule A</dt>
+    <dd>The FEC form that itemizes individual contributions of $200 or more, including the donor's name, employer, and occupation. This is how we categorized business vs. labor money.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">BLS — Bureau of Labor Statistics</dt>
+    <dd>The federal agency that publishes wage, employment, and inflation data. Source for QCEW wage data, LAUS county unemployment rates, and CPI inflation indexes.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">QCEW — Quarterly Census of Employment and Wages</dt>
+    <dd>BLS dataset tracking wages and employment by industry and geography, derived from state unemployment insurance records. Used here for average annual wage figures.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">LAUS — Local Area Unemployment Statistics</dt>
+    <dd>The BLS program that produces monthly unemployment rates at the state, county, and metro level. Source for the unemployment rate data in the context figures.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">CPI-U — Consumer Price Index for All Urban Consumers</dt>
+    <dd>The BLS measure of inflation — how much prices for a basket of goods and services have risen over time. Used here to adjust nominal benefit values to constant 2026 dollars.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">HUD — U.S. Department of Housing and Urban Development</dt>
+    <dd>Federal agency that sets annual Fair Market Rents used as the housing cost benchmark in this audit.</dd>
+
+    <dt style="color:var(--lime);font-weight:700;">DMV Region</dt>
+    <dd>DC, Maryland, and Virginia — the three jurisdictions analyzed in this audit. The term is borrowed from the regional identity of the Washington metropolitan area.</dd>
+  </dl>
+</div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- SOURCES & CITATIONS -->
