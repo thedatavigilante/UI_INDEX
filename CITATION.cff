@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software or dataset, please cite it as below."
+type: software
+title: "UI_INDEX: The Stagnant Safety Net — A Forensic Data Audit of DMV Unemployment Insurance"
+authors:
+  - family-names: Napier
+    given-names: Sierra
+    affiliation: "The Data Vigilante / E3-AI"
+repository-code: "https://github.com/thedatavigilante/UI_INDEX"
+license: MIT
+keywords:
+  - unemployment insurance
+  - data visualization
+  - policy analysis
+  - BLS data
+  - FEC data
+  - DMV
+  - housing gap
+  - campaign finance
+version: 1.0.0
+date-released: 2026-06-11

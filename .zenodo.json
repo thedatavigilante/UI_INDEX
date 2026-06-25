@@ -1,0 +1,20 @@
+{
+  "title": "UI_INDEX: The Stagnant Safety Net — A Forensic Data Audit of DMV Unemployment Insurance",
+  "description": "This repository contains the data, code, and analysis behind an investigation into how unemployment insurance safety net adequacy has eroded across DC, Maryland, and Virginia.",
+  "creators": [
+    {
+      "name": "Napier, Sierra",
+      "affiliation": "The Data Vigilante / E3-AI"
+    }
+  ],
+  "keywords": [
+    "unemployment insurance",
+    "policy analysis",
+    "data visualization",
+    "BLS data",
+    "FEC data",
+    "DMV"
+  ],
+  "license": "MIT",
+  "upload_type": "software"
+}
