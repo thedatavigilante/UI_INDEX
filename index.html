@@ -1,1 +1,1000 @@
-Once David Trone's $62.9M in self-loans are correctly removed, $27.0M is true outside money
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Stagnant Safety Net — The Data Vigilante</title>
+<meta name="description" content="A forensic data audit of unemployment insurance decay across DC, Maryland, and Virginia. Built in one day using AI. The safety net is broken and here's the receipts.">
+<meta name="author" content="Sierra Napier, MPA — The Data Vigilante">
+<meta property="og:title" content="The Stagnant Safety Net — The Data Vigilante">
+<meta property="og:description" content="A forensic audit of unemployment insurance decay across DC, MD, and VA. The safety net is broken and here are the receipts. $601M/year disappearing.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thedatavigilante.github.io/UI_INDEX/">
+<meta property="og:image" content="https://thedatavigilante.github.io/UI_INDEX/figures/01_bai_decay_trajectory.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Stagnant Safety Net — The Data Vigilante">
+<meta name="twitter:description" content="Forensic data audit: who broke the UI safety net in DC, MD, VA — and who's funding the freeze.">
+<meta name="twitter:image" content="https://thedatavigilante.github.io/UI_INDEX/figures/01_bai_decay_trajectory.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "UI_INDEX: The Stagnant Safety Net",
+  "description": "Forensic data audit of unemployment insurance decay across DC, Maryland, and Virginia using 4 proprietary macroeconomic indices and 7 political funding charts",
+  "creator": {
+    "@type": "Person",
+    "name": "Sierra Napier",
+    "url": "https://github.com/thedatavigilante"
+  },
+  "datePublished": "2026-06-11",
+  "license": "https://github.com/thedatavigilante/UI_INDEX/blob/main/LICENSE",
+  "distribution": {
+    "@type": "DataDownload",
+    "contentUrl": "https://thedatavigilante.github.io/UI_INDEX/"
+  },
+  "spatialCoverage": [
+    {
+      "@type": "Place",
+      "name": "District of Columbia"
+    },
+    {
+      "@type": "Place",
+      "name": "Maryland"
+    },
+    {
+      "@type": "Place",
+      "name": "Virginia"
+    }
+  ],
+  "temporalCoverage": "2010/2026",
+  "keywords": ["unemployment insurance", "forensic audit", "DMV", "benefit adequacy", "wage base", "campaign finance", "FEC", "BLS", "policy analysis"]
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #121212;
+    --bg2:     #1a1a1a;
+    --bg3:     #1e1e1e;
+    --fg:      #e8e8e8;
+    --muted:   #888888;
+    --accent:  #00FF41;
+    --lime:    #BFFF00;
+    --gold:    #D4AF37;
+    --crimson: #DC143C;
+    --blue:    #4aa8d8;
+    --border:  #2a2a2a;
+    --mono:    'Space Mono', monospace;
+    --sans:    'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.65;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+
+  /* ── NAV ─────────────────────────────────────────────── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(18,18,18,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.7rem 0;
+    margin: 0 -1.5rem 0;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  nav .nav-brand {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 700;
+    margin-right: 1.5rem;
+    white-space: nowrap;
+  }
+  nav a {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    transition: color 0.15s, background 0.15s;
+  }
+  nav a:hover { color: var(--accent); background: rgba(0,255,65,0.07); }
+  .nav-bmc {
+    margin-left: auto;
+    background: var(--gold) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    padding: 0.3rem 0.8rem !important;
+    border-radius: 4px !important;
+  }
+  .nav-bmc:hover { background: #f0c040 !important; }
+
+  /* ── HERO ────────────────────────────────────────────── */
+  header {
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+  .badges { margin-bottom: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .badge {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.22rem 0.55rem;
+    border-radius: 3px;
+  }
+  .b-green  { background: var(--accent);  color: #000; }
+  .b-gold   { background: var(--gold);    color: #000; }
+  .b-red    { background: var(--crimson); color: #fff; }
+  .b-blue   { background: var(--blue);    color: #000; }
+  .b-outline { border: 1px solid var(--muted); color: var(--muted); background: transparent; }
+
+  .hero { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .hero-avatar {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 22px rgba(0,255,65,0.5), 0 0 60px rgba(0,255,65,0.12);
+    flex-shrink: 0;
+  }
+  .hero-text { flex: 1; min-width: 260px; }
+  h1 {
+    font-family: var(--mono);
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow: 0 0 25px rgba(0,255,65,0.4);
+    line-height: 1.2;
+  }
+  .hero-tagline {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+  .hero-subtitle {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 0.4rem;
+    color: var(--fg);
+  }
+  .hero-meta {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+  }
+
+  /* ── QUOTE BANNER ─────────────────────────────────────── */
+  .quote-banner {
+    background: linear-gradient(135deg, #1a0a0a 0%, #1e1e1e 100%);
+    border-left: 4px solid var(--crimson);
+    border-radius: 0 6px 6px 0;
+    padding: 1.4rem 1.8rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .quote-banner blockquote {
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    color: var(--fg);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .quote-banner blockquote::before {
+    content: '"';
+    font-size: 3rem;
+    color: var(--crimson);
+    line-height: 0;
+    vertical-align: -0.6rem;
+    margin-right: 0.2rem;
+    font-style: normal;
+  }
+  .quote-banner cite {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── BMC BUTTON ───────────────────────────────────────── */
+  .bmc-section {
+    background: linear-gradient(135deg, #1a1500 0%, #1e1e1e 100%);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 1.4rem 1.8rem;
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .bmc-text { flex: 1; min-width: 220px; }
+  .bmc-text strong {
+    font-family: var(--mono);
+    color: var(--gold);
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .bmc-text p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+  .bmc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gold);
+    color: #000;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 0.75rem 1.4rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: background 0.15s, transform 0.1s;
+    flex-shrink: 0;
+  }
+  .bmc-btn:hover { background: #f0c040; transform: translateY(-1px); }
+
+  /* ── AI CALLOUT ───────────────────────────────────────── */
+  .ai-callout {
+    background: #0d1a0d;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.9rem 1.2rem;
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  .ai-callout .ai-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .ai-callout p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+  .ai-callout strong { color: var(--accent); font-family: var(--mono); }
+
+  /* ── SECTION HEADERS ──────────────────────────────────── */
+  h2 {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--lime);
+    margin: 3rem 0 1rem;
+    padding: 0.65rem 0 0.65rem 1rem;
+    border-left: 4px solid var(--accent);
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  h3 {
+    font-family: var(--mono);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 1.5rem 0 0.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── PROSE ─────────────────────────────────────────────── */
+  p { font-size: 0.95rem; color: var(--fg); margin-bottom: 0.5rem; }
+  ul, ol { margin: 0.5rem 0 0.8rem 1.5rem; }
+  li { font-size: 0.92rem; color: var(--fg); margin-bottom: 0.4rem; }
+  strong { color: var(--fg); }
+
+  /* ── CARDS ─────────────────────────────────────────────── */
+  .card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.4rem;
+    margin: 1.2rem 0;
+  }
+  .card img {
+    width: 100%;
+    border-radius: 4px;
+    margin: 1rem 0 0.5rem;
+    border: 1px solid var(--border);
+    display: block;
+  }
+  .caption {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+  .caption em { color: var(--lime); font-style: normal; }
+
+  /* ── STAT ROW ──────────────────────────────────────────── */
+  .stat-row { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.2rem 0; }
+  .stat-box {
+    flex: 1; min-width: 160px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.1rem 1rem;
+    text-align: center;
+  }
+  .stat-box.danger { border-top-color: var(--crimson); }
+  .stat-box.gold   { border-top-color: var(--gold); }
+  .stat-value {
+    font-family: var(--mono);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-value.red  { color: var(--crimson); }
+  .stat-value.gold { color: var(--gold); }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.35rem;
+  }
+
+  /* ── CALLOUT BOXES ─────────────────────────────────────── */
+  .finding {
+    background: #0f1a0f;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    font-size: 0.9rem;
+  }
+  .finding .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .methodology {
+    background: #181818;
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+    color: #aaa;
+  }
+  .methodology strong { color: var(--fg); }
+  code {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--lime);
+    background: #222;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+  }
+
+  /* ── CITATION TABLE ─────────────────────────────────────── */
+  .cite-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  .cite-table th {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+  }
+  .cite-table td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--fg);
+    vertical-align: top;
+  }
+  .cite-table tr:hover td { background: #1e1e1e; }
+  .cite-table .status-ok   { color: var(--accent); font-family: var(--mono); font-size: 0.8rem; }
+  .cite-table .status-warn { color: var(--gold);   font-family: var(--mono); font-size: 0.8rem; }
+  .cite-table .status-fail { color: var(--crimson);font-family: var(--mono); font-size: 0.8rem; }
+
+  /* ── FOOTER ─────────────────────────────────────────────── */
+  footer {
+    border-top: 2px solid var(--accent);
+    margin-top: 4rem;
+    padding-top: 2rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .footer-brand { color: var(--accent); font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .footer-tagline { color: var(--gold); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ── LIGHT MODE ─────────────────────────────────────────── */
+  body.light {
+    --bg:      #f5f5f5;
+    --bg2:     #ffffff;
+    --bg3:     #eeeeee;
+    --fg:      #111111;
+    --muted:   #555555;
+    --border:  #dddddd;
+    --accent:  #007a20;
+    --lime:    #5a8000;
+  }
+  body.light nav {
+    background: rgba(245,245,245,0.97);
+  }
+  body.light .quote-banner {
+    background: linear-gradient(135deg, #fff0f0 0%, #f8f8f8 100%);
+  }
+  body.light .bmc-section {
+    background: linear-gradient(135deg, #fffbea 0%, #f8f8f8 100%);
+  }
+  body.light .ai-callout {
+    background: #f0fff4;
+  }
+  body.light .finding {
+    background: #f0fff4;
+  }
+  body.light code {
+    background: #e8e8e8;
+    color: #3a6800;
+  }
+  body.light .methodology {
+    background: #fafafa;
+    color: #444;
+  }
+
+  #theme-toggle {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    margin-left: 0.3rem;
+  }
+  #theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── "SO WHAT?" CALLOUT ──────────────────────────────────── */
+  .callout-plain {
+    border-left: 4px solid var(--gold);
+    background: transparent;
+    padding: 0.85rem 1.2rem;
+    margin: 0 0 1.2rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--fg);
+    line-height: 1.5;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--lime); text-decoration: underline; }
+
+  /* ── INVESTIGATIVE TAKE ─────────────────────────────────────── */
+  .investigative-take {
+    border-left: 3px solid var(--crimson);
+    padding: 1rem 1.5rem;
+    margin: 1.2rem 0;
+    font-family: var(--mono);
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--fg);
+    background: rgba(220,20,60,0.05);
+    border-radius: 0 4px 4px 0;
+    line-height: 1.6;
+  }
+  .investigative-take .it-label {
+    display: block;
+    font-style: normal;
+    font-size: 0.65rem;
+    color: var(--crimson);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── SEVERITY BANNER ─────────────────────────────────────────── */
+  .severity-banner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .sev-cell {
+    border-radius: 6px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+  }
+  .sev-critical { background: rgba(220,20,60,0.12); border: 1px solid var(--crimson); }
+  .sev-severe   { background: rgba(212,175,55,0.12); border: 1px solid var(--gold); }
+  .sev-cautionary { background: rgba(191,255,0,0.08); border: 1px solid var(--lime); }
+  .sev-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+  .sev-verdict {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .sev-critical .sev-verdict { color: var(--crimson); }
+  .sev-severe   .sev-verdict { color: var(--gold); }
+  .sev-cautionary .sev-verdict { color: var(--lime); }
+  .sev-detail {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── LAWMAKER TABLE ──────────────────────────────────────────── */
+  .lawmaker-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+  }
+  .lawmaker-table th {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+  }
+  .lawmaker-table td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--fg);
+    vertical-align: top;
+  }
+  .lawmaker-table tr:hover td { background: #1e1e1e; }
+  .lawmaker-table .zero { color: var(--crimson); font-family: var(--mono); font-weight: 700; }
+  .lawmaker-table .pos  { color: var(--lime);    font-family: var(--mono); }
+  .lawmaker-table .ratio { color: var(--gold);   font-family: var(--mono); font-weight: 700; }
+
+  /* ── STAT VALUE LIME ─────────────────────────────────────────── */
+  .stat-value.lime { color: var(--lime); }
+  .stat-box.lime   { border-top-color: var(--lime); }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 1.4rem; }
+    .hero-avatar { width: 80px; height: 80px; }
+    .stat-value { font-size: 1.3rem; }
+    nav { gap: 0.2rem; }
+    .bmc-section { flex-direction: column; }
+    .severity-banner { grid-template-columns: 1fr; }
+    .lawmaker-table { font-size: 0.78rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ────────────────────────────────────────────── -->
+<nav>
+  <span class="nav-brand">📊 DATA VIGILANTE</span>
+  <a href="#ch1">BAI</a>
+  <a href="#ch2">WBI</a>
+  <a href="#ch3">MIPI</a>
+  <a href="#ch4">Trust Fund</a>
+  <a href="#county-map">Map</a>
+  <a href="#interactive-charts">Interactive</a>
+  <a href="#ch5">FEC</a>
+  <a href="political.html">Political Layer</a>
+  <a href="methodology.html">Methodology</a>
+  <a href="about.html">About</a>
+  <a href="https://www.linkedin.com/in/sierran" target="_blank" rel="noopener">LinkedIn</a>
+  <button id="theme-toggle" aria-label="Toggle light/dark mode" onclick="toggleTheme()">◑</button>
+  <a href="https://buymeacoffee.com/thedatavigilante" target="_blank" rel="noopener" class="nav-bmc">☕ Support</a>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<header>
+  <div class="badges">
+    <span class="badge b-green">Forensic Audit</span>
+    <span class="badge b-gold">Public Data</span>
+    <span class="badge b-red">Political Accountability</span>
+    <span class="badge b-blue">DMV 2010–2026</span>
+    <span class="badge b-outline">Built in 1 Day · AI-Assisted</span>
+  </div>
+
+  <div class="hero">
+    <img class="hero-avatar"
+         src="https://github.com/thedatavigilante.png"
+         alt="The Data Vigilante — Sierra Napier, MPA"
+         onerror="this.style.display='none'">
+    <div class="hero-text">
+      <h1>📊 The Stagnant Safety Net</h1>
+      <div class="hero-tagline">The Robin Hood of AI &nbsp;·&nbsp; The Data Vigilante</div>
+      <div class="hero-subtitle">A Tri-State Forensic Audit of Unemployment Insurance Decay</div>
+      <div class="hero-meta">Sierra Napier, MPA &nbsp;|&nbsp; DC · Maryland · Virginia &nbsp;|&nbsp; 2010 → 2026 &nbsp;|&nbsp; BLS · USDOL · FEC · Census · HUD</div>
+    </div>
+  </div>
+
+  <div class="quote-banner">
+    <blockquote>I now know why they want to keep you sleeping. It's easier to rob you blind.</blockquote>
+    <cite>— The Data Vigilante</cite>
+  </div>
+
+  <p style="color:#aaa; font-size:0.93rem; margin-top:1rem; line-height:1.7;">
+    While you were busy surviving, three jurisdictions quietly let your unemployment safety net rot.
+    Benefits frozen. Wage bases locked. Trust funds drained. And the people with the power to fix it?
+    Funded by the same industries that profit from keeping your floor low.
+    This isn't a coincidence. <strong style="color:var(--lime)">This is the policy.</strong> Here are the receipts.
+  </p>
+</header>
+
+<!-- ── BMC SUPPORT ─────────────────────────────────────────────── -->
+<div class="bmc-section">
+  <div class="bmc-text">
+    <strong>☕ Keep the Investigation Running</strong>
+    <p>
+      I'm currently unemployed — yes, actually living the data — and the APIs that power this
+      audit (FEC, Census, Congress.gov) cost real money to keep running. If this work matters to you,
+      buy me a coffee. Every dollar keeps the data flowing and the freeze exposed.
+    </p>
+  </div>
+  <a class="bmc-btn"
+     href="https://buymeacoffee.com/thedatavigilante"
+     target="_blank" rel="noopener">
+    ☕ Buy Me a Coffee
+  </a>
+</div>
+
+<div class="ai-callout">
+  <span class="ai-icon">🤖</span>
+  <p>
+    <strong>Built in one day using AI.</strong> This entire forensic audit — data pipeline, indices,
+    13 figures + 11 interactive charts + county GIS map, FEC API integration, political accountability layer, and this portfolio —
+    was architected and shipped in a single session using Claude (Anthropic).
+    If the machine can expose a $601M annual shortfall faster than a legislative committee can schedule a hearing,
+    maybe the problem isn't the technology.
+  </p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 1 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="ch1">Chapter 1 — Worker Insolvency: The BAI</h2>
+
+<div class="callout-plain">Your unemployment check can't pay your rent — and it hasn't kept pace with housing for sixteen years running.</div>
+
+<div class="card">
+  <p>
+    The <strong><abbr title="Can your UI check cover your rent? Below 1.0 = no.">Benefit Adequacy Index (BAI)</abbr></strong> answers one question:
+    <em>can a laid-off worker still pay rent?</em>
+    <code>BAI = Max WBA ÷ Weekly Housing Cost</code>.
+    Below 1.0 is systemic failure — the benefit cannot cover housing alone,
+    before food, utilities, childcare, or transportation enter the equation.
+  </p>
+  <p style="margin-top:0.6rem; color:#aaa; font-size:0.9rem;">
+    Maryland's maximum weekly benefit has been <strong>$430 since 2014</strong>.
+    Not a typo. The same $430 across 12 years of wage growth, inflation, and a pandemic.
+    Meanwhile weekly housing costs in Maryland climbed from $295 to $450 —
+    a 52% increase. The safety net did not move. The cost of survival did.
+  </p>
+  <img src="figures/01_bai_decay_trajectory.png" alt="BAI Decay Trajectory 2010–2026">
+  <div class="caption">
+    Figure 1 — BAI decay across DC, Maryland, and Virginia (2010–2026). Source: <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> + <a href="https://www.hud.gov/program_offices/comm_planning/affordablehousing/programs/home/fmr" target="_blank">HUD Fair Market Rents</a> + State DOL benefit schedules.<br>
+    <em>Maryland crossed below the 1.0 survival threshold by 2026. Virginia passed SB 1056 in January 2026 (+$52/week, first increase since 2014), bringing BAI to 1.02 — barely above the line. DC was already below threshold in 2010 and has no scheduled correction.</em>
+  </div>
+</div>
+
+<div class="stat-row">
+  <div class="stat-box danger">
+    <div class="stat-value red">0.96</div>
+    <div class="stat-label">Maryland BAI 2026</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-value" style="color:#BFFF00">1.02</div>
+    <div class="stat-label">Virginia BAI 2026 ↑ SB1056</div>
+  </div>
+  <div class="stat-box danger">
+    <div class="stat-value red">0.85</div>
+    <div class="stat-label">DC BAI 2026</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-value">1.46 → 0.96</div>
+    <div class="stat-label">Maryland 16-yr decline</div>
+  </div>
+</div>
+
+<blockquote class="investigative-take">
+  <span class="it-label">// Investigative Take — BAI</span>
+  Maryland crossed below survival threshold sometime between 2018 and 2026. There was no press conference. No emergency session. The line just quietly dropped. Virginia got a $52/week fix in January 2026 — the first legislative action since 2014 — and is now exactly $10/week above failure. DC has been below threshold since at least 2010 and has no scheduled correction. Three jurisdictions. Sixteen years. Two remain in active failure. One just barely escaped — for now.
+</blockquote>
+
+<div class="finding">
+  <span class="label">// FORENSIC FINDING — CH.1</span>
+  Two of three jurisdictions can't cover rent on a full unemployment check — and the one that "passed" clears the bar by ten dollars a week. Nobody declared an emergency. The floor just dropped a little lower every year until it stopped being enough to live on.
+</div>
+
+<!-- ── REAL VALUE INDEX (added 2026-06-12, additive) ── -->
+<h3 style="margin: 2rem 0 0.8rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">The Real Value Index — inflation did the cutting</h3>
+<div class="callout-plain">They didn't even have to take a vote. A $430 check frozen since 2014 is worth about <strong style="color:var(--crimson)">$300</strong> today — inflation quietly carved off nearly a third. Virginia froze all the way back in 2008, so its check sank to ~$244 in real money before the 2026 bump.</div>
+<div class="card">
+  <p>
+    The <strong>Real Value Index (RVI)</strong> converts each jurisdiction's nominal frozen maximum weekly benefit into 2026 constant dollars using BLS CPI-U cumulative inflation.
+    <code>RVI = Nominal WBA ÷ (1 + Cumulative CPI%)</code>.
+    The result is the purchasing power a claimant actually holds — not the number on the check.
+    A benefit frozen since 2014 has lost 29% of its real value by 2026.
+    A benefit frozen since 2008 has lost 35%. Nobody voted to cut it. The clock did.
+  </p>
+  <img src="figures/08_real_value_index.png" alt="Real Value Index — frozen benefits vs. their real 2026 value">
+  <div class="caption">
+    Figure 8 — The Real Value Index: what each frozen maximum benefit is actually worth in 2026 dollars.
+    Source: <a href="https://www.bls.gov/cpi/" target="_blank">BLS CPI-U</a> (2014→2026 anchor: 40.67% cumulative; 2008→2026 anchor: ~54%).<br>
+    <em>Maryland −29% · Virginia −35% (frozen since 2008 — the worst erosion) · DC −25%. A freeze is a pay cut nobody has to sign their name to.</em>
+  </div>
+</div>
+
+<blockquote class="investigative-take">
+  <span class="it-label">// Forensic Finding — Real Value Index</span>
+  A frozen benefit is not static — it actively loses purchasing power every year inflation runs. Maryland's $430 cap, unchanged since 2014, is worth approximately $300 in today's dollars: a 29% cut with no floor vote and no press conference. Virginia's freeze ran from 2008 to 2026 — long enough to carve 35% off the check's real value before SB 1056 partially corrected it. A freeze is not inaction. It is a passive, unsigned pay cut that compounds every single year the cap sits still.
+</blockquote>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 2 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="ch2">Chapter 2 — The Corporate Tax Escape: WBI</h2>
+
+<div class="callout-plain">The cap on what your employer pays into unemployment hasn't moved in over 30 years. Your wages have. Theirs haven't.</div>
+
+<div class="card">
+  <p>
+    The <strong><abbr title="What % of your wage is actually taxed for UI? Falling = system starves.">Regressive Wage Base Index (WBI)</abbr></strong> is where it gets deliberately boring —
+    which is exactly how they want it.
+    <code>WBI = Taxable Wage Base ÷ Avg Annual Wage</code>.
+    Employers only pay SUI tax on wages <em>up to the statutory cap</em>.
+    Maryland's cap: <strong>$8,500 — frozen since 1992</strong>.
+    A cap set when the median Maryland wage was around $32,000.
+    It is now $72,800. The math is not complicated.
+    The politics is.
+  </p>
+  <img src="figures/02_wbi_stagnation.png" alt="WBI Stagnation">
+  <div class="caption">
+    Figure 2 — WBI stagnation. Source: <a href="https://www.dol.gov/agencies/eta/unemployment-insurance/financing" target="_blank">DOL UI Financial Data</a> + <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> + State DOL statutory wage base schedules.<br>
+    <em>Maryland frozen at $8,500 since 1992. Virginia at $8,000 since 2010. DC raised once in 2018.</em>
+  </div>
+</div>
+
+<div class="methodology">
+  <strong>What this actually means:</strong> A Maryland employer pays SUI tax on the first $8,500 of every worker's wages.
+  On a worker earning $72,800/year, that's a taxable fraction of <code>11.7%</code> —
+  the employer contributes nothing toward the safety net on the other 88% of that paycheck.
+</div>
+
+<blockquote class="investigative-take">
+  <span class="it-label">// Investigative Take — WBI</span>
+  The formula is elegant in its cruelty: freeze the taxable wage cap while wages grow, and the employer's effective tax rate falls by half — without anyone ever voting to cut it. Maryland employers now pay UI taxes on 11.7% of the average worker's wages; in 1992 it was 26%. The trust fund is starved by inaction compounded over three decades. They just never touched the number. That's how you cut a program without cutting a program.
+</blockquote>
+
+<div class="finding">
+  <span class="label">// FORENSIC FINDING — CH.2</span>
+  Maryland's $8,500 taxable wage base was set in 1992 when the average Maryland wage was approximately $32,700 — a taxable fraction of 26%. The average wage is now $72,800. The base captures 11.7%. Employers pay zero toward the safety net on the top <strong>88.3%</strong> of the average worker's paycheck. No vote was cast to cut that rate. No vote is needed to keep it cut. The statute sits still and the formula does the rest automatically.
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 3 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="ch3">Chapter 3 — The Poverty Trap: MIPI & Housing Gap</h2>
+
+<div class="callout-plain">Drove Uber to make ends meet while on unemployment? The government sees that $250 and takes most of it back out of your check. The system punishes you for surviving.</div>
+
+<div class="card">
+  <p>
+    The <strong><abbr title="How much of your side gig does the UI office claw back? Higher = more punishment for earning.">Multi-Income Penalty Index (MIPI)</abbr></strong> measures what happens when a UI recipient
+    does exactly what every think-piece tells them to do: hustle.
+    <code>MIPI = (Earnings − Disregard) ÷ Max WBA</code>.
+    Earn $250/week in part-time work? The system claws back most of it in benefit reductions.
+    The disregard threshold — the amount you can earn before the penalty kicks in —
+    was set decades ago and frozen there. Shocking, I know.
+  </p>
+  <img src="figures/03_mipi_clawback.png" alt="MIPI Clawback Severity">
+  <div class="caption">
+    Figure 3 — MIPI clawback severity across jurisdictions. Source: State DOL benefit calculation schedules + <a href="https://www.dol.gov/agencies/eta/unemployment-insurance" target="_blank">DOL UI Program</a>.<br>
+    <em>The clawback rate climbs across jurisdictions — the more you hustle, the more the office takes back.</em>
+  </div>
+</div>
+
+<blockquote class="investigative-take">
+  <span class="it-label">// Investigative Take — MIPI</span>
+  MIPI has a technical name. What it actually measures is: how aggressively does the system penalize you for not being poor enough? Virginia at 0.529 means you lose 53 cents of benefit for every dollar you earn above the disregard threshold. The gig economy is real. Millions of people drive, deliver, tutor, and freelance while looking for work. The UI system was not updated to acknowledge any of that. The disregard thresholds haven't kept pace with wages any more than the benefit caps have. The message encoded in this policy is: stay broke or lose your check.
+</blockquote>
+
+<div class="card">
+  <p>
+    The <strong>Housing Gap</strong> is the weekly dollar amount a UI claimant must conjure from thin air.
+    It is not abstract. It is the difference between housed and not.
+  </p>
+  <img src="figures/04_housing_vs_wba_gap.png" alt="Housing vs WBA Gap — 3-panel diverging lines">
+  <div class="caption">
+    Figure 4 — Housing cost (rising, crimson) vs. maximum weekly benefit (flat/frozen, dashed) per state.
+    Source: <a href="https://www.huduser.gov/portal/datasets/fmr.html" target="_blank">HUD Fair Market Rents</a> + State DOL benefit schedules.<br>
+    <em>The shaded area is the survival deficit. Watch Maryland's flat line and the housing cost climb past it and keep going.</em>
+  </div>
+</div>
+
+<blockquote class="investigative-take">
+  <span class="it-label">// Investigative Take — Housing Gap</span>
+  The shaded area isn't a policy gap. It's a weekly survival deficit. Maryland claimants are $20/week short on rent alone — before a single other bill. That $20 shortfall is the direct result of a $430 benefit cap that hasn't moved in over a decade, facing a $450 weekly housing market that never stopped moving. DC is $76/week short. That's not a gap. That's a canyon. And the people writing the policy that created it are getting paid $115,000 a year with automatic cost-of-living adjustments.
+</blockquote>
+
+<div class="finding">
+  <span class="label">// FORENSIC FINDING — CH.3</span>
+  Earn a little, the state claws most of it back. Cover rent, and you're already short before the lights, the bus, or a single meal. This isn't a system with a poverty-trap bug. The trap is the product.
+</div>
+
+<!-- ── CROSS-INDEX SEVERITY BANNER ───────────────────────────── -->
+<h3 style="margin: 2rem 0 0.8rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Cross-Index Severity Assessment — 2026</h3>
+<div class="severity-banner">
+  <div class="sev-cell sev-critical">
+    <div class="sev-label">District of Columbia</div>
+    <div class="sev-verdict">CRITICAL</div>
+    <div class="sev-detail">BAI 0.85 · −$76/wk housing deficit · Below threshold every year measured · No correction scheduled · WBI 8.0%</div>
+  </div>
+  <div class="sev-cell sev-severe">
+    <div class="sev-label">Maryland</div>
+    <div class="sev-verdict">SEVERE</div>
+    <div class="sev-detail">BAI 0.96 · −$20/wk housing deficit · Crossed below threshold · $430 frozen since 2014 · WBI 11.7%</div>
+  </div>
+  <div class="sev-cell sev-cautionary">
+    <div class="sev-label">Virginia</div>
+    <div class="sev-verdict">CAUTIONARY</div>
+    <div class="sev-detail">BAI 1.02 · $10/wk above failure · First fix since 2014 via SB 1056 (Jan 2026) · WBI 11.7%</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 4 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="ch4">Chapter 4 — The Trust Fund Shortfall</h2>
+
+<div class="callout-plain">Maryland's unemployment tax cap hasn't moved since 1992 — when gas was $1.05 a gallon. That frozen number costs the DMV region $601 million every single year.</div>
+
+<div class="card">
+  <p>
+    If the SUI taxable wage base had kept pace with average wage growth since 2010,
+    here is what employers would be contributing per worker, per year —
+    and here is what they actually pay.
+    The difference is the structural shortfall. It is not speculative.
+    It is arithmetic.
+  </p>
+  <img src="figures/05_employer_per_employee_gap.png" alt="Per-Employee Underpayment">
+  <div class="caption">
+    Figure 5 — Per-employee structural underpayment ($/worker/year).
+    Source: <a href="https://www.dol.gov/agencies/eta/unemployment-insurance/financing" target="_blank">DOL UI Financial Data</a> (effective SUI tax rates) + <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> (wages).<br>
+    <em>Uses DOL historical effective SUI tax rates by state and year — not a flat assumption. Rates shown inside each bar.</em>
+  </div>
+</div>
+
+<blockquote class="investigative-take">
+  <span class="it-label">// Investigative Take — Per-Employee Underpayment</span>
+  Figure 5 uses DOL historical effective SUI tax rates — not a flat assumption — to quantify the actual employer tax avoidance rate per position. Virginia's effective rate is lower than Maryland's, but its frozen $8,000 base (unchanged since 2010) combined with faster wage growth produces a structurally larger per-employee gap in real terms. The shortfall is directly traceable to a number that was written into statute and never touched again. This is not an estimate of potential revenue — it is a calculation of what the system was designed to collect and stopped collecting as wages grew past the cap.
+</blockquote>
+
+<div class="stat-row">
+  <div class="stat-box gold">
+    <div class="stat-value gold">$601.3M</div>
+    <div class="stat-label">DMV Annual Shortfall</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-value">$252.4M</div>
+    <div class="stat-label">Virginia / Year</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-value">$248.6M</div>
+    <div class="stat-label">Maryland / Year</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-value">$100.3M</div>
+    <div class="stat-label">DC / Year</div>
+  </div>
+</div>
+
+<div class="card">
+  <img src="figures/06_employer_aggregate_gap.png" alt="Aggregate Trust Fund Shortfall">
+  <div class="caption">
+    Figure 6 — Annual aggregate trust fund shortfall by state ($ millions).
+    Source: <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a> (covered employment) + <a href="https://www.dol.gov/agencies/eta/unemployment-insurance/financing" target="_blank">DOL UI Financial Data</a>.<br>
+    <em>$601.3 million per year, every year, disappearing from the trust fund because of a number that hasn't moved since George H.W. Bush was president.</em>
+  </div>
+</div>
+
+<blockquote class="investigative-take">
+  <span class="it-label">// Investigative Take — Aggregate Shortfall</span>
+  $601.3 million per year disappears from the tri-state trust fund infrastructure because taxable wage cap denominators sit frozen while the wage numerator climbs. Virginia: $252.4M. Maryland: $248.6M. DC: $100.3M. Scale Maryland's 34-year freeze across time and you are looking at a multi-billion dollar structural drain baked silently into statute. This revenue did not disappear due to economic recession or legislative spending — it was never collected in the first place. The cap froze. The wages didn't. The math is not complicated.
+</blockquote>
+
+<div class="card">
+  <img src="figures/07_statutory_vs_expected_wage_base.png" alt="Statutory vs Expected Wage Base">
+  <div class="caption">
+    Figure 7 — Statutory (frozen) vs. expected (wage-indexed) taxable wage base, 2026.
+    Source: State DOL + <a href="https://www.bls.gov/cew/" target="_blank">BLS QCEW</a>.<br>
+    <em>The red bar is what the base would be if it tracked the same ratio to wages it had in 2010. The blue bar is what the law actually says. The gap between them is $601M/year.</em>
+  </div>
+</div>
+
+<blockquote class="investigative-take">
+  <span class="it-label">// Investigative Take — Statutory vs. Expected Wage Base</span>
+  The bar gap in Figure 7 makes the policy choice visible in absolute dollar terms. Virginia's wage base should be approximately $17,000 if indexed to maintain its 2010 ratio; the statute says $8,000. Maryland's should be ~$22,000; the statute says $8,500. DC's should be ~$16,000; the statute says $9,000. These gaps were not caused by economic downturns, fiscal crises, or competing budget priorities. They are the direct result of state legislatures declining to update a number. The erosion from 16.3% to 11.7% in Maryland isolates the exact mathematical cause of structural starvation — and it is simply arithmetic.
+</blockquote>
+
+<div class="finding">
+  <span class="label">// FORENSIC FINDING — CH.4</span>
+  Maryland's taxable wage base is now <strong>11.7%</strong> of the average annual wage.
+  In 2010 it was 16.3%. Virginia: from 16.7% to 11.7%.
+  DC: from 13.6% to 8.0%. The trust fund is being systematically starved —
+  not by economic downturn, but by a denominator allowed to grow
+  while the numerator sits perfectly still.
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- UNEMPLOYMENT CONTEXT — Figure 09 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="ch-exposure">The Human Scale — Who Is Exposed?</h2>
+
+<div class="callout-plain">Before we follow the money, let's count the people. Three jurisdictions. Millions of workers. Two states where your unemployment check can't cover rent — and federal UI investment has not kept pace with the workers left behind.</div>
+
+<div class="card">
+  <p>
+    Figure 9 presents a dual-panel context view: state unemployment rate trajectories from 2010 through 2026 (left) alongside federal UI administrative grant allocations under CFDA 17.225 (right).
+    Together these panels establish the human scale of the system being audited —
+    how many workers are exposed across each jurisdiction, and whether the federal infrastructure investment
+    that administers their benefits has tracked that exposure over time.
+    These are the people the BAI, WBI, MIPI, and trust fund figures are ultimately about.
+  </p>
+  <img src="figures/09_unemployment_context.png" alt="Unemployment Context: Rates 2010–2026 and Federal UI Investment">
+  <div class="caption">
+    Figure 9 — Left: State unemployment rate trends 2010–2026. Right: Federal UI administrative grants (CFDA 17.225, $M/year) by state.
+    Source: <a href="https://www.bls.gov/lau/" target="_blank">BLS LAUS</a> + <a href="https://www.usaspending.gov/" target="_blank">USASpending.gov</a>.<br>
+    <em>DC's unemployment rate peaked at 9.9% in 2010 and has declined to 4.1% — yet the maximum benefit is unchanged in real terms. Federal UI grants have not tracked changes in unemployed worker populations across the DMV.</em>
+  </div>
+</div>
+
+<blockquote class="investigative-take">
+  <span class="it-label">// Investigative Take — Human Scale &amp; Federal Investment</span>
+  Federal UI administrative grants have not dynamically scaled alongside shifting worker footprints across the DMV. DC's unemployment peaked at 9.9% in 2010 and has since declined; the federal administrative investment tracked the peak but has not been recalibrated to benefit adequacy. The grants fund administration — not adequacy. A state can receive stable federal money while workers inside it receive frozen, inflation-eroded benefits. These two metrics are structurally decoupled, and that decoupling is itself a policy choice — one that allows administrative capacity to be maintained while the floor beneath claimants quietly drops.
+</blockquote>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- COUNTY MAP — Chapter 4.5 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="county-map">Geographic Distribution — Benefit Adequacy by County</h2>
+
+<div class="callout-plain">Two of three DMV jurisdictions cannot cover housing on maximum UI benefits. DC's BAI of 0.854 means even a worker receiving the full $444/week benefit faces a $76 weekly housing shortfall. Maryland's $430 cap falls $20/week short of a 2-bedroom FMR. These are not marginal misses — they are structural failures built into the statutory benefit caps.</div>
+
+<div class="card">
+  <p>
+    The interactive choropleth shows the Benefit Adequacy Index (BAI) — the ratio of maximum weekly
