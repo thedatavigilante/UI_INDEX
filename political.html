@@ -10,7 +10,13 @@
 <meta property="og:description" content="7 UI committee members. $89.9M in activity. The honest version: why every view of this data tells a different story — and what the opacity itself reveals.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thedatavigilante.github.io/UI_INDEX/political.html">
+<meta property="og:image" content="https://thedatavigilante.github.io/UI_INDEX/figures/11_fec_total_receipts.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Who Funds the Freeze — Political Layer | The Data Vigilante">
+<meta name="twitter:description" content="7 UI committee members. $89.9M in activity. The honest version: why every view of this data tells a different story.">
+<meta name="twitter:image" content="https://thedatavigilante.github.io/UI_INDEX/figures/11_fec_total_receipts.png">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -91,8 +97,8 @@
   .lawmaker-table td { padding:0.6rem 0.8rem; border-bottom:1px solid var(--border); color:var(--fg); vertical-align:top; }
   .lawmaker-table tr:hover td { background:#1e1e1e; }
   .lawmaker-table .zero { color:var(--crimson); font-family:var(--mono); font-weight:700; }
-  .lawmaker-table .pos { color:var(--lime); font-family:var(--mono); }
-  .lawmaker-table .ratio { color:var(--gold); font-family:var(--mono); font-weight:700; }
+  .lawmaker-table .pos { color:var(--lime);    font-family:var(--mono); }
+  .lawmaker-table .ratio { color:var(--gold);   font-family:var(--mono); font-weight:700; }
 
   .methodology-note { background:#181818; border-left:3px solid var(--gold); padding:1rem 1.2rem; margin:1rem 0; font-size:0.85rem; color:#aaa; border-radius:0 4px 4px 0; }
   .methodology-note strong { color:var(--fg); }
@@ -112,6 +118,26 @@
     nav { gap:0.2rem; }
   }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "UI_INDEX Political Layer: Who Funds the Freeze",
+  "description": "Campaign finance analysis of UI committee members using FEC 2023-2024 data. Four-view comparison matrix with self-funding correction, business-to-labor ratios, and per-month normalization.",
+  "creator": {
+    "@type": "Person",
+    "name": "Sierra Napier",
+    "url": "https://github.com/thedatavigilante"
+  },
+  "datePublished": "2026-06-11",
+  "license": "https://github.com/thedatavigilante/UI_INDEX/blob/main/LICENSE",
+  "distribution": {
+    "@type": "DataDownload",
+    "contentUrl": "https://thedatavigilante.github.io/UI_INDEX/"
+  },
+  "keywords": ["campaign finance", "FEC", "unemployment insurance", "political accountability", "business-to-labor ratio", "self-funding", "DMV"]
+}
+</script>
 </head>
 <body>
 
@@ -255,7 +281,7 @@
 
 <div class="card">
   <img src="figures/11_fec_total_receipts.png" alt="FEC Total Receipts by Member">
-  <div class="caption">Figure 11 — Total campaign receipts by member, 2023–2024 reporting period (FEC API). <em>Trone's bar is 97.7% self-funded. Remove him and the field collapses to single-digit millions.</em></div>
+  <div class="caption">Figure 11 — Total campaign receipts by member, 2023–2024 reporting period (FEC API). <em>Trone's bar is 98.6% self-funded. Remove him and the field collapses to single-digit millions.</em></div>
 </div>
 
 <div class="card">
@@ -274,7 +300,7 @@
   <h3>// Profile: David Trone (MD)</h3>
   <div>
     <span class="trone-stat">$63.8M</span>
-    <span class="trone-stat">97.7%</span>
+    <span class="trone-stat">98.6%</span>
     <span class="trone-stat">~$2.4B</span>
   </div>
   <p style="color:var(--muted); font-size:0.78rem; margin-top:0.2rem;">Total receipts &nbsp;|&nbsp; Self-funded share &nbsp;|&nbsp; Total Wine &amp; More est. revenue</p>
@@ -289,7 +315,7 @@
 
 <blockquote class="investigative-take">
   <span class="it-label">// Investigative Take — Trone</span>
-  A man who co-founded a $2.4 billion retail empire sat on the committee overseeing the tax policy that governs how much his own company pays into unemployment insurance. He then self-funded 97.7% of a $63.8 million Senate campaign, making outside-donor analysis nearly impossible — because there are almost no outside donors ($1.45M of $63.8M total). The conflict of interest isn't hidden in the donor file. It's in the committee roster.
+  A man who co-founded a $2.4 billion retail empire sat on the committee overseeing the tax policy that governs how much his own company pays into unemployment insurance. He then self-funded 98.6% of a $63.8 million Senate campaign, making outside-donor analysis nearly impossible — because there are almost no outside donors ($1.45M of $63.8M total). The conflict of interest isn't hidden in the donor file. It's in the committee roster.
 </blockquote>
 
 <!-- LAWMAKER SALARY -->

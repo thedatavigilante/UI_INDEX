@@ -1,0 +1,37 @@
+name: Bug Report
+description: Report a bug in the data pipeline, visualization, or site
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. This project handles government data — accuracy matters.
+  - type: input
+    id: jurisdiction
+    attributes:
+      label: Jurisdiction
+      description: Which state/region is affected?
+      placeholder: e.g., Maryland, Virginia, DC
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug. Include expected vs. actual behavior.
+      placeholder: The BAI chart shows Virginia at 0.98, but the README says 1.02...
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Data Source (if applicable)
+      description: Which source shows the discrepancy?
+      placeholder: e.g., BLS QCEW 2024, HUD FMR 2026
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

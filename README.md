@@ -7,10 +7,12 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/build-passing-success?style=flat-square" alt="Build Status">
-  <img src="https://img.shields.io/badge/Data%20Validation-Verified-blue?style=flat-square" alt="Data Validation">
-  <img src="https://img.shields.io/badge/Version-1.0.0--Production-blue?style=flat-square" alt="Version">
-  <img src="https://img.shields.io/badge/License-MIT-orange?style=flat-square" alt="License">
+  <img src="https://img.shields.io/github/stars/thedatavigilante/UI_INDEX?style=social" alt="GitHub stars">
+  <img src="https://img.shields.io/github/forks/thedatavigilante/UI_INDEX?style=social" alt="GitHub forks">
+  <img src="https://img.shields.io/github/last-commit/thedatavigilante/UI_INDEX" alt="Last commit">
+  <img src="https://github.com/thedatavigilante/UI_INDEX/actions/workflows/validate.yml/badge.svg" alt="CI">
+  <img src="https://img.shields.io/github/license/thedatavigilante/UI_INDEX" alt="License">
+  <a href="https://thedatavigilante.github.io/UI_INDEX/"><img src="https://img.shields.io/badge/Live%20Site-thedatavigilante.github.io%2FUI__INDEX-FFB800?logo=githubpages" alt="Live Site"></a>
 </p>
 
 > ***A forensic data portfolio exposing how inflation, frozen policies, and political campaign contributions have been systematically weaponized to weaken unemployment insurance across the DMV.***
@@ -18,19 +20,51 @@
 **Architected by:** Sierra Napier, MPA ([The Data Vigilante](https://github.com/thedatavigilante))  
 **Target Focus:** District of Columbia, Maryland, Virginia (DMV) Legislative Auditing
 
+---
+
+## 🚀 6-Second Scan
+
+| Stat | Value | What it means |
+|------|-------|---------------|
+| 🔴 **Maryland BAI 2026** | **0.96** | Benefits can't cover rent |
+| 🔴 **DC BAI 2026** | **0.85** | $76/week short on housing |
+| 🟡 **Virginia BAI 2026** | **1.02** | $10/week from failure (SB 1056) |
+| 💰 **DMV Annual Shortfall** | **$601.3M** | Trust fund starved by frozen caps |
+| 🏛️ **MD wage base** | **$8,500** | Frozen since **1992** |
+| 📊 **Political analysis** | **7 members** | $89.9M in committee activity; B:L ratios up to 21:1 |
+
+**[→ Live Portfolio](https://thedatavigilante.github.io/UI_INDEX/)** · **[→ Political Layer](https://thedatavigilante.github.io/UI_INDEX/political.html)** · **[→ Methodology](https://thedatavigilante.github.io/UI_INDEX/methodology.html)** · **[→ About](https://thedatavigilante.github.io/UI_INDEX/about.html)**
+
+---
+
+## 📑 Table of Contents
+
+- [What This Is](#-what-this-is)
+- [Forensic Metrics Defined](#-forensic-metrics-defined)
+- [Methodology Note](#-methodology-note)
+- [Files in This Repository](#-files-in-this-repository)
+- [Key Findings](#-key-findings)
+- [Quickstart](#-quickstart)
+- [Data Provenance](#-data-provenance)
+- [Known Limitations](#-known-limitations)
+- [Portfolio](#-portfolio)
 
 ---
 
 ## 🗺️ What This Is
 
-This repository contains the data, code, and analysis behind an investigation into how unemployment insurance safety net adequacy has eroded across three jurisdictions — and who funds the legislators holding the policy levers.
+**Who this is for:** Policymakers, journalists, data analysts, and advocates investigating economic safety net erosion.
+
+**What it does:** Produces a forensic data audit of unemployment insurance decay across DC, Maryland, and Virginia using 5 proprietary macroeconomic indices (BAI, WBI, MIPI, Housing Gap, RVI) and 5 political funding charts (FEC 2024 cycle, spending accountability, unemployment context).
+
+**Why it matters:** First-ever multi-index framework quantifying how inflation, frozen benefits, and campaign contributions have systematically weakened the UI safety net — with a live 4-page portfolio and interactive notebooks.
 
 It includes:
-- **4 macroeconomic indices** (BAI, WBI, MIPI, Housing Gap) calculated from BLS and Census data
-- **7 static visualization charts** (matplotlib) exported as PNGs
-- **3 political funding charts** (FEC data, 2024 cycle) exported as PNGs
-- **2 interactive Jupyter notebooks** for exploration and scenario analysis
-- **A portfolio landing page** (`index.html`) that embeds all figures
+- **5 macroeconomic indices** (BAI, WBI, MIPI, Housing Gap, RVI) calculated from BLS and Census data
+- **13 static visualization charts** (matplotlib) exported as PNGs
+- **5 political funding charts** (FEC data, 2024 cycle) exported as PNGs
+- **6 interactive Jupyter notebooks** for exploration and scenario analysis
+- **A 4-page portfolio landing site** (`index.html`, `political.html`, `methodology.html`, `about.html`) that embeds all figures
 
 ---
 
@@ -219,7 +253,7 @@ Maryland and DC operate below the survival threshold with no scheduled correctio
 - **Wage base erosion:** MD base is now 11.7% of average wage (down from 16.3% in 2010); VA 11.7% (down from 16.7%); DC 8.0% (down from 13.6%)
 
 ### Political Accountability: Who Funds the Freeze
-- **7 members** with UI-relevant committee assignments analyzed using FEC 2023-2024 reporting period data
+- **7 members** with UI-relevant committee assignments analyzed using FEC 2023–2024 reporting period data
 - **$89.9M** in total committee activity; once David Trone's $62.9M in *verified candidate self-loans* are correctly removed, **$27.0M** is true outside money
 - **David Trone** co-founded Total Wine & More (~$2.4B company) and sat on the **Ways and Means Committee** while self-funding 98.7% of his Senate campaign
 - **No labor-affiliated PAC contribution above $500** reached Hoyer, Kaine, or Warner in the cycle

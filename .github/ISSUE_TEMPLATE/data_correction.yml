@@ -1,0 +1,46 @@
+name: Data Correction
+description: Report inaccurate or outdated data
+title: "[Data]: "
+labels: ["data-correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping keep this audit accurate. Every data point is verified against a live source. Please include the authoritative source URL.
+  - type: input
+    id: jurisdiction
+    attributes:
+      label: Jurisdiction
+      description: Which state/region?
+      placeholder: e.g., Maryland, Virginia, DC
+  - type: input
+    id: data-point
+    attributes:
+      label: Data Point
+      description: Which specific value needs correction?
+      placeholder: e.g., MD max WBA 2026
+  - type: input
+    id: current-value
+    attributes:
+      label: Current Value in Repository
+      description: What does the repo currently show?
+  - type: input
+    id: expected-value
+    attributes:
+      label: Expected Value
+      description: What should it be?
+  - type: input
+    id: source
+    attributes:
+      label: Verified Source URL
+      description: Link to the authoritative primary source
+      placeholder: https://...
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

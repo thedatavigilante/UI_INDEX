@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Data Vigilante Support & Questions
+    url: https://github.com/thedatavigilante/UI_INDEX/discussions
+    about: Ask questions and share ideas in our discussions forum
+  - name: Security Vulnerability
+    url: https://github.com/thedatavigilante/UI_INDEX/security/advisories/new
+    about: Please report security vulnerabilities here (do not open public issues)
