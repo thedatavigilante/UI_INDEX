@@ -53,14 +53,18 @@
 
 ## 🗺️ What This Is
 
-This repository contains the data, code, and analysis behind an investigation into how unemployment insurance safety net adequacy has eroded across three jurisdictions — and who funds the legislators holding the policy levers.
+**Who this is for:** Policymakers, journalists, data analysts, and advocates investigating economic safety net erosion.
+
+**What it does:** Produces a forensic data audit of unemployment insurance decay across DC, Maryland, and Virginia using 5 proprietary macroeconomic indices (BAI, WBI, MIPI, Housing Gap, RVI) and 5 political funding charts (FEC 2024 cycle, spending accountability, unemployment context).
+
+**Why it matters:** First-ever multi-index framework quantifying how inflation, frozen benefits, and campaign contributions have systematically weakened the UI safety net — with a live 4-page portfolio and interactive notebooks.
 
 It includes:
-- **4 macroeconomic indices** (BAI, WBI, MIPI, Housing Gap) calculated from BLS and Census data
-- **7 static visualization charts** (matplotlib) exported as PNGs
-- **3 political funding charts** (FEC data, 2024 cycle) exported as PNGs
-- **2 interactive Jupyter notebooks** for exploration and scenario analysis
-- **A portfolio landing page** (`index.html`) that embeds all figures
+- **5 macroeconomic indices** (BAI, WBI, MIPI, Housing Gap, RVI) calculated from BLS and Census data
+- **13 static visualization charts** (matplotlib) exported as PNGs
+- **5 political funding charts** (FEC data, 2024 cycle) exported as PNGs
+- **6 interactive Jupyter notebooks** for exploration and scenario analysis
+- **A 4-page portfolio landing site** (`index.html`, `political.html`, `methodology.html`, `about.html`) that embeds all figures
 
 ---
 
