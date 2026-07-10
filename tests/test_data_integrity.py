@@ -30,6 +30,7 @@ EXPECTED_FIGS = [
     "12_fec_business_vs_labor.png",
     "13_fec_contribution_mix.png",
     "14_col_bai_comparison.png",
+    "15_expense_matrix.png",
 ]
 
 
@@ -215,6 +216,24 @@ def test_col_bai_values_plausible():
         if rpp > 100:
             assert col_bai <= bai + 0.01, \
                 f"{jur} {yr}: COL-BAI ({col_bai}) should be ≤ BAI ({bai}) when RPP > 100"
+
+
+def test_col_bai_expense_breakdown():
+    path = DATA / "col_bai_results.json"
+    if not path.exists():
+        pytest.skip("col_bai_results.json not yet generated — run col_bai_engine.py")
+    with open(path) as f:
+        data = json.load(f)
+    required_cats = {"housing", "food", "transportation", "healthcare", "childcare", "other"}
+    for row in data["data"]:
+        jur = row.get("jurisdiction")
+        yr = row.get("year")
+        eb = row.get("expense_breakdown")
+        assert eb is not None, f"{jur} {yr}: missing expense_breakdown"
+        missing = required_cats - set(eb.keys())
+        assert not missing, f"{jur} {yr}: expense_breakdown missing categories: {missing}"
+        total = sum(eb.values())
+        assert total > 100, f"{jur} {yr}: expense total ${total} implausibly low"
 
 
 def test_bls_metro_cpi_schema():

@@ -109,6 +109,7 @@ jobs:
           python generate_context_figure.py
           python generate_spending_accountability.py
           python generate_col_bai_figure.py
+          python generate_expense_matrix_figure.py
         continue-on-error: true
 
       # ── Phase 8: Regenerate county map ────────────────────────────────────────
