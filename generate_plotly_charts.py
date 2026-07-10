@@ -329,6 +329,132 @@ def fig13_fec_mix():
     _save(fig, "fig13_fec_mix", "FEC Contribution Source Mix — 2024 Cycle (% of itemized total)")
 
 
+def fig14_expense_matrix():
+    """
+    Interactive expense category matrix — where the UI check runs out.
+    Two scenarios toggled via dropdown: 1 adult / 1 adult + 1 child.
+    """
+    col_bai_path = DATA_DIR / "col_bai_results.json"
+
+    # Load expense breakdown data (3-tier fallback)
+    expenses_no_child = {}
+    expenses_with_child = {}
+    if col_bai_path.exists():
+        try:
+            with open(col_bai_path) as f:
+                data = json.load(f)
+            for jur, row in data.get("summary_2026", {}).items():
+                eb = row.get("expense_breakdown")
+                ec = row.get("expense_breakdown_with_child")
+                if eb:
+                    expenses_no_child[jur] = eb
+                if ec:
+                    expenses_with_child[jur] = ec
+        except (json.JSONDecodeError, OSError):
+            pass
+
+    # Hardcoded fallback
+    _fallback_no_child = {
+        "District of Columbia": {"housing": 476, "food": 96, "transportation": 139, "healthcare": 52, "childcare": 0, "other": 86},
+        "Maryland":             {"housing": 337, "food": 90, "transportation": 127, "healthcare": 46, "childcare": 0, "other": 75},
+        "Virginia":             {"housing": 285, "food": 85, "transportation": 130, "healthcare": 43, "childcare": 0, "other": 70},
+    }
+    _fallback_with_child = {
+        "District of Columbia": {"housing": 551, "food": 148, "transportation": 139, "healthcare": 105, "childcare": 500, "other": 141},
+        "Maryland":             {"housing": 391, "food": 134, "transportation": 127, "healthcare": 95, "childcare": 441, "other": 115},
+        "Virginia":             {"housing": 335, "food": 125, "transportation": 130, "healthcare": 90, "childcare": 422, "other": 106},
+    }
+    if not expenses_no_child:
+        expenses_no_child = _fallback_no_child
+    if not expenses_with_child:
+        expenses_with_child = _fallback_with_child
+
+    ui_max = {"District of Columbia": 444, "Maryland": 430, "Virginia": 430}
+    jurisdictions = ["District of Columbia", "Maryland", "Virginia"]
+    short = {"District of Columbia": "DC", "Maryland": "MD", "Virginia": "VA"}
+    categories   = ["housing", "food", "transportation", "healthcare", "childcare", "other"]
+    cat_labels   = ["Housing", "Food", "Transportation", "Healthcare", "Childcare", "Other"]
+    cat_colors   = [CRIMSON, GOLD, BLUE, ORANGE, LIME, MUTED]
+
+    def build_traces(exp_data: dict, visible: bool = True) -> list:
+        traces = []
+        for cat, label, color in zip(categories, cat_labels, cat_colors):
+            x_vals = [exp_data.get(j, {}).get(cat, 0) for j in jurisdictions]
+            y_vals = [short[j] for j in jurisdictions]
+            pct_vals = [round(v / ui_max[j] * 100, 1) for v, j in zip(x_vals, jurisdictions)]
+            traces.append(go.Bar(
+                name=label,
+                x=x_vals,
+                y=y_vals,
+                orientation="h",
+                marker_color=color,
+                marker_line_width=0,
+                opacity=0.88,
+                visible=visible,
+                hovertemplate=(
+                    f"<b>{label}</b><br>"
+                    "Cost: $%{x}/wk<br>"
+                    "= %{customdata}% of UI max<extra></extra>"
+                ),
+                customdata=pct_vals,
+            ))
+        return traces
+
+    traces_adult  = build_traces(expenses_no_child, visible=True)
+    traces_child  = build_traces(expenses_with_child, visible=False)
+    all_traces    = traces_adult + traces_child
+    n = len(categories)
+
+    # UI max benefit shapes (y-axis order matches jurisdictions list: DC=0, MD=1, VA=2)
+    shapes = [
+        dict(type="line", x0=ui_max[jur], x1=ui_max[jur],
+             y0=idx - 0.45, y1=idx + 0.45,
+             line=dict(color=GREEN, width=2.5, dash="dot"))
+        for idx, jur in enumerate(jurisdictions)
+    ]
+
+    layout = {
+        "paper_bgcolor": BG, "plot_bgcolor": BG2,
+        "font": dict(color=FG, family="monospace"),
+        "xaxis": dict(gridcolor=GRID, linecolor=GRID, tickcolor=MUTED, title="Weekly cost ($)"),
+        "yaxis": dict(gridcolor=GRID, linecolor=GRID, tickcolor=MUTED),
+        "legend": dict(bgcolor=BG2, bordercolor=GRID, orientation="h",
+                       yanchor="bottom", y=-0.30, xanchor="left", x=0),
+        "margin": dict(l=80, r=160, t=130, b=130),
+        "barmode": "stack",
+        "shapes": shapes,
+        "updatemenus": [dict(
+            type="buttons",
+            direction="left",
+            x=0.0, y=1.12,
+            buttons=[
+                dict(
+                    label="1 Adult (no children)",
+                    method="update",
+                    args=[{"visible": [True]*n + [False]*n}],
+                ),
+                dict(
+                    label="1 Adult + 1 Child",
+                    method="update",
+                    args=[{"visible": [False]*n + [True]*n}],
+                ),
+            ],
+            bgcolor=BG2, bordercolor=GRID, font=dict(color=FG),
+        )],
+        "annotations": [
+            dict(text="Scenario:", x=0.0, y=1.15, xref="paper", yref="paper",
+                 showarrow=False, font=dict(color=MUTED, size=11)),
+            dict(text="▏ UI max", x=1.01, y=0.5, xref="paper", yref="paper",
+                 showarrow=False, font=dict(color=GREEN, size=10), xanchor="left"),
+        ],
+    }
+    fig = go.Figure(data=all_traces)
+    fig.update_layout(**layout)
+
+    _save(fig, "fig14_expense_matrix",
+          "Figure 14 (Interactive) — Weekly Expense Categories vs. UI Maximum Benefit")
+
+
 def main():
     print("=" * 60)
     print("PLOTLY INTERACTIVE CHART GENERATOR")
@@ -352,6 +478,9 @@ def main():
     print("\nGenerating FEC figures...")
     fig_fec()
     fig13_fec_mix()
+
+    print("\nGenerating COL-BAI expense matrix...")
+    fig14_expense_matrix()
 
     html_files = list(OUT_DIR.glob("*.html"))
     print(f"\n✅ {len(html_files)} interactive figures in {OUT_DIR}/")
