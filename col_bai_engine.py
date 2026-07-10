@@ -64,6 +64,44 @@ HOURS_PER_WEEK = 40
 # CSV "Year" → anchor years for analysis
 ANCHOR_YEARS = {2010: "2010", 2018: "2018", 2026: "2024"}  # 2026 data uses 2024 MIT values
 
+# ── MIT Expense Breakdown — 1 adult, no children ─────────────────────────────
+# Source: MIT Living Wage Calculator, livingwage.mit.edu, 2024
+# Weekly values = annual cost ÷ 52. Categories follow MIT's published schema.
+MIT_EXPENSE_BREAKDOWN = {
+    "District of Columbia": {
+        "housing": 476, "food": 96, "transportation": 139,
+        "healthcare": 52, "childcare": 0, "other": 86,
+    },
+    "Maryland": {
+        "housing": 337, "food": 90, "transportation": 127,
+        "healthcare": 46, "childcare": 0, "other": 75,
+    },
+    "Virginia": {
+        "housing": 285, "food": 85, "transportation": 130,
+        "healthcare": 43, "childcare": 0, "other": 70,
+    },
+}
+
+# ── MIT Expense Breakdown — 1 adult, 1 child ─────────────────────────────────
+# Source: MIT Living Wage Calculator, livingwage.mit.edu, 2024
+# Childcare in DC alone ($500/wk) exceeds the entire MD UI maximum benefit.
+MIT_EXPENSE_BREAKDOWN_WITH_CHILD = {
+    "District of Columbia": {
+        "housing": 551, "food": 148, "transportation": 139,
+        "healthcare": 105, "childcare": 500, "other": 141,
+    },
+    "Maryland": {
+        "housing": 391, "food": 134, "transportation": 127,
+        "healthcare": 95, "childcare": 441, "other": 115,
+    },
+    "Virginia": {
+        "housing": 335, "food": 125, "transportation": 130,
+        "healthcare": 90, "childcare": 422, "other": 106,
+    },
+}
+
+EXPENSE_CATEGORIES = ["housing", "food", "transportation", "healthcare", "childcare", "other"]
+
 
 def _load_baselines() -> list[dict]:
     """Load dmv_macro_baselines.csv. Returns list of dicts with numeric fields cast."""
@@ -115,7 +153,7 @@ def compute_col_bai(jurisdiction: str, year: int, max_wba: float, weekly_housing
     """
     year_key = ANCHOR_YEARS.get(year, "2024")
 
-    # ── BEA RPP adjustment ────────────────────────────────────────
+    # ── BEA RPP adjustment ───────────────────────────────────────────
     rpp_data = BEA_RPP.get(jurisdiction, {})
     # Use closest available year (2022 for 2026 rows)
     rpp = rpp_data.get(year_key, rpp_data.get("2022", 100.0))
@@ -123,7 +161,7 @@ def compute_col_bai(jurisdiction: str, year: int, max_wba: float, weekly_housing
     col_adjusted_housing = weekly_housing * (rpp / 100.0)
     col_bai = round(max_wba / col_adjusted_housing, 3) if col_adjusted_housing else None
 
-    # ── MIT Living Wage ───────────────────────────────────────────
+    # ── MIT Living Wage ──────────────────────────────────────────────
     mit_data = MIT_LIVING_WAGE_HOURLY.get(jurisdiction, {})
     mit_hourly = mit_data.get(year_key, mit_data.get("2024", None))
     mit_weekly = round(mit_hourly * HOURS_PER_WEEK, 2) if mit_hourly else None
@@ -135,8 +173,22 @@ def compute_col_bai(jurisdiction: str, year: int, max_wba: float, weekly_housing
         round(mit_weekly - max_wba, 2) if mit_weekly else None
     )
 
-    # ── Housing-only BAI (for comparison) ────────────────────────
+    # ── Housing-only BAI (for comparison) ────────────────────────────
     bai = round(max_wba / weekly_housing, 3) if weekly_housing else None
+
+    # ── Expense breakdown (2024 MIT data; used for 2026 rows) ────────────
+    # For 2010/2018 rows we attach the breakdown for reference; historical
+    # category-level data from MIT is not available, so 2024 values are used.
+    expenses_no_child = MIT_EXPENSE_BREAKDOWN.get(jurisdiction, {})
+    expenses_with_child = MIT_EXPENSE_BREAKDOWN_WITH_CHILD.get(jurisdiction, {})
+
+    # Cumulative drain: remaining UI budget after each expense category
+    remaining = max_wba
+    drain = {}
+    for cat in EXPENSE_CATEGORIES:
+        cost = expenses_no_child.get(cat, 0)
+        remaining = round(remaining - cost, 2)
+        drain[cat] = remaining  # negative = in the red
 
     return {
         "jurisdiction": jurisdiction,
@@ -154,6 +206,10 @@ def compute_col_bai(jurisdiction: str, year: int, max_wba: float, weekly_housing
         "mit_living_wage_weekly": mit_weekly,
         "living_wage_coverage_pct": living_wage_coverage_pct,
         "living_wage_gap": living_wage_gap,
+        # Expense breakdown (2024 MIT values; weekly)
+        "expense_breakdown": expenses_no_child,
+        "expense_breakdown_with_child": expenses_with_child,
+        "cumulative_drain": drain,  # remaining UI budget after each expense; negative = deficit
     }
 
 
