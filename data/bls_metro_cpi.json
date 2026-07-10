@@ -1,0 +1,47 @@
+{
+  "_metadata": {
+    "generated_by": "fetch_bls_metro_cpi.py",
+    "generated_at": "2026-07-10T01:14:12.068163",
+    "sources": [
+      "BLS Public Data API v2 \u2014 CPI-U metro area series (1982-84=100)"
+    ],
+    "methodology": "Metro CPI series are compared to the national US City Average on the same 1982-84=100 base to derive a relative price accumulation index. national_ratio=104 means prices in that metro have risen 4% more than the national average since the base period. This differs from BEA Regional Price Parities (RPP), which measure absolute price LEVELS; BLS metro CPI measures cumulative price CHANGE. COL-BAI uses BEA RPP values; BLS ratios are provided as supplementary context.",
+    "caveat": "BLS does not publish metro CPI for all metro areas. DC and Baltimore are among the larger metros with dedicated CPI series. Virginia state-level is approximated using the DC metro series (Northern VA is the dominant population center and falls within the DC metro area definition).",
+    "data_source": "hardcoded_fallback",
+    "fallback_note": "Values are approximate 2023 annual averages from BLS published reports. Run with BLS_API_KEY set to fetch live data."
+  },
+  "series": {
+    "national": {
+      "series_id": "CUUR0000SA0",
+      "cpi_value": 304.7,
+      "national_ratio": 100.0,
+      "year": 2023,
+      "annual_data": {
+        "2023": 304.7
+      }
+    },
+    "dc_metro": {
+      "series_id": "CUURS35ASA0",
+      "cpi_value": 316.2,
+      "national_ratio": 103.8,
+      "year": 2023,
+      "annual_data": {
+        "2023": 316.2
+      }
+    },
+    "balt_metro": {
+      "series_id": "CUURS12ASA0",
+      "cpi_value": 297.4,
+      "national_ratio": 97.6,
+      "year": 2023,
+      "annual_data": {
+        "2023": 297.4
+      }
+    }
+  },
+  "jurisdiction_mapping": {
+    "District of Columbia": "dc_metro",
+    "Maryland": "balt_metro",
+    "Virginia": "dc_metro"
+  }
+}

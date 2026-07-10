@@ -29,6 +29,7 @@ EXPECTED_FIGS = [
     "11_fec_total_receipts.png",
     "12_fec_business_vs_labor.png",
     "13_fec_contribution_mix.png",
+    "14_col_bai_comparison.png",
 ]
 
 
@@ -175,3 +176,57 @@ def test_no_unexpected_figures():
     existing = sorted(p.name for p in FIGS.glob("*.png"))
     assert len(existing) >= len(EXPECTED_FIGS), \
         f"Fewer figures than expected: {len(existing)} vs {len(EXPECTED_FIGS)}"
+
+
+# ── COL-BAI data tests ────────────────────────────────────────────────────────
+
+def test_col_bai_results_schema():
+    path = DATA / "col_bai_results.json"
+    if not path.exists():
+        pytest.skip("col_bai_results.json not yet generated — run col_bai_engine.py")
+    with open(path) as f:
+        data = json.load(f)
+    assert "_metadata" in data, "col_bai_results.json missing _metadata"
+    assert "data" in data, "col_bai_results.json missing data array"
+    rows = data["data"]
+    assert len(rows) == 9, f"Expected 9 rows (3 states × 3 years), got {len(rows)}"
+    required_fields = {"jurisdiction", "year", "bai", "col_bai", "living_wage_gap",
+                       "living_wage_coverage_pct", "bea_rpp"}
+    for row in rows:
+        missing = required_fields - set(row.keys())
+        assert not missing, \
+            f"col_bai row for {row.get('jurisdiction')} {row.get('year')} missing: {missing}"
+
+
+def test_col_bai_values_plausible():
+    path = DATA / "col_bai_results.json"
+    if not path.exists():
+        pytest.skip("col_bai_results.json not yet generated — run col_bai_engine.py")
+    with open(path) as f:
+        data = json.load(f)
+    for row in data["data"]:
+        bai = row.get("bai") or 0
+        col_bai = row.get("col_bai") or 0
+        jur = row.get("jurisdiction")
+        yr = row.get("year")
+        assert 0.3 <= col_bai <= 2.5, \
+            f"COL-BAI {col_bai:.3f} out of plausible range for {jur} {yr}"
+        rpp = row.get("bea_rpp", 100)
+        if rpp > 100:
+            assert col_bai <= bai + 0.01, \
+                f"{jur} {yr}: COL-BAI ({col_bai}) should be ≤ BAI ({bai}) when RPP > 100"
+
+
+def test_bls_metro_cpi_schema():
+    path = DATA / "bls_metro_cpi.json"
+    if not path.exists():
+        pytest.skip("bls_metro_cpi.json not yet generated — run fetch_bls_metro_cpi.py")
+    with open(path) as f:
+        data = json.load(f)
+    assert "_metadata" in data, "bls_metro_cpi.json missing _metadata"
+    assert "series" in data, "bls_metro_cpi.json missing series"
+    for label in ("national", "dc_metro", "balt_metro"):
+        assert label in data["series"], f"bls_metro_cpi.json missing series key: {label}"
+        sdata = data["series"][label]
+        ratio = sdata.get("national_ratio", 0)
+        assert 70 <= ratio <= 130, f"{label}: national_ratio {ratio} outside plausible range"

@@ -83,6 +83,20 @@ jobs:
           python fetch_county_data.py
         continue-on-error: true
 
+      # ── Phase 6A: BLS Metro CPI (COL-BAI context data) ───────────────────────
+      - name: Fetch BLS metro CPI
+        run: |
+          echo "=== BLS Metro Area CPI Series (DC + Baltimore metros) ==="
+          python fetch_bls_metro_cpi.py
+        continue-on-error: true
+
+      # ── Phase 6A: COL-BAI computation ─────────────────────────────────────────
+      - name: Compute COL-BAI and Living Wage metrics
+        run: |
+          echo "=== COL-BAI Engine (BEA RPP + MIT Living Wage) ==="
+          python col_bai_engine.py
+        continue-on-error: true
+
       # ── Phase 7: Regenerate figures (optional, controlled by input) ───────────
       - name: Regenerate static figures
         if: ${{ github.event.inputs.run_figures != 'false' }}
@@ -94,6 +108,7 @@ jobs:
           python generate_fec_charts.py
           python generate_context_figure.py
           python generate_spending_accountability.py
+          python generate_col_bai_figure.py
         continue-on-error: true
 
       # ── Phase 8: Regenerate county map ────────────────────────────────────────

@@ -131,6 +131,51 @@
     <li><code>MIPI</code> = (Earnings − Disregard Threshold) ÷ Max Weekly Benefit</li>
     <li><code>Housing Gap</code> = Weekly Housing − Max Weekly Benefit &nbsp;($/week deficit)</li>
     <li><code>Employer Gap</code> = (Expected Base − Statutory Base) × DOL Effective Rate × Covered Employment</li>
+    <li><code>COL-BAI</code> = Max Weekly Benefit ÷ (Weekly Housing × BEA RPP ÷ 100) &nbsp;|&nbsp; <em style="color:var(--lime);">Full cost-of-living adjusted version of BAI</em></li>
+    <li><code>Living Wage Gap</code> = MIT Living Wage (weekly, 1 adult) − Max Weekly Benefit &nbsp;($/week below survival)</li>
+    <li><code>Living Wage Coverage</code> = (Max Weekly Benefit ÷ MIT Living Wage Weekly) × 100 &nbsp;(% of survival floor covered)</li>
+  </ul>
+</div>
+
+<!-- COL-BAI METHODOLOGY (Phase 6A) -->
+<h2 id="col-bai">COL-BAI — Cost-of-Living Adjusted Benefit Adequacy</h2>
+<div class="card">
+  <p><strong>The housing-only BAI is the right first-cut measure.</strong> But housing is not the only cost. A worker receiving UI also needs food, transportation, healthcare, and childcare. The COL-BAI extends the BAI to the full consumer basket by using the Bureau of Economic Analysis <strong>Regional Price Parities (RPP)</strong>.</p>
+
+  <h3 style="font-size:0.9rem; margin:1.2rem 0 0.4rem;">BEA Regional Price Parities (RPP)</h3>
+  <p>The BEA publishes RPP annually at the state level. RPP=100 means the full consumer basket costs the national average. RPP=119 (DC, 2022) means the full basket costs 19% more than the national average.</p>
+  <p>RPP captures housing, goods, and services — the complete survival budget. It is a price <em>level</em> index (not a price change index), making it the appropriate tool for cross-jurisdiction cost-of-living comparison.</p>
+  <table class="cite-table" style="margin:1rem 0;">
+    <thead><tr><th>Jurisdiction</th><th>BEA RPP (2022)</th><th>Above national avg</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>District of Columbia</td><td class="val">119.0</td><td class="status-fail">+19%</td><td><a href="https://www.bea.gov/data/prices-inflation/regional-price-parities-state-and-metro-area" target="_blank" rel="noopener">BEA RPP 2022</a></td></tr>
+      <tr><td>Maryland</td><td class="val">108.2</td><td class="status-warn">+8%</td><td><a href="https://www.bea.gov/data/prices-inflation/regional-price-parities-state-and-metro-area" target="_blank" rel="noopener">BEA RPP 2022</a></td></tr>
+      <tr><td>Virginia</td><td class="val">103.5</td><td class="status-warn">+4%</td><td><a href="https://www.bea.gov/data/prices-inflation/regional-price-parities-state-and-metro-area" target="_blank" rel="noopener">BEA RPP 2022</a></td></tr>
+      <tr><td>National (reference)</td><td class="val">100.0</td><td>—</td><td>BEA definition</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.82rem; color:var(--muted);">COL-BAI values in this audit use the 2022 RPP (latest published). Annual updates available via BEA API (free registration at apps.bea.gov/api/signup/). Script: <code>col_bai_engine.py</code></p>
+
+  <h3 style="font-size:0.9rem; margin:1.2rem 0 0.4rem;">MIT Living Wage Calculator</h3>
+  <p>The <a href="https://livingwage.mit.edu" target="_blank" rel="noopener">MIT Living Wage Calculator</a> (Glasmeier, 2024) computes the minimum hourly wage needed to cover a basic survival budget for different family compositions. This audit uses the <strong>1 adult, no children</strong> baseline — the most conservative scenario that gives UI claimants the best possible outcome.</p>
+  <table class="cite-table" style="margin:1rem 0;">
+    <thead><tr><th>Jurisdiction</th><th>MIT Living Wage (2024)</th><th>Weekly (40hr)</th><th>UI Max</th><th>Coverage</th></tr></thead>
+    <tbody>
+      <tr><td>District of Columbia</td><td class="val">$27.40/hr</td><td class="val">$1,096/wk</td><td class="val">$444</td><td class="status-fail">40%</td></tr>
+      <tr><td>Maryland</td><td class="val">$23.15/hr</td><td class="val">$926/wk</td><td class="val">$430</td><td class="status-fail">46%</td></tr>
+      <tr><td>Virginia</td><td class="val">$21.50/hr</td><td class="val">$860/wk</td><td class="val">$430</td><td class="status-warn">50%</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:0.9rem; margin:1.2rem 0 0.4rem;">BLS Metro CPI — Supplementary Context</h3>
+  <p>BLS publishes metro-area CPI series (<code>CUURS35ASA0</code> for DC metro, <code>CUURS12ASA0</code> for Baltimore metro) on the same 1982-84=100 base as the national series. These measure <em>cumulative price change</em> from the base period and are fetched by <code>fetch_bls_metro_cpi.py</code> using the existing <code>BLS_API_KEY</code>. They differ from BEA RPP: BLS tracks price change accumulation; BEA measures absolute price level. For the COL-BAI formula, BEA RPP is the appropriate measure. BLS metro ratios are provided as supplementary context.</p>
+
+  <h3 style="font-size:0.9rem; margin:1.2rem 0 0.4rem;">Limitations</h3>
+  <ul style="font-size:0.85rem;">
+    <li><strong>BEA RPP is state-level:</strong> County-level RPP is not published. DC's RPP (119) applies to the whole jurisdiction; Maryland's (108) is a state average that includes lower-cost rural counties.</li>
+    <li><strong>MIT Living Wage is full-time:</strong> The calculator assumes 40 hours/week. UI benefits replace partial income for a worker who may not have been working full-time. The gap is a structural observation, not a claim that UI was ever intended to fully cover the MIT basket.</li>
+    <li><strong>BEA RPP lag:</strong> The 2022 RPP is the latest published at time of writing. Prices in 2025-2026 may have diverged further.</li>
+    <li><strong>Housing double-counting note:</strong> The COL-BAI formula multiplies the housing cost by the full RPP. This slightly overstates the adjustment if housing costs in the CSV already reflect DC-market pricing (which they do). The COL-BAI is best read as a relative comparison across jurisdictions, not an absolute survival threshold.</li>
   </ul>
 </div>
 
