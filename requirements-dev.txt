@@ -3,7 +3,7 @@
 -r requirements.txt
 
 pytest>=8.0
-jupyter>=1.0,<2
+jupyter>=1.1.1,<2
 nbconvert>=7.0
 ipykernel>=6.0
 folium>=0.14
