@@ -550,14 +550,63 @@
   .stat-value.lime { color: var(--lime); }
   .stat-box.lime   { border-top-color: var(--lime); }
 
+  /* ── COL-BAI STAT GRID (Ch.3B) ───────────────────────────────── */
+  .stat-grid { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.2rem 0; }
+  .stat-sub {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+    line-height: 1.4;
+  }
+  .stat-box.warn { border-top-color: var(--gold); }
+  .chart-block { margin: 1.2rem 0; }
+
+  /* ── CHART INVENTORY MATRIX ───────────────────────────────────── */
+  .chart-matrix { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.82rem; }
+  .chart-matrix th {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0.7rem;
+    text-align: left;
+  }
+  .chart-matrix td {
+    padding: 0.45rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--fg);
+    vertical-align: middle;
+  }
+  .chart-matrix tr:hover td { background: var(--bg3); }
+  .chart-matrix .tick { color: var(--accent); font-family: var(--mono); font-weight: 700; }
+  .chart-matrix .cross { color: var(--muted); font-family: var(--mono); }
+  .chart-matrix .fig-num {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--lime);
+    font-weight: 700;
+  }
+
+  /* ── RESPONSIVE IFRAMES ───────────────────────────────────────── */
+  .iframe-wrap { width: 100%; overflow: hidden; }
+  .iframe-wrap iframe { width: 100%; display: block; }
+
   @media (max-width: 640px) {
     h1 { font-size: 1.4rem; }
     .hero-avatar { width: 80px; height: 80px; }
     .stat-value { font-size: 1.3rem; }
-    nav { gap: 0.2rem; }
+    .stat-sub { font-size: 0.62rem; }
+    nav { gap: 0.2rem; flex-wrap: wrap; }
     .bmc-section { flex-direction: column; }
     .severity-banner { grid-template-columns: 1fr; }
     .lawmaker-table { font-size: 0.78rem; }
+    .stat-grid { flex-direction: column; }
+    .chart-matrix { font-size: 0.72rem; }
+    .card iframe { height: 360px !important; }
+    .iframe-wrap iframe { height: 360px !important; }
   }
 </style>
 </head>
@@ -573,6 +622,7 @@
   <a href="#ch4">Trust Fund</a>
   <a href="#county-map">Map</a>
   <a href="#interactive-charts">Interactive</a>
+  <a href="#chart-inventory">Charts</a>
   <a href="#ch5">FEC</a>
   <a href="political.html">Political Layer</a>
   <a href="methodology.html">Methodology</a>
@@ -952,6 +1002,24 @@
        alt="Figure 14 — COL-BAI vs BAI comparison, Living Wage Gap, and Coverage Trend"
        style="max-width:100%; border-radius:4px;">
   <div class="caption">Figure 14 — COL-BAI vs BAI (Panel A); Weekly Living Wage Gap, 2010–2026 (Panel B); Living Wage Coverage trend (Panel C). Sources: BEA Regional Price Parities 2022; MIT Living Wage Calculator 2024; DOL benefit schedules.</div>
+</div>
+
+<!-- Figure 15: Expense Category Matrix -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Expense Category Breakdown — Where the Check Goes</h3>
+<div class="callout-plain">DC's UI check runs out before food. Housing alone ($476/wk) exceeds the $444 maximum benefit — the claimant is already $32 in the red before a single other expense enters the equation.</div>
+<div class="chart-block">
+  <img src="figures/15_expense_matrix.png"
+       alt="Figure 15 — Weekly expense categories vs. UI maximum benefit by jurisdiction"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Figure 15 — Weekly expense categories (MIT Living Wage methodology) stacked against the UI maximum benefit floor for DC, Maryland, and Virginia. Sources: MIT Living Wage Calculator 2024; DOL benefit schedules; BEA RPP 2022.</div>
+</div>
+
+<div class="card" style="padding:0;">
+  <div style="border:1px solid var(--border); border-radius:3px; overflow:hidden;">
+    <iframe src="interactive/fig14_expense_matrix.html" width="100%" height="520" frameborder="0" loading="lazy"
+      title="Expense Category Matrix — Interactive Scenario Toggle"></iframe>
+  </div>
+  <div class="caption" style="padding:0.5rem 1rem 0.8rem;">Figure 15 (Interactive) — Toggle between 1 Adult and 1 Adult + 1 Child scenarios. Dotted green lines show UI maximum benefit floors (DC $444, MD/VA $430).</div>
 </div>
 
 <blockquote class="investigative-take">
@@ -1334,11 +1402,51 @@
 
 </div>
 
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHART INVENTORY -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="chart-inventory">Chart Inventory — All 16 Visualizations</h2>
+<div class="callout-plain">Every chart in this audit mapped to its format. Static PNGs render inline in each chapter. Interactive Plotly versions load in the section above (requires click to expand). Figure 15's interactive counterpart (scenario toggle) is embedded directly in Chapter 3B.</div>
+<div class="card" style="padding:0;">
+  <div style="overflow-x:auto;">
+  <table class="chart-matrix">
+    <thead>
+      <tr>
+        <th style="width:3rem;">Fig</th>
+        <th>Title</th>
+        <th>Chapter</th>
+        <th>Static PNG</th>
+        <th>Interactive</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="fig-num">01</td><td>BAI Decay Trajectory</td><td>Ch.1 — Worker Insolvency</td><td class="tick">✓ 01_bai_decay_trajectory.png</td><td class="tick">✓ fig01_bai.html</td></tr>
+      <tr><td class="fig-num">02</td><td>WBI Stagnation</td><td>Ch.2 — Corporate Tax Escape</td><td class="tick">✓ 02_wbi_stagnation.png</td><td class="tick">✓ fig02_wbi.html</td></tr>
+      <tr><td class="fig-num">03</td><td>MIPI Clawback</td><td>Ch.3 — Poverty Trap</td><td class="tick">✓ 03_mipi_clawback.png</td><td class="tick">✓ fig03_mipi.html</td></tr>
+      <tr><td class="fig-num">04</td><td>Housing vs. WBA Gap</td><td>Ch.3 — Poverty Trap</td><td class="tick">✓ 04_housing_vs_wba_gap.png</td><td class="tick">✓ fig04_housing.html</td></tr>
+      <tr><td class="fig-num">05</td><td>Per-Employee Underpayment</td><td>Ch.4 — Trust Fund</td><td class="tick">✓ 05_employer_per_employee_gap.png</td><td class="tick">✓ fig05_employer_per_emp.html</td></tr>
+      <tr><td class="fig-num">06</td><td>Aggregate Trust Fund Gap</td><td>Ch.4 — Trust Fund</td><td class="tick">✓ 06_employer_aggregate_gap.png</td><td class="tick">✓ fig06_employer_aggregate.html</td></tr>
+      <tr><td class="fig-num">07</td><td>Statutory vs. Expected Wage Base</td><td>Ch.4 — Trust Fund</td><td class="tick">✓ 07_statutory_vs_expected_wage_base.png</td><td class="tick">✓ fig07_wage_base.html</td></tr>
+      <tr><td class="fig-num">08</td><td>Real Value Index (RVI)</td><td>Ch.1 — Worker Insolvency</td><td class="tick">✓ 08_real_value_index.png</td><td class="tick">✓ fig08_rvi.html</td></tr>
+      <tr><td class="fig-num">09</td><td>Unemployment Context</td><td>Human Scale</td><td class="tick">✓ 09_unemployment_context.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">10</td><td>Spending Accountability Matrix</td><td>Ch.5 — Who Funds the Freeze</td><td class="tick">✓ 10_spending_accountability.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">11</td><td>FEC Total Receipts</td><td>Ch.5 — Who Funds the Freeze</td><td class="tick">✓ 11_fec_total_receipts.png</td><td class="tick">✓ fig11_fec_totals.html</td></tr>
+      <tr><td class="fig-num">12</td><td>FEC Business vs. Labor</td><td>Ch.5 — Who Funds the Freeze</td><td class="tick">✓ 12_fec_business_vs_labor.png</td><td class="tick">✓ fig12_fec_biz_labor.html</td></tr>
+      <tr><td class="fig-num">13</td><td>FEC Contribution Mix</td><td>Ch.5 — Who Funds the Freeze</td><td class="tick">✓ 13_fec_contribution_mix.png</td><td class="tick">✓ fig13_fec_mix.html</td></tr>
+      <tr><td class="fig-num">14</td><td>COL-BAI Comparison</td><td>Ch.3B — Real Cost Gap</td><td class="tick">✓ 14_col_bai_comparison.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">15</td><td>Expense Category Matrix</td><td>Ch.3B — Real Cost Gap</td><td class="tick">✓ 15_expense_matrix.png</td><td class="tick">✓ fig14_expense_matrix.html (Ch.3B)</td></tr>
+      <tr><td class="fig-num">—</td><td>DMV County Unemployment Map</td><td>Geographic Distribution</td><td class="cross">— interactive only</td><td class="tick">✓ dmv_counties.html (Folium)</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
 <!-- ── LAWMAKER SALARY VS. UI BENEFIT ───────────────────────── -->
 <h2 id="lawmakers" style="margin-top:2.5rem;">The Lawmakers Who Set Your Benefits — And Their Own Raises</h2>
 <div class="callout-plain">Maryland legislators gave themselves $6,306 in raises between 2022 and 2026. The UI benefit cap Maryland workers depend on? Same $430 it was in 2014. Virginia's legislature voted itself a 183% raise — $17,640 to $50,000 — the same year it gave claimants 13.8%. This is not hypocrisy. This is policy.</div>
 
-<div class="card">
+<div class="card" style="padding:0;">
+  <div style="overflow-x:auto; padding:1.4rem;">
   <table class="lawmaker-table">
     <thead>
       <tr>
@@ -1375,7 +1483,8 @@
       </tr>
     </tbody>
   </table>
-  <p style="margin-top:0.8rem; font-size:0.8rem; color:var(--muted);">
+  </div><!-- /overflow-x -->
+  <p style="margin-top:0.8rem; padding: 0 1.4rem 1rem; font-size:0.8rem; color:var(--muted);">
     Sources: <a href="https://mgaleg.maryland.gov/Pubs/Other/2026-Report-of-the-General-Assembly-Compensation-Commission.pdf" target="_blank">MD Compensation Commission 2026</a> ·
     <a href="https://wset.com/news/local/virginia-senate-democrats-pass-state-budget-add-nearly-300-percent-pay-increase-for-legislators-money-taxes-richmond-republicans-amendments-affordability" target="_blank">WSET — VA legislator pay raise</a> ·
     <a href="https://code.dccouncil.gov/us/dc/council/code/sections/1-611.09" target="_blank">DC Code §1-611.09</a> ·
@@ -1397,7 +1506,8 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <h2 id="sources">Data Sources &amp; Citations</h2>
 
-<div class="card">
+<div class="card" style="padding:0;">
+  <div style="overflow-x:auto; padding:1.4rem;">
   <table class="cite-table">
     <thead>
       <tr>
@@ -1476,8 +1586,9 @@
       </tr>
     </tbody>
   </table>
+  </div><!-- /overflow-x -->
 
-  <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">
+  <p style="padding: 0 1.4rem 1rem; margin-top:0.5rem; font-size:0.85rem; color:var(--muted);">
     All data sources are public record. No proprietary or restricted datasets were used.
     Every figure in this audit is reproducible from the source code at
     <a href="https://github.com/thedatavigilante/UI_INDEX" target="_blank">github.com/thedatavigilante/UI_INDEX</a>.
