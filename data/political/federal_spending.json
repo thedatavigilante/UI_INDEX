@@ -1,0 +1,121 @@
+{
+  "_metadata": {
+    "source": "USASpending.gov Public API v2",
+    "url": "https://api.usaspending.gov/api/v2",
+    "programs": {
+      "17.225": "Unemployment Insurance",
+      "17.207": "Employment Service (Wagner-Peyser)"
+    },
+    "fiscal_years": [
+      2010,
+      2018,
+      2023
+    ],
+    "fetched_at": "2026-07-18T21:33:44.212083",
+    "fallback_applied": true,
+    "note": "CFDA 17.225 = Unemployment Insurance grants to states. Amounts are federal obligations to state UI agencies."
+  },
+  "spending_by_state": {
+    "MD": {
+      "2010": {
+        "17.225": {
+          "program": "Unemployment Insurance",
+          "obligated_amount": null
+        },
+        "17.207": {
+          "program": "Employment Service (Wagner-Peyser)",
+          "obligated_amount": null
+        }
+      },
+      "2018": {
+        "17.225": {
+          "program": "Unemployment Insurance",
+          "obligated_amount": null
+        },
+        "17.207": {
+          "program": "Employment Service (Wagner-Peyser)",
+          "obligated_amount": null
+        }
+      },
+      "2023": {
+        "17.225": {
+          "program": "Unemployment Insurance",
+          "obligated_amount": null
+        },
+        "17.207": {
+          "program": "Employment Service (Wagner-Peyser)",
+          "obligated_amount": null
+        }
+      }
+    },
+    "VA": {
+      "2010": {
+        "17.225": {
+          "program": "Unemployment Insurance",
+          "obligated_amount": null
+        },
+        "17.207": {
+          "program": "Employment Service (Wagner-Peyser)",
+          "obligated_amount": null
+        }
+      },
+      "2018": {
+        "17.225": {
+          "program": "Unemployment Insurance",
+          "obligated_amount": null
+        },
+        "17.207": {
+          "program": "Employment Service (Wagner-Peyser)",
+          "obligated_amount": null
+        }
+      },
+      "2023": {
+        "17.225": {
+          "program": "Unemployment Insurance",
+          "obligated_amount": null
+        },
+        "17.207": {
+          "program": "Employment Service (Wagner-Peyser)",
+          "obligated_amount": null
+        }
+      }
+    },
+    "DC": {
+      "2010": {
+        "17.225": {
+          "program": "Unemployment Insurance",
+          "obligated_amount": null
+        },
+        "17.207": {
+          "program": "Employment Service (Wagner-Peyser)",
+          "obligated_amount": null
+        }
+      },
+      "2018": {
+        "17.225": {
+          "program": "Unemployment Insurance",
+          "obligated_amount": null
+        },
+        "17.207": {
+          "program": "Employment Service (Wagner-Peyser)",
+          "obligated_amount": null
+        }
+      },
+      "2023": {
+        "17.225": {
+          "program": "Unemployment Insurance",
+          "obligated_amount": null
+        },
+        "17.207": {
+          "program": "Employment Service (Wagner-Peyser)",
+          "obligated_amount": null
+        }
+      }
+    }
+  },
+  "dol_budget_functions": {
+    "2010": null,
+    "2018": null,
+    "2023": null
+  }
+}

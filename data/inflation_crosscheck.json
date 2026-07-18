@@ -1,0 +1,113 @@
+{
+  "_metadata": {
+    "source": "Federal Reserve Bank of St. Louis (FRED)",
+    "series_fetched": [
+      "CPIAUCSL",
+      "CUURA311SA0",
+      "PCEPI"
+    ],
+    "fetched_at": "2026-07-18T21:31:54.813874",
+    "current_year": 2026,
+    "fallback_applied": false,
+    "note": "CUURA311SA0 (DC metro CPI) preferred over national CPI for DMV accuracy. PCEPI provides methodologically independent cross-check."
+  },
+  "series": {
+    "CPIAUCSL": {
+      "2005": 195.267,
+      "2006": 201.558,
+      "2007": 207.344,
+      "2008": 215.254,
+      "2009": 214.565,
+      "2010": 218.076,
+      "2011": 224.923,
+      "2012": 229.586,
+      "2013": 232.952,
+      "2014": 236.715,
+      "2015": 237.002,
+      "2016": 240.005,
+      "2017": 245.121,
+      "2018": 251.1,
+      "2019": 255.653,
+      "2020": 258.856,
+      "2021": 270.973,
+      "2022": 292.626,
+      "2023": 304.703,
+      "2024": 313.698,
+      "2025": 321.962
+    },
+    "CUURA311SA0": {
+      "2005": 124.117,
+      "2006": 128.683,
+      "2007": 133.192,
+      "2008": 139.447,
+      "2009": 139.667,
+      "2010": 142.085,
+      "2011": 146.816,
+      "2012": 150.101,
+      "2013": 152.382,
+      "2014": 154.861,
+      "2015": 155.314,
+      "2016": 157.122
+    },
+    "PCEPI": {
+      "2005": 82.127,
+      "2006": 84.44,
+      "2007": 86.607,
+      "2008": 89.17,
+      "2009": 88.921,
+      "2010": 90.514,
+      "2011": 92.804,
+      "2012": 94.534,
+      "2013": 95.781,
+      "2014": 97.121,
+      "2015": 97.299,
+      "2016": 98.284,
+      "2017": 100.0,
+      "2018": 102.047,
+      "2019": 103.509,
+      "2020": 104.666,
+      "2021": 108.973,
+      "2022": 116.1,
+      "2023": 120.511,
+      "2024": 123.666,
+      "2025": 126.919
+    }
+  },
+  "crosscheck": {
+    "Maryland": {
+      "freeze_year": 2014,
+      "ratios": {
+        "CPIAUCSL": 1.360125,
+        "CUURA311SA0": 1.0146,
+        "PCEPI": 1.306813
+      },
+      "preferred_ratio": 1.0146,
+      "preferred_series": "CUURA311SA0",
+      "national_vs_metro_delta_pct": -25.4,
+      "flag": "REVIEW"
+    },
+    "Virginia": {
+      "freeze_year": 2008,
+      "ratios": {
+        "CPIAUCSL": 1.495731,
+        "CUURA311SA0": 1.126751,
+        "PCEPI": 1.423337
+      },
+      "preferred_ratio": 1.126751,
+      "preferred_series": "CUURA311SA0",
+      "national_vs_metro_delta_pct": -24.67,
+      "flag": "REVIEW"
+    },
+    "District of Columbia": {
+      "freeze_year": 2018,
+      "ratios": {
+        "CPIAUCSL": 1.282206,
+        "PCEPI": 1.243731
+      },
+      "preferred_ratio": 1.282206,
+      "preferred_series": "CPIAUCSL",
+      "national_vs_metro_delta_pct": null,
+      "flag": "PARTIAL"
+    }
+  }
+}

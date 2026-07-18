@@ -10,7 +10,12 @@
       2023
     ],
     "county_count": 48,
-    "fetched_at": "2026-06-15T07:20:31.242303"
+    "fetched_at": "2026-07-18T21:33:55.737739",
+    "fallback_applied": true,
+    "fallback_detail": {
+      "census_income": true,
+      "bls_laus": true
+    }
   },
   "counties": [
     {

@@ -1,20 +1,20 @@
 {
   "_metadata": {
     "generated_by": "col_bai_engine.py",
-    "generated_at": "2026-07-10T01:36:20.603516",
+    "generated_at": "2026-07-18T21:33:56.239095",
     "sources": [
-      "BEA Regional Price Parities (RPP), 2022 — apps.bea.gov/data/prices-inflation/regional-price-parities-state-and-metro-area",
-      "MIT Living Wage Calculator, 2024 — livingwage.mit.edu (1 adult, no children)",
-      "DOL/State UI Benefit Schedules — Max_WBA from dmv_macro_baselines.csv",
-      "HUD Fair Market Rents — Weekly_Housing from dmv_macro_baselines.csv"
+      "BEA Regional Price Parities (RPP), 2022 \u2014 apps.bea.gov/data/prices-inflation/regional-price-parities-state-and-metro-area",
+      "MIT Living Wage Calculator, 2024 \u2014 livingwage.mit.edu (1 adult, no children)",
+      "DOL/State UI Benefit Schedules \u2014 Max_WBA from dmv_macro_baselines.csv",
+      "HUD Fair Market Rents \u2014 Weekly_Housing from dmv_macro_baselines.csv"
     ],
     "formulas": {
       "BAI": "Max_WBA / Weekly_Housing",
-      "COL_BAI": "Max_WBA / (Weekly_Housing × BEA_RPP / 100)",
-      "Living_Wage_Gap": "MIT_Living_Wage_Weekly − Max_WBA",
-      "Living_Wage_Coverage_Pct": "(Max_WBA / MIT_Living_Wage_Weekly) × 100"
+      "COL_BAI": "Max_WBA / (Weekly_Housing \u00d7 BEA_RPP / 100)",
+      "Living_Wage_Gap": "MIT_Living_Wage_Weekly \u2212 Max_WBA",
+      "Living_Wage_Coverage_Pct": "(Max_WBA / MIT_Living_Wage_Weekly) \u00d7 100"
     },
-    "caveat": "BEA RPP captures full-basket price level differences (housing, food, transport, healthcare, childcare) — unlike housing-only BAI. MIT Living Wage is a full-time (40hr/wk) 1-adult baseline; UI benefits replace partial income. The Living Wage Gap shows the structural shortfall, not a design spec. 2026 rows use 2024 MIT values and 2022 BEA RPP (latest published)."
+    "caveat": "BEA RPP captures full-basket price level differences (housing, food, transport, healthcare, childcare) \u2014 unlike housing-only BAI. MIT Living Wage is a full-time (40hr/wk) 1-adult baseline; UI benefits replace partial income. The Living Wage Gap shows the structural shortfall, not a design spec. 2026 rows use 2024 MIT values and 2022 BEA RPP (latest published)."
   },
   "summary_2026": {
     "Maryland": {
@@ -30,9 +30,30 @@
       "mit_living_wage_weekly": 926.0,
       "living_wage_coverage_pct": 46.4,
       "living_wage_gap": 496.0,
-      "expense_breakdown": {"housing": 337, "food": 90, "transportation": 127, "healthcare": 46, "childcare": 0, "other": 75},
-      "expense_breakdown_with_child": {"housing": 391, "food": 134, "transportation": 127, "healthcare": 95, "childcare": 441, "other": 115},
-      "cumulative_drain": {"housing": 93.0, "food": 3.0, "transportation": -124.0, "healthcare": -170.0, "childcare": -170.0, "other": -245.0},
+      "expense_breakdown": {
+        "housing": 337,
+        "food": 90,
+        "transportation": 127,
+        "healthcare": 46,
+        "childcare": 0,
+        "other": 75
+      },
+      "expense_breakdown_with_child": {
+        "housing": 391,
+        "food": 134,
+        "transportation": 127,
+        "healthcare": 95,
+        "childcare": 441,
+        "other": 115
+      },
+      "cumulative_drain": {
+        "housing": 93.0,
+        "food": 3.0,
+        "transportation": -124.0,
+        "healthcare": -170.0,
+        "childcare": -170.0,
+        "other": -245.0
+      },
       "bls_metro_cpi_ratio": 97.6
     },
     "Virginia": {
@@ -48,9 +69,30 @@
       "mit_living_wage_weekly": 860.0,
       "living_wage_coverage_pct": 50.0,
       "living_wage_gap": 430.0,
-      "expense_breakdown": {"housing": 285, "food": 85, "transportation": 130, "healthcare": 43, "childcare": 0, "other": 70},
-      "expense_breakdown_with_child": {"housing": 335, "food": 125, "transportation": 130, "healthcare": 90, "childcare": 422, "other": 106},
-      "cumulative_drain": {"housing": 145.0, "food": 60.0, "transportation": -70.0, "healthcare": -113.0, "childcare": -113.0, "other": -183.0},
+      "expense_breakdown": {
+        "housing": 285,
+        "food": 85,
+        "transportation": 130,
+        "healthcare": 43,
+        "childcare": 0,
+        "other": 70
+      },
+      "expense_breakdown_with_child": {
+        "housing": 335,
+        "food": 125,
+        "transportation": 130,
+        "healthcare": 90,
+        "childcare": 422,
+        "other": 106
+      },
+      "cumulative_drain": {
+        "housing": 145.0,
+        "food": 60.0,
+        "transportation": -70.0,
+        "healthcare": -113.0,
+        "childcare": -113.0,
+        "other": -183.0
+      },
       "bls_metro_cpi_ratio": 103.8
     },
     "District of Columbia": {
@@ -66,21 +108,384 @@
       "mit_living_wage_weekly": 1096.0,
       "living_wage_coverage_pct": 40.5,
       "living_wage_gap": 652.0,
-      "expense_breakdown": {"housing": 476, "food": 96, "transportation": 139, "healthcare": 52, "childcare": 0, "other": 86},
-      "expense_breakdown_with_child": {"housing": 551, "food": 148, "transportation": 139, "healthcare": 105, "childcare": 500, "other": 141},
-      "cumulative_drain": {"housing": -32.0, "food": -128.0, "transportation": -267.0, "healthcare": -319.0, "childcare": -319.0, "other": -405.0},
+      "expense_breakdown": {
+        "housing": 476,
+        "food": 96,
+        "transportation": 139,
+        "healthcare": 52,
+        "childcare": 0,
+        "other": 86
+      },
+      "expense_breakdown_with_child": {
+        "housing": 551,
+        "food": 148,
+        "transportation": 139,
+        "healthcare": 105,
+        "childcare": 500,
+        "other": 141
+      },
+      "cumulative_drain": {
+        "housing": -32.0,
+        "food": -128.0,
+        "transportation": -267.0,
+        "healthcare": -319.0,
+        "childcare": -319.0,
+        "other": -405.0
+      },
       "bls_metro_cpi_ratio": 103.8
     }
   },
   "data": [
-    {"jurisdiction": "Maryland", "year": 2010, "max_wba": 430.0, "weekly_housing": 295.0, "bai": 1.458, "bea_rpp": 106.2, "col_adjusted_housing": 313.29, "col_bai": 1.373, "mit_living_wage_hourly": 13.95, "mit_living_wage_weekly": 558.0, "living_wage_coverage_pct": 77.1, "living_wage_gap": 128.0, "expense_breakdown": {"housing": 337, "food": 90, "transportation": 127, "healthcare": 46, "childcare": 0, "other": 75}, "expense_breakdown_with_child": {"housing": 391, "food": 134, "transportation": 127, "healthcare": 95, "childcare": 441, "other": 115}, "cumulative_drain": {"housing": 93.0, "food": 3.0, "transportation": -124.0, "healthcare": -170.0, "childcare": -170.0, "other": -245.0}, "bls_metro_cpi_ratio": 97.6},
-    {"jurisdiction": "Maryland", "year": 2018, "max_wba": 430.0, "weekly_housing": 370.0, "bai": 1.162, "bea_rpp": 107.8, "col_adjusted_housing": 398.86, "col_bai": 1.078, "mit_living_wage_hourly": 17.89, "mit_living_wage_weekly": 715.6, "living_wage_coverage_pct": 60.1, "living_wage_gap": 285.6, "expense_breakdown": {"housing": 337, "food": 90, "transportation": 127, "healthcare": 46, "childcare": 0, "other": 75}, "expense_breakdown_with_child": {"housing": 391, "food": 134, "transportation": 127, "healthcare": 95, "childcare": 441, "other": 115}, "cumulative_drain": {"housing": 93.0, "food": 3.0, "transportation": -124.0, "healthcare": -170.0, "childcare": -170.0, "other": -245.0}, "bls_metro_cpi_ratio": 97.6},
-    {"jurisdiction": "Maryland", "year": 2026, "max_wba": 430.0, "weekly_housing": 450.0, "bai": 0.956, "bea_rpp": 108.2, "col_adjusted_housing": 486.9, "col_bai": 0.883, "mit_living_wage_hourly": 23.15, "mit_living_wage_weekly": 926.0, "living_wage_coverage_pct": 46.4, "living_wage_gap": 496.0, "expense_breakdown": {"housing": 337, "food": 90, "transportation": 127, "healthcare": 46, "childcare": 0, "other": 75}, "expense_breakdown_with_child": {"housing": 391, "food": 134, "transportation": 127, "healthcare": 95, "childcare": 441, "other": 115}, "cumulative_drain": {"housing": 93.0, "food": 3.0, "transportation": -124.0, "healthcare": -170.0, "childcare": -170.0, "other": -245.0}, "bls_metro_cpi_ratio": 97.6},
-    {"jurisdiction": "Virginia", "year": 2010, "max_wba": 378.0, "weekly_housing": 270.0, "bai": 1.4, "bea_rpp": 101.8, "col_adjusted_housing": 274.86, "col_bai": 1.375, "mit_living_wage_hourly": 12.82, "mit_living_wage_weekly": 512.8, "living_wage_coverage_pct": 73.7, "living_wage_gap": 134.8, "expense_breakdown": {"housing": 285, "food": 85, "transportation": 130, "healthcare": 43, "childcare": 0, "other": 70}, "expense_breakdown_with_child": {"housing": 335, "food": 125, "transportation": 130, "healthcare": 90, "childcare": 422, "other": 106}, "cumulative_drain": {"housing": 93.0, "food": 8.0, "transportation": -122.0, "healthcare": -165.0, "childcare": -165.0, "other": -235.0}, "bls_metro_cpi_ratio": 103.8},
-    {"jurisdiction": "Virginia", "year": 2018, "max_wba": 378.0, "weekly_housing": 345.0, "bai": 1.096, "bea_rpp": 102.9, "col_adjusted_housing": 355.01, "col_bai": 1.065, "mit_living_wage_hourly": 16.43, "mit_living_wage_weekly": 657.2, "living_wage_coverage_pct": 57.5, "living_wage_gap": 279.2, "expense_breakdown": {"housing": 285, "food": 85, "transportation": 130, "healthcare": 43, "childcare": 0, "other": 70}, "expense_breakdown_with_child": {"housing": 335, "food": 125, "transportation": 130, "healthcare": 90, "childcare": 422, "other": 106}, "cumulative_drain": {"housing": 93.0, "food": 8.0, "transportation": -122.0, "healthcare": -165.0, "childcare": -165.0, "other": -235.0}, "bls_metro_cpi_ratio": 103.8},
-    {"jurisdiction": "Virginia", "year": 2026, "max_wba": 430.0, "weekly_housing": 420.0, "bai": 1.024, "bea_rpp": 103.5, "col_adjusted_housing": 434.7, "col_bai": 0.989, "mit_living_wage_hourly": 21.5, "mit_living_wage_weekly": 860.0, "living_wage_coverage_pct": 50.0, "living_wage_gap": 430.0, "expense_breakdown": {"housing": 285, "food": 85, "transportation": 130, "healthcare": 43, "childcare": 0, "other": 70}, "expense_breakdown_with_child": {"housing": 335, "food": 125, "transportation": 130, "healthcare": 90, "childcare": 422, "other": 106}, "cumulative_drain": {"housing": 145.0, "food": 60.0, "transportation": -70.0, "healthcare": -113.0, "childcare": -113.0, "other": -183.0}, "bls_metro_cpi_ratio": 103.8},
-    {"jurisdiction": "District of Columbia", "year": 2010, "max_wba": 359.0, "weekly_housing": 380.0, "bai": 0.945, "bea_rpp": 119.3, "col_adjusted_housing": 453.34, "col_bai": 0.792, "mit_living_wage_hourly": 16.58, "mit_living_wage_weekly": 663.2, "living_wage_coverage_pct": 54.1, "living_wage_gap": 304.2, "expense_breakdown": {"housing": 476, "food": 96, "transportation": 139, "healthcare": 52, "childcare": 0, "other": 86}, "expense_breakdown_with_child": {"housing": 551, "food": 148, "transportation": 139, "healthcare": 105, "childcare": 500, "other": 141}, "cumulative_drain": {"housing": -117.0, "food": -213.0, "transportation": -352.0, "healthcare": -404.0, "childcare": -404.0, "other": -490.0}, "bls_metro_cpi_ratio": 103.8},
-    {"jurisdiction": "District of Columbia", "year": 2018, "max_wba": 444.0, "weekly_housing": 460.0, "bai": 0.965, "bea_rpp": 120.1, "col_adjusted_housing": 552.46, "col_bai": 0.804, "mit_living_wage_hourly": 20.62, "mit_living_wage_weekly": 824.8, "living_wage_coverage_pct": 53.8, "living_wage_gap": 380.8, "expense_breakdown": {"housing": 476, "food": 96, "transportation": 139, "healthcare": 52, "childcare": 0, "other": 86}, "expense_breakdown_with_child": {"housing": 551, "food": 148, "transportation": 139, "healthcare": 105, "childcare": 500, "other": 141}, "cumulative_drain": {"housing": -32.0, "food": -128.0, "transportation": -267.0, "healthcare": -319.0, "childcare": -319.0, "other": -405.0}, "bls_metro_cpi_ratio": 103.8},
-    {"jurisdiction": "District of Columbia", "year": 2026, "max_wba": 444.0, "weekly_housing": 520.0, "bai": 0.854, "bea_rpp": 119.0, "col_adjusted_housing": 618.8, "col_bai": 0.718, "mit_living_wage_hourly": 27.4, "mit_living_wage_weekly": 1096.0, "living_wage_coverage_pct": 40.5, "living_wage_gap": 652.0, "expense_breakdown": {"housing": 476, "food": 96, "transportation": 139, "healthcare": 52, "childcare": 0, "other": 86}, "expense_breakdown_with_child": {"housing": 551, "food": 148, "transportation": 139, "healthcare": 105, "childcare": 500, "other": 141}, "cumulative_drain": {"housing": -32.0, "food": -128.0, "transportation": -267.0, "healthcare": -319.0, "childcare": -319.0, "other": -405.0}, "bls_metro_cpi_ratio": 103.8}
+    {
+      "jurisdiction": "Maryland",
+      "year": 2010,
+      "max_wba": 430.0,
+      "weekly_housing": 295.0,
+      "bai": 1.458,
+      "bea_rpp": 106.2,
+      "col_adjusted_housing": 313.29,
+      "col_bai": 1.373,
+      "mit_living_wage_hourly": 13.95,
+      "mit_living_wage_weekly": 558.0,
+      "living_wage_coverage_pct": 77.1,
+      "living_wage_gap": 128.0,
+      "expense_breakdown": {
+        "housing": 337,
+        "food": 90,
+        "transportation": 127,
+        "healthcare": 46,
+        "childcare": 0,
+        "other": 75
+      },
+      "expense_breakdown_with_child": {
+        "housing": 391,
+        "food": 134,
+        "transportation": 127,
+        "healthcare": 95,
+        "childcare": 441,
+        "other": 115
+      },
+      "cumulative_drain": {
+        "housing": 93.0,
+        "food": 3.0,
+        "transportation": -124.0,
+        "healthcare": -170.0,
+        "childcare": -170.0,
+        "other": -245.0
+      },
+      "bls_metro_cpi_ratio": 97.6
+    },
+    {
+      "jurisdiction": "Maryland",
+      "year": 2018,
+      "max_wba": 430.0,
+      "weekly_housing": 370.0,
+      "bai": 1.162,
+      "bea_rpp": 107.8,
+      "col_adjusted_housing": 398.86,
+      "col_bai": 1.078,
+      "mit_living_wage_hourly": 17.89,
+      "mit_living_wage_weekly": 715.6,
+      "living_wage_coverage_pct": 60.1,
+      "living_wage_gap": 285.6,
+      "expense_breakdown": {
+        "housing": 337,
+        "food": 90,
+        "transportation": 127,
+        "healthcare": 46,
+        "childcare": 0,
+        "other": 75
+      },
+      "expense_breakdown_with_child": {
+        "housing": 391,
+        "food": 134,
+        "transportation": 127,
+        "healthcare": 95,
+        "childcare": 441,
+        "other": 115
+      },
+      "cumulative_drain": {
+        "housing": 93.0,
+        "food": 3.0,
+        "transportation": -124.0,
+        "healthcare": -170.0,
+        "childcare": -170.0,
+        "other": -245.0
+      },
+      "bls_metro_cpi_ratio": 97.6
+    },
+    {
+      "jurisdiction": "Maryland",
+      "year": 2026,
+      "max_wba": 430.0,
+      "weekly_housing": 450.0,
+      "bai": 0.956,
+      "bea_rpp": 108.2,
+      "col_adjusted_housing": 486.9,
+      "col_bai": 0.883,
+      "mit_living_wage_hourly": 23.15,
+      "mit_living_wage_weekly": 926.0,
+      "living_wage_coverage_pct": 46.4,
+      "living_wage_gap": 496.0,
+      "expense_breakdown": {
+        "housing": 337,
+        "food": 90,
+        "transportation": 127,
+        "healthcare": 46,
+        "childcare": 0,
+        "other": 75
+      },
+      "expense_breakdown_with_child": {
+        "housing": 391,
+        "food": 134,
+        "transportation": 127,
+        "healthcare": 95,
+        "childcare": 441,
+        "other": 115
+      },
+      "cumulative_drain": {
+        "housing": 93.0,
+        "food": 3.0,
+        "transportation": -124.0,
+        "healthcare": -170.0,
+        "childcare": -170.0,
+        "other": -245.0
+      },
+      "bls_metro_cpi_ratio": 97.6
+    },
+    {
+      "jurisdiction": "Virginia",
+      "year": 2010,
+      "max_wba": 378.0,
+      "weekly_housing": 270.0,
+      "bai": 1.4,
+      "bea_rpp": 101.8,
+      "col_adjusted_housing": 274.86,
+      "col_bai": 1.375,
+      "mit_living_wage_hourly": 12.82,
+      "mit_living_wage_weekly": 512.8,
+      "living_wage_coverage_pct": 73.7,
+      "living_wage_gap": 134.8,
+      "expense_breakdown": {
+        "housing": 285,
+        "food": 85,
+        "transportation": 130,
+        "healthcare": 43,
+        "childcare": 0,
+        "other": 70
+      },
+      "expense_breakdown_with_child": {
+        "housing": 335,
+        "food": 125,
+        "transportation": 130,
+        "healthcare": 90,
+        "childcare": 422,
+        "other": 106
+      },
+      "cumulative_drain": {
+        "housing": 93.0,
+        "food": 8.0,
+        "transportation": -122.0,
+        "healthcare": -165.0,
+        "childcare": -165.0,
+        "other": -235.0
+      },
+      "bls_metro_cpi_ratio": 103.8
+    },
+    {
+      "jurisdiction": "Virginia",
+      "year": 2018,
+      "max_wba": 378.0,
+      "weekly_housing": 345.0,
+      "bai": 1.096,
+      "bea_rpp": 102.9,
+      "col_adjusted_housing": 355.01,
+      "col_bai": 1.065,
+      "mit_living_wage_hourly": 16.43,
+      "mit_living_wage_weekly": 657.2,
+      "living_wage_coverage_pct": 57.5,
+      "living_wage_gap": 279.2,
+      "expense_breakdown": {
+        "housing": 285,
+        "food": 85,
+        "transportation": 130,
+        "healthcare": 43,
+        "childcare": 0,
+        "other": 70
+      },
+      "expense_breakdown_with_child": {
+        "housing": 335,
+        "food": 125,
+        "transportation": 130,
+        "healthcare": 90,
+        "childcare": 422,
+        "other": 106
+      },
+      "cumulative_drain": {
+        "housing": 93.0,
+        "food": 8.0,
+        "transportation": -122.0,
+        "healthcare": -165.0,
+        "childcare": -165.0,
+        "other": -235.0
+      },
+      "bls_metro_cpi_ratio": 103.8
+    },
+    {
+      "jurisdiction": "Virginia",
+      "year": 2026,
+      "max_wba": 430.0,
+      "weekly_housing": 420.0,
+      "bai": 1.024,
+      "bea_rpp": 103.5,
+      "col_adjusted_housing": 434.7,
+      "col_bai": 0.989,
+      "mit_living_wage_hourly": 21.5,
+      "mit_living_wage_weekly": 860.0,
+      "living_wage_coverage_pct": 50.0,
+      "living_wage_gap": 430.0,
+      "expense_breakdown": {
+        "housing": 285,
+        "food": 85,
+        "transportation": 130,
+        "healthcare": 43,
+        "childcare": 0,
+        "other": 70
+      },
+      "expense_breakdown_with_child": {
+        "housing": 335,
+        "food": 125,
+        "transportation": 130,
+        "healthcare": 90,
+        "childcare": 422,
+        "other": 106
+      },
+      "cumulative_drain": {
+        "housing": 145.0,
+        "food": 60.0,
+        "transportation": -70.0,
+        "healthcare": -113.0,
+        "childcare": -113.0,
+        "other": -183.0
+      },
+      "bls_metro_cpi_ratio": 103.8
+    },
+    {
+      "jurisdiction": "District of Columbia",
+      "year": 2010,
+      "max_wba": 359.0,
+      "weekly_housing": 380.0,
+      "bai": 0.945,
+      "bea_rpp": 119.3,
+      "col_adjusted_housing": 453.34,
+      "col_bai": 0.792,
+      "mit_living_wage_hourly": 16.58,
+      "mit_living_wage_weekly": 663.2,
+      "living_wage_coverage_pct": 54.1,
+      "living_wage_gap": 304.2,
+      "expense_breakdown": {
+        "housing": 476,
+        "food": 96,
+        "transportation": 139,
+        "healthcare": 52,
+        "childcare": 0,
+        "other": 86
+      },
+      "expense_breakdown_with_child": {
+        "housing": 551,
+        "food": 148,
+        "transportation": 139,
+        "healthcare": 105,
+        "childcare": 500,
+        "other": 141
+      },
+      "cumulative_drain": {
+        "housing": -117.0,
+        "food": -213.0,
+        "transportation": -352.0,
+        "healthcare": -404.0,
+        "childcare": -404.0,
+        "other": -490.0
+      },
+      "bls_metro_cpi_ratio": 103.8
+    },
+    {
+      "jurisdiction": "District of Columbia",
+      "year": 2018,
+      "max_wba": 444.0,
+      "weekly_housing": 460.0,
+      "bai": 0.965,
+      "bea_rpp": 120.1,
+      "col_adjusted_housing": 552.46,
+      "col_bai": 0.804,
+      "mit_living_wage_hourly": 20.62,
+      "mit_living_wage_weekly": 824.8,
+      "living_wage_coverage_pct": 53.8,
+      "living_wage_gap": 380.8,
+      "expense_breakdown": {
+        "housing": 476,
+        "food": 96,
+        "transportation": 139,
+        "healthcare": 52,
+        "childcare": 0,
+        "other": 86
+      },
+      "expense_breakdown_with_child": {
+        "housing": 551,
+        "food": 148,
+        "transportation": 139,
+        "healthcare": 105,
+        "childcare": 500,
+        "other": 141
+      },
+      "cumulative_drain": {
+        "housing": -32.0,
+        "food": -128.0,
+        "transportation": -267.0,
+        "healthcare": -319.0,
+        "childcare": -319.0,
+        "other": -405.0
+      },
+      "bls_metro_cpi_ratio": 103.8
+    },
+    {
+      "jurisdiction": "District of Columbia",
+      "year": 2026,
+      "max_wba": 444.0,
+      "weekly_housing": 520.0,
+      "bai": 0.854,
+      "bea_rpp": 119.0,
+      "col_adjusted_housing": 618.8,
+      "col_bai": 0.718,
+      "mit_living_wage_hourly": 27.4,
+      "mit_living_wage_weekly": 1096.0,
+      "living_wage_coverage_pct": 40.5,
+      "living_wage_gap": 652.0,
+      "expense_breakdown": {
+        "housing": 476,
+        "food": 96,
+        "transportation": 139,
+        "healthcare": 52,
+        "childcare": 0,
+        "other": 86
+      },
+      "expense_breakdown_with_child": {
+        "housing": 551,
+        "food": 148,
+        "transportation": 139,
+        "healthcare": 105,
+        "childcare": 500,
+        "other": 141
+      },
+      "cumulative_drain": {
+        "housing": -32.0,
+        "food": -128.0,
+        "transportation": -267.0,
+        "healthcare": -319.0,
+        "childcare": -319.0,
+        "other": -405.0
+      },
+      "bls_metro_cpi_ratio": 103.8
+    }
   ]
 }

@@ -1,10 +1,10 @@
-Jurisdiction,Year,Max_WBA,Taxable_Wage_Base,Avg_Annual_Wage,Weekly_Housing
-Maryland,2010,430,8500,51200,295
-Maryland,2018,430,8500,61000,370
-Maryland,2026,430,8500,72000,450
-Virginia,2010,378,8000,48500,270
-Virginia,2018,378,8000,57200,345
-Virginia,2026,430,8000,68000,420
-District of Columbia,2010,359,9000,74000,380
-District of Columbia,2018,444,9000,86500,460
-District of Columbia,2026,444,9000,112400,520
+Jurisdiction,Year,Max_WBA,Taxable_Wage_Base,Avg_Annual_Wage,Weekly_Housing,_wage_source,_fetched_at
+Maryland,2010,430,8500,51200,295,manual (BLS fetch failed),2026-07-18T21:31:55.145522
+Maryland,2018,430,8500,61000,370,manual (BLS fetch failed),2026-07-18T21:31:55.513299
+Maryland,2026,430,8500,72000,450,manual (BLS fetch failed),2026-07-18T21:31:55.889094
+Virginia,2010,378,8000,48500,270,manual (BLS fetch failed),2026-07-18T21:31:56.258794
+Virginia,2018,378,8000,57200,345,manual (BLS fetch failed),2026-07-18T21:31:56.644329
+Virginia,2026,430,8000,68000,420,manual (BLS fetch failed),2026-07-18T21:31:57.011974
+District of Columbia,2010,359,9000,74000,380,manual (BLS fetch failed),2026-07-18T21:31:57.386216
+District of Columbia,2018,444,9000,86500,460,manual (BLS fetch failed),2026-07-18T21:31:57.750787
+District of Columbia,2026,444,9000,112400,520,manual (BLS fetch failed),2026-07-18T21:31:58.126719
