@@ -243,7 +243,7 @@ def test_col_bai_values_plausible():
         rpp = row.get("bea_rpp", 100)
         if rpp > 100:
             assert col_bai <= bai + 0.01, \
-                f"{jur} {yr}: COL-BAI ({col_bai}) should be ≤ BAI ({bai}) when RPP > 100"
+                f"{jur} {yr}: COL-BAI ({col_bai}) should be <= BAI ({bai}) when RPP > 100"
 
 
 def test_col_bai_expense_breakdown():

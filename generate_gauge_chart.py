@@ -70,7 +70,7 @@ def draw_gauge(ax, bai_val, col_bai_val, abbr, jcolor):
 
     def val_to_angle(v):
         norm = (v - GAUGE_MIN) / (GAUGE_MAX - GAUGE_MIN)
-        return math.pi * (1 - norm)  # π (left) → 0 (right)
+        return math.pi * (1 - norm)  # pi (left) → 0 (right)
 
     # Draw arc zones
     for vmin, vmax, zcol, zalpha in zones:
