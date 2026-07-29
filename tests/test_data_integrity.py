@@ -31,6 +31,18 @@ EXPECTED_FIGS = [
     "13_fec_contribution_mix.png",
     "14_col_bai_comparison.png",
     "15_expense_matrix.png",
+    # Phase 7 — new chart types
+    "16_slope_coverage_collapse.png",
+    "17_policy_freeze_timeline.png",
+    "19_adequacy_heatmap.png",
+    "20_radar_severity.png",
+    "21_small_multiples.png",
+    "22_bai_gauge.png",
+    "23_sui_rate_decline.png",
+    "24_sui_wagbase_dual.png",
+    "25_waterfall_expense_drain.png",
+    "26_constituent_income_scatter.png",
+    "27_lawmaker_pay_diverging.png",
 ]
 
 
@@ -160,6 +172,22 @@ def test_sui_rates_in_range():
         for yr, rate in yr_rates.items():
             assert 0.005 <= rate <= 0.08, \
                 f"{state} {yr}: SUI rate {rate:.3%} outside plausible range (0.5%–8%)"
+
+
+def test_sui_rates_3x3_complete():
+    path = DATA / "sui_rates.json"
+    if not path.exists():
+        pytest.skip("sui_rates.json not yet generated — run fetch_dol_sui_rates.py")
+    with open(path) as f:
+        data = json.load(f)
+    rates = data.get("rates", {})
+    for state in ("MD", "VA", "DC"):
+        assert state in rates, f"sui_rates.json missing state: {state}"
+        for yr in ("2010", "2018", "2026"):
+            assert yr in rates[state], \
+                f"sui_rates.json missing {state}/{yr} (required for 3×3 coverage)"
+            assert isinstance(rates[state][yr], (int, float)), \
+                f"sui_rates.json {state}/{yr} is not numeric"
 
 
 # ── Figure files ──────────────────────────────────────────────────────────────

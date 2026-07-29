@@ -620,10 +620,12 @@
   <a href="#ch3">MIPI</a>
   <a href="#ch3b">COL Cost Gap</a>
   <a href="#ch4">Trust Fund</a>
+  <a href="#ch-exposure">Exposure</a>
   <a href="#county-map">Map</a>
+  <a href="#ch5">FEC</a>
+  <a href="#appendix">Appendix</a>
   <a href="#interactive-charts">Interactive</a>
   <a href="#chart-inventory">Charts</a>
-  <a href="#ch5">FEC</a>
   <a href="political.html">Political Layer</a>
   <a href="methodology.html">Methodology</a>
   <a href="about.html">About</a>
@@ -777,6 +779,26 @@
   A frozen benefit is not static — it actively loses purchasing power every year inflation runs. Maryland's $430 cap, unchanged since 2014, is worth approximately $300 in today's dollars: a 29% cut with no floor vote and no press conference. Virginia's freeze ran from 2008 to 2026 — long enough to carve 35% off the check's real value before SB 1056 partially corrected it. A freeze is not inaction. It is a passive, unsigned pay cut that compounds every single year the cap sits still.
 </blockquote>
 
+<!-- Fig 1.3 — Slope Chart: Living Wage Coverage Collapse -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig 1.3 — Living Wage Coverage Collapse: 2010 → 2018 → 2026</h3>
+<div class="callout-plain">Every jurisdiction is declining. The question is only how fast — and whether 50% living-wage coverage (the minimum line) is a floor or a ceiling.</div>
+<div class="chart-block">
+  <img src="figures/16_slope_coverage_collapse.png"
+       alt="Fig 1.3 — Slope chart: Living Wage Coverage collapse 2010–2026"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig 1.3 — Living wage coverage (UI max benefit as % of MIT Living Wage) across 2010, 2018, and 2026. Each line = one jurisdiction. Dashed red = 50% adequacy floor. Sources: MIT Living Wage Calculator (2010/2018 retrospective; 2024 published) · DOL benefit schedules · col_bai_results.json</div>
+</div>
+
+<!-- Fig 1.4 — Gauge Panel: BAI vs. Survival Threshold -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig 1.4 — Benefit Adequacy Gauges — 2026 Snapshot</h3>
+<div class="callout-plain">DC, Maryland, and Virginia — all three gauges sitting in the red or barely above it. The needle doesn't lie.</div>
+<div class="chart-block">
+  <img src="figures/22_bai_gauge.png"
+       alt="Fig 1.4 — Gauge panel: BAI and COL-BAI vs. 1.0 survival threshold, 2026"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig 1.4 — Benefit adequacy gauges. Solid needle = BAI (housing-only); dashed needle = COL-BAI (full basket adjusted). Red zone = below threshold (UI check cannot cover rent). Sources: col_bai_results.json · BEA Regional Price Parities 2022.</div>
+</div>
+
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- CHAPTER 2 -->
 <!-- ══════════════════════════════════════════════════════════════ -->
@@ -816,6 +838,26 @@
 <div class="finding">
   <span class="label">// FORENSIC FINDING — CH.2</span>
   Maryland's $8,500 taxable wage base was set in 1992 when the average Maryland wage was approximately $32,700 — a taxable fraction of 26%. The average wage is now $72,800. The base captures 11.7%. Employers pay zero toward the safety net on the top <strong>88.3%</strong> of the average worker's paycheck. No vote was cast to cut that rate. No vote is needed to keep it cut. The statute sits still and the formula does the rest automatically.
+</div>
+
+<!-- Fig 2.2 — SUI Effective Tax Rate Decline -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig 2.2 — Effective Employer SUI Tax Rate: The Other Decline</h3>
+<div class="callout-plain">It's not just the wage base that's eroding — the effective SUI tax rate itself has been declining too. Both shrink simultaneously, compounding the trust fund starvation.</div>
+<div class="chart-block">
+  <img src="figures/23_sui_rate_decline.png"
+       alt="Fig 2.2 — SUI Effective Tax Rate decline 2010/2018/2026 for DC, MD, VA"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig 2.2 — Effective employer SUI tax rate (total contributions ÷ total taxable wages) at 2010, 2018, and 2026 anchor years. All three jurisdictions show declining rates — compounding the frozen wage base effect. Source: DOL ETA-5159 State UI Financial Data (2026 row uses 2023 latest published year).</div>
+</div>
+
+<!-- Fig 2.3 — Policy Freeze Timeline (Gantt) -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig 2.3 — Policy Freeze Timeline: How Long Each Cap Has Been Frozen</h3>
+<div class="callout-plain">Maryland's wage base hasn't moved since 1992. That's 34 years. The bar makes the duration visible in a way a sentence cannot.</div>
+<div class="chart-block">
+  <img src="figures/17_policy_freeze_timeline.png"
+       alt="Fig 2.3 — Gantt-style policy freeze timeline 1992–2026"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig 2.3 — Gantt-style freeze duration chart. Each bar = how long each UI policy parameter has been frozen. MD taxable wage base: 34 years. VA max benefit: 18 years before SB1056. Congress salary: 17 years. Sources: MD DOL · VA DOL · DC OHR · State DOL statutes · Congress.gov · WSET/MD Compensation Commission.</div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
@@ -1022,6 +1064,26 @@
   <div class="caption" style="padding:0.5rem 1rem 0.8rem;">Figure 15 (Interactive) — Toggle between 1 Adult and 1 Adult + 1 Child scenarios. Dotted green lines show UI maximum benefit floors (DC $444, MD/VA $430).</div>
 </div>
 
+<!-- Fig 3B.3 — Waterfall: Cumulative Expense Drain -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig 3B.3 — Waterfall: Where the Check Goes (Expense Drain)</h3>
+<div class="callout-plain">DC's UI check runs out at housing. Before food. Before transportation. Before healthcare. The waterfall makes that visible as a running balance — and the balance goes negative before step one is complete.</div>
+<div class="chart-block">
+  <img src="figures/25_waterfall_expense_drain.png"
+       alt="Fig 3B.3 — Waterfall chart: cumulative expense drain from UI max benefit, 2026"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig 3B.3 — Starting at the UI maximum benefit and subtracting each expense category in sequence. DC goes negative at housing alone (−$32/wk before food). MD balance after all categories: −$245/wk. VA: −$213/wk. Source: MIT Living Wage Calculator 2024 · DOL benefit schedules · col_bai_results.json</div>
+</div>
+
+<!-- Fig 3B.5 — Heatmap: Benefit Adequacy 3×3 Grid -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig 3B.5 — Benefit Adequacy Heatmap — 3 Jurisdictions × 3 Years</h3>
+<div class="callout-plain">Every cell is getting redder. The temporal decline and cross-state comparison in one glance — no axis-reading required.</div>
+<div class="chart-block">
+  <img src="figures/19_adequacy_heatmap.png"
+       alt="Fig 3B.5 — Heatmap: BAI, COL-BAI, and Living Wage Coverage across DC/MD/VA × 2010/2018/2026"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig 3B.5 — Three 3×3 heatmaps (rows = jurisdictions, cols = anchor years). Green → gold → red = adequate → marginal → critical. Left: BAI; Center: COL-BAI; Right: Living Wage Coverage %. Source: col_bai_results.json · MIT Living Wage 2024.</div>
+</div>
+
 <blockquote class="investigative-take">
   <span class="it-label">// Investigative Take — COL-BAI &amp; Living Wage Gap</span>
   The housing-only BAI was already damning. The COL-adjusted picture is worse. DC's benefit covers 72% of the COL-adjusted housing cost — and only 40% of what MIT calculates as the bare minimum to survive as one adult in the DC metro. That means a laid-off DC worker receiving the maximum benefit is $652/week below survival, every single week, before accounting for any savings erosion. Maryland is $496/week short. Virginia is $430/week short. These are not edge cases or statistical artifacts. They are the mathematical result of benefit caps that have been frozen for over a decade while housing costs, food prices, transportation, and healthcare have continued compounding. The living wage gap has nearly doubled since 2010 in all three jurisdictions. The system was inadequate then. It is structurally disqualifying now.
@@ -1114,6 +1176,16 @@
   DC: from 13.6% to 8.0%. The trust fund is being systematically starved —
   not by economic downturn, but by a denominator allowed to grow
   while the numerator sits perfectly still.
+</div>
+
+<!-- Fig 4.4 — Dual-Axis: SUI Rate × Wage Base Erosion -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig 4.4 — Trust Fund Double-Erosion: SUI Rate AND Wage Base Both Declining</h3>
+<div class="callout-plain">It's not one problem. Both the effective employer tax rate and the wage fraction that's taxable are declining simultaneously — compounding the trust fund starvation at every level.</div>
+<div class="chart-block">
+  <img src="figures/24_sui_wagbase_dual.png"
+       alt="Fig 4.4 — Dual-axis: SUI effective rate (left) and wage base as % of avg wage (right), 2010/2018/2026"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig 4.4 — Three-panel dual-axis chart (one per jurisdiction). Left axis: effective SUI employer tax rate. Right axis: taxable wage base as % of average annual wage (WBI). Both trend lines decline across all three states — simultaneous compression from two directions. Sources: DOL ETA-5159 (SUI rates) · BLS QCEW (avg wages) · State DOL (wage base statutes).</div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
@@ -1289,6 +1361,26 @@
   You can draw your own conclusions about why Maryland's wage base hasn't moved since 1992.
 </div>
 
+<!-- Fig 5.5 — Scatter: Constituent Income vs. Per-Employee Gap -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig 5.5 — Constituent Median Income vs. Per-Employee Trust Fund Gap</h3>
+<div class="callout-plain">Each dot is a lawmaker. The richer their district, the higher the per-employee trust fund gap in their state — the one they're not fixing.</div>
+<div class="chart-block">
+  <img src="figures/26_constituent_income_scatter.png"
+       alt="Fig 5.5 — Scatter: constituent median income vs. per-employee trust fund gap per legislator"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig 5.5 — Each point = one DMV legislator. X-axis: constituent median household income (Census ACS 2022 5-year). Y-axis: per-employee annual trust fund gap for their home state. Diamonds = Senators (statewide income), circles = House members (district income). Sources: political_layer_report.json · employer_contribution_gap.json · ACS 2022.</div>
+</div>
+
+<!-- Fig 5.6 — Diverging Bar: Lawmaker Pay vs. UI Benefit Change -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig 5.6 — Lawmaker Pay vs. UI Benefit Change: 2014–2026</h3>
+<div class="callout-plain">Maryland lawmakers got a +12.5% pay raise. Maryland workers got 0%. The ratio: ∞ to 1. That is not a metaphor — it is the arithmetic.</div>
+<div class="chart-block">
+  <img src="figures/27_lawmaker_pay_diverging.png"
+       alt="Fig 5.6 — Diverging grouped bar: lawmaker pay % change vs. UI benefit % change 2014–2026"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig 5.6 — Grouped bars per legislative body: lime = their salary change; colored = UI max benefit change (2014–2026). MD: +12.5% pay / 0% benefit. VA: +183% pay / +13.8% benefit (includes SB1056). DC: +15% pay / +23.7% benefit (CPI-linked by statute). Sources: MD Compensation Commission 2026 · WSET (VA legislative pay raise 2026) · DC Code §1-611.09 · CRS RL30064 · State DOL UI benefit schedules.</div>
+</div>
+
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- INTERACTIVE CHARTS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
@@ -1405,37 +1497,49 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- CHART INVENTORY -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<h2 id="chart-inventory">Chart Inventory — All 16 Visualizations</h2>
-<div class="callout-plain">Every chart in this audit mapped to its format. Static PNGs render inline in each chapter. Interactive Plotly versions load in the section above (requires click to expand). Figure 15's interactive counterpart (scenario toggle) is embedded directly in Chapter 3B.</div>
+<h2 id="chart-inventory">Chart Inventory — All 27 Visualizations</h2>
+<div class="callout-plain">Every chart in this audit mapped to its format and chapter. Static PNGs render inline in each chapter. Interactive Plotly versions load in the section above. Phase 7 adds 12 new chart types including slope, Gantt, waterfall, heatmap, radar, small multiples, dual-axis, and gauge visualizations.</div>
 <div class="card" style="padding:0;">
   <div style="overflow-x:auto;">
   <table class="chart-matrix">
     <thead>
       <tr>
-        <th style="width:3rem;">Fig</th>
+        <th style="width:3.5rem;">Fig</th>
         <th>Title</th>
         <th>Chapter</th>
+        <th>Chart Type</th>
         <th>Static PNG</th>
         <th>Interactive</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td class="fig-num">01</td><td>BAI Decay Trajectory</td><td>Ch.1 — Worker Insolvency</td><td class="tick">✓ 01_bai_decay_trajectory.png</td><td class="tick">✓ fig01_bai.html</td></tr>
-      <tr><td class="fig-num">02</td><td>WBI Stagnation</td><td>Ch.2 — Corporate Tax Escape</td><td class="tick">✓ 02_wbi_stagnation.png</td><td class="tick">✓ fig02_wbi.html</td></tr>
-      <tr><td class="fig-num">03</td><td>MIPI Clawback</td><td>Ch.3 — Poverty Trap</td><td class="tick">✓ 03_mipi_clawback.png</td><td class="tick">✓ fig03_mipi.html</td></tr>
-      <tr><td class="fig-num">04</td><td>Housing vs. WBA Gap</td><td>Ch.3 — Poverty Trap</td><td class="tick">✓ 04_housing_vs_wba_gap.png</td><td class="tick">✓ fig04_housing.html</td></tr>
-      <tr><td class="fig-num">05</td><td>Per-Employee Underpayment</td><td>Ch.4 — Trust Fund</td><td class="tick">✓ 05_employer_per_employee_gap.png</td><td class="tick">✓ fig05_employer_per_emp.html</td></tr>
-      <tr><td class="fig-num">06</td><td>Aggregate Trust Fund Gap</td><td>Ch.4 — Trust Fund</td><td class="tick">✓ 06_employer_aggregate_gap.png</td><td class="tick">✓ fig06_employer_aggregate.html</td></tr>
-      <tr><td class="fig-num">07</td><td>Statutory vs. Expected Wage Base</td><td>Ch.4 — Trust Fund</td><td class="tick">✓ 07_statutory_vs_expected_wage_base.png</td><td class="tick">✓ fig07_wage_base.html</td></tr>
-      <tr><td class="fig-num">08</td><td>Real Value Index (RVI)</td><td>Ch.1 — Worker Insolvency</td><td class="tick">✓ 08_real_value_index.png</td><td class="tick">✓ fig08_rvi.html</td></tr>
-      <tr><td class="fig-num">09</td><td>Unemployment Context</td><td>Human Scale</td><td class="tick">✓ 09_unemployment_context.png</td><td class="cross">— static only</td></tr>
-      <tr><td class="fig-num">10</td><td>Spending Accountability Matrix</td><td>Ch.5 — Who Funds the Freeze</td><td class="tick">✓ 10_spending_accountability.png</td><td class="cross">— static only</td></tr>
-      <tr><td class="fig-num">11</td><td>FEC Total Receipts</td><td>Ch.5 — Who Funds the Freeze</td><td class="tick">✓ 11_fec_total_receipts.png</td><td class="tick">✓ fig11_fec_totals.html</td></tr>
-      <tr><td class="fig-num">12</td><td>FEC Business vs. Labor</td><td>Ch.5 — Who Funds the Freeze</td><td class="tick">✓ 12_fec_business_vs_labor.png</td><td class="tick">✓ fig12_fec_biz_labor.html</td></tr>
-      <tr><td class="fig-num">13</td><td>FEC Contribution Mix</td><td>Ch.5 — Who Funds the Freeze</td><td class="tick">✓ 13_fec_contribution_mix.png</td><td class="tick">✓ fig13_fec_mix.html</td></tr>
-      <tr><td class="fig-num">14</td><td>COL-BAI Comparison</td><td>Ch.3B — Real Cost Gap</td><td class="tick">✓ 14_col_bai_comparison.png</td><td class="cross">— static only</td></tr>
-      <tr><td class="fig-num">15</td><td>Expense Category Matrix</td><td>Ch.3B — Real Cost Gap</td><td class="tick">✓ 15_expense_matrix.png</td><td class="tick">✓ fig14_expense_matrix.html (Ch.3B)</td></tr>
-      <tr><td class="fig-num">—</td><td>DMV County Unemployment Map</td><td>Geographic Distribution</td><td class="cross">— interactive only</td><td class="tick">✓ dmv_counties.html (Folium)</td></tr>
+      <tr><td class="fig-num">1.1</td><td>BAI Decay Trajectory</td><td>Ch.1 — Worker Insolvency</td><td>Multi-line</td><td class="tick">✓ 01_bai_decay_trajectory.png</td><td class="tick">✓ fig01_bai.html</td></tr>
+      <tr><td class="fig-num">1.2</td><td>Real Value Index (RVI)</td><td>Ch.1 — Worker Insolvency</td><td>Grouped bar</td><td class="tick">✓ 08_real_value_index.png</td><td class="tick">✓ fig08_rvi.html</td></tr>
+      <tr><td class="fig-num">1.3</td><td>Living Wage Coverage Collapse</td><td>Ch.1 — Worker Insolvency</td><td>Slope chart</td><td class="tick">✓ 16_slope_coverage_collapse.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">1.4</td><td>Benefit Adequacy Gauges</td><td>Ch.1 — Worker Insolvency</td><td>Gauge panel</td><td class="tick">✓ 22_bai_gauge.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">2.1</td><td>WBI Stagnation</td><td>Ch.2 — Corporate Tax Escape</td><td>Dual-line / area</td><td class="tick">✓ 02_wbi_stagnation.png</td><td class="tick">✓ fig02_wbi.html</td></tr>
+      <tr><td class="fig-num">2.2</td><td>SUI Effective Tax Rate Decline</td><td>Ch.2 — Corporate Tax Escape</td><td>Dot-connected line</td><td class="tick">✓ 23_sui_rate_decline.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">2.3</td><td>Policy Freeze Timeline</td><td>Ch.2 — Corporate Tax Escape</td><td>Gantt / timeline</td><td class="tick">✓ 17_policy_freeze_timeline.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">3.1</td><td>MIPI Clawback</td><td>Ch.3 — Poverty Trap</td><td>Horizontal bar</td><td class="tick">✓ 03_mipi_clawback.png</td><td class="tick">✓ fig03_mipi.html</td></tr>
+      <tr><td class="fig-num">3.2</td><td>Housing vs. WBA Gap</td><td>Ch.3 — Poverty Trap</td><td>Diverging line</td><td class="tick">✓ 04_housing_vs_wba_gap.png</td><td class="tick">✓ fig04_housing.html</td></tr>
+      <tr><td class="fig-num">3B.1</td><td>COL-BAI Comparison</td><td>Ch.3B — Real Cost Gap</td><td>Composite 3-panel</td><td class="tick">✓ 14_col_bai_comparison.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">3B.2</td><td>Expense Category Matrix</td><td>Ch.3B — Real Cost Gap</td><td>Stacked horizontal bar</td><td class="tick">✓ 15_expense_matrix.png</td><td class="tick">✓ fig14_expense_matrix.html</td></tr>
+      <tr><td class="fig-num">3B.3</td><td>Waterfall — Expense Drain</td><td>Ch.3B — Real Cost Gap</td><td>Waterfall / cascade</td><td class="tick">✓ 25_waterfall_expense_drain.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">3B.5</td><td>Benefit Adequacy Heatmap</td><td>Ch.3B — Real Cost Gap</td><td>Color heatmap</td><td class="tick">✓ 19_adequacy_heatmap.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">4.1</td><td>Per-Employee Underpayment</td><td>Ch.4 — Trust Fund</td><td>Bar chart</td><td class="tick">✓ 05_employer_per_employee_gap.png</td><td class="tick">✓ fig05_employer_per_emp.html</td></tr>
+      <tr><td class="fig-num">4.2</td><td>Aggregate Trust Fund Gap</td><td>Ch.4 — Trust Fund</td><td>Bar chart</td><td class="tick">✓ 06_employer_aggregate_gap.png</td><td class="tick">✓ fig06_employer_aggregate.html</td></tr>
+      <tr><td class="fig-num">4.3</td><td>Statutory vs. Expected Wage Base</td><td>Ch.4 — Trust Fund</td><td>Grouped bar</td><td class="tick">✓ 07_statutory_vs_expected_wage_base.png</td><td class="tick">✓ fig07_wage_base.html</td></tr>
+      <tr><td class="fig-num">4.4</td><td>SUI Rate × Wage Base Dual-Erosion</td><td>Ch.4 — Trust Fund</td><td>Dual-axis (twinx)</td><td class="tick">✓ 24_sui_wagbase_dual.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">5.1</td><td>Spending Accountability Matrix</td><td>Ch.5 — Who Funds the Freeze</td><td>Scatter</td><td class="tick">✓ 10_spending_accountability.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">5.2</td><td>FEC Total Receipts</td><td>Ch.5 — Who Funds the Freeze</td><td>Horizontal bar</td><td class="tick">✓ 11_fec_total_receipts.png</td><td class="tick">✓ fig11_fec_totals.html</td></tr>
+      <tr><td class="fig-num">5.3</td><td>FEC Business vs. Labor</td><td>Ch.5 — Who Funds the Freeze</td><td>Grouped bar</td><td class="tick">✓ 12_fec_business_vs_labor.png</td><td class="tick">✓ fig12_fec_biz_labor.html</td></tr>
+      <tr><td class="fig-num">5.4</td><td>FEC Contribution Mix</td><td>Ch.5 — Who Funds the Freeze</td><td>100% stacked bar</td><td class="tick">✓ 13_fec_contribution_mix.png</td><td class="tick">✓ fig13_fec_mix.html</td></tr>
+      <tr><td class="fig-num">5.5</td><td>Constituent Income vs. Trust Fund Gap</td><td>Ch.5 — Who Funds the Freeze</td><td>Scatter</td><td class="tick">✓ 26_constituent_income_scatter.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">5.6</td><td>Lawmaker Pay vs. UI Benefit Change</td><td>Ch.5 — Who Funds the Freeze</td><td>Diverging grouped bar</td><td class="tick">✓ 27_lawmaker_pay_diverging.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">6.1</td><td>Unemployment Context</td><td>Ch.6 — Human Scale</td><td>Dual-panel line+bar</td><td class="tick">✓ 09_unemployment_context.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">A.1</td><td>Multi-Index Severity Radar</td><td>Appendix — Summary</td><td>Radar / spider</td><td class="tick">✓ 20_radar_severity.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">A.2</td><td>All Metrics Small Multiples Grid</td><td>Appendix — Summary</td><td>Small multiples (9-panel)</td><td class="tick">✓ 21_small_multiples.png</td><td class="cross">— static only</td></tr>
+      <tr><td class="fig-num">—</td><td>DMV County Unemployment Map</td><td>Geographic Distribution</td><td>Choropleth (Folium)</td><td class="cross">— interactive only</td><td class="tick">✓ dmv_counties.html</td></tr>
     </tbody>
   </table>
   </div>
@@ -1503,6 +1607,39 @@
 
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- SOURCES & CITATIONS -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- APPENDIX — SUMMARY FIGURES -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<h2 id="appendix">Appendix — Cross-Chapter Summary</h2>
+
+<div class="callout-plain">Two summary visualizations that synthesize all five chapters in one view — the severity radar and the 3×3 small multiples grid covering every metric across every jurisdiction and year.</div>
+
+<!-- Fig A.1 — Radar/Spider: Multi-Index Severity -->
+<h3 style="margin: 1.5rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig A.1 — Multi-Index Severity Radar: 2026 vs. 2010 Ghost</h3>
+<div class="callout-plain">A smaller polygon means worse performance across every dimension. DC's polygon shrinks in every direction. The 2010 ghost (dotted) shows how far each state has fallen.</div>
+<div class="chart-block">
+  <img src="figures/20_radar_severity.png"
+       alt="Fig A.1 — Radar/spider chart: multi-index severity profile DC/MD/VA, 2026 vs 2010 ghost"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig A.1 — Multi-index severity radar. Five axes (BAI, COL-BAI, WBI wage-base%, Living Wage Coverage%, SUI effective rate), normalized to 0–1 scale. Solid polygon = 2026; dotted ghost = 2010. Larger polygon = stronger performance. Red dashed ring = ~50% of normalized range (failure threshold zone). Sources: col_bai_results.json · sui_rates.json · dmv_macro_baselines.csv.</div>
+</div>
+
+<!-- Fig A.2 — Small Multiples: All Metrics 3×3 Grid -->
+<h3 style="margin: 2rem 0 0.6rem; font-size:0.78rem; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Fig A.2 — All Key Metrics: Small Multiples Grid (Jurisdiction × Year)</h3>
+<div class="callout-plain">Every datapoint in this audit — nine jurisdiction-year combinations — in one view. Each cell shows a mini bar chart of BAI, COL-BAI, Living Wage Coverage, and Living Wage Gap. Red labels = below threshold.</div>
+<div class="chart-block">
+  <img src="figures/21_small_multiples.png"
+       alt="Fig A.2 — Small multiples 3×3 grid: rows = DC/MD/VA, cols = 2010/2018/2026"
+       style="max-width:100%; border-radius:4px;">
+  <div class="caption">Fig A.2 — Small multiples grid (3 rows = jurisdictions, 3 cols = anchor years). Each cell: mini bar chart of BAI, COL-BAI, Living Wage Coverage %, and Living Wage Gap. Red dashed line = failure threshold. Values labeled above each bar in red (below threshold) or white (above). Source: col_bai_results.json · MIT Living Wage Calculator 2024.</div>
+</div>
+
+<blockquote class="investigative-take">
+  <span class="it-label">// Cross-Chapter Synthesis</span>
+  The radar tells you the shape of failure. The small multiples tell you when it started. In 2010, Maryland had a defensible BAI — above 1.4. By 2026, it's below 1.0. DC was already failing in 2010 and has only gotten worse. Virginia's partial correction via SB1056 shows up in the 2026 column — but its living wage coverage is still only 50%, and the COL-BAI sits at 0.989, barely below the survival line. All three jurisdictions are in active crisis by the metric that matters: does the check cover the life it's supposed to sustain? The answer, across every anchor year, every jurisdiction, and every methodology used in this audit, is: less and less.
+</blockquote>
+
 <!-- ══════════════════════════════════════════════════════════════ -->
 <h2 id="sources">Data Sources &amp; Citations</h2>
 

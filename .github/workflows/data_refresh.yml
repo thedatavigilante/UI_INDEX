@@ -110,6 +110,15 @@ jobs:
           python generate_spending_accountability.py
           python generate_col_bai_figure.py
           python generate_expense_matrix_figure.py
+          # Phase 7 new chart types (figs 16–27)
+          python generate_slope_chart.py
+          python generate_policy_timeline.py
+          python generate_heatmap.py
+          python generate_waterfall_chart.py
+          python generate_summary_figures.py
+          python generate_sui_charts.py
+          python generate_accountability_charts.py
+          python generate_gauge_chart.py
         continue-on-error: true
 
       # ── Phase 8: Regenerate county map ────────────────────────────────────────
