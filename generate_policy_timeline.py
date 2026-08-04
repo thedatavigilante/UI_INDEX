@@ -25,12 +25,22 @@ ORANGE  = "#F39C12"
 # "end" is when the freeze ended (or 2026 if still frozen)
 FREEZE_BARS = [
     # Taxable Wage Bases
+    # MD: CSV (dmv_macro_baselines.csv) shows $8,500 for 2010, 2018, 2026 — freeze predates 2010.
+    # 1992 is the asserted start; confirmed only that it extends to at least 2010.
     ("MD Taxable Wage Base\n($8,500 — no change since 1992)", 1992, 2026, CRIMSON,  "34-year freeze"),
+    # VA: CSV shows $8,000 for 2010, 2018, 2026 — consistent with 2010 freeze start.
     ("VA Taxable Wage Base\n($8,000 — no change since 2010)", 2010, 2026, CRIMSON,  "16-year freeze"),
-    ("DC Taxable Wage Base\n($9,000 — last raised 2018)",     2018, 2026, GOLD,     "8-year freeze"),
+    # DC: CSV shows $9,000 for ALL three anchor years (2010, 2018, 2026).
+    # The wage base was already $9,000 in 2010 — it was NOT raised in 2018.
+    # Bar corrected from start_year=2018 to ≤2010; using 2010 as the confirmed upper bound.
+    ("DC Taxable Wage Base\n($9,000 — no change since ≤ 2010)", 2010, 2026, CRIMSON, "≥16-year freeze"),
     # Max Weekly Benefits
-    ("MD Max WBA\n($430 — no change since 2014)",             2014, 2026, ORANGE,   "12-year freeze"),
+    # MD: CSV shows $430 for ALL three anchor years (2010, 2018, 2026).
+    # Freeze confirmed to predate 2010; bar corrected from 2014 to 2010.
+    ("MD Max WBA\n($430 — no change since ≤ 2010)",           2010, 2026, ORANGE,   "≥16-year freeze"),
+    # VA: CSV shows $378 for 2010 and 2018, $430 for 2026 (SB1056 fix). Consistent with 2008 start.
     ("VA Max WBA\n($378 → frozen 2008, SB1056 2026)",         2008, 2026, GOLD,     "18-year freeze\n(SB1056 fix: +$52 Jan 2026)"),
+    # DC: CSV shows $359 (2010) → $444 (2018) — WBA raised in 2018. Bar unchanged.
     ("DC Max WBA\n($359 → raised to $444 in 2018)",           2010, 2018, ORANGE,   "8-year freeze\n(pre-2018)"),
     # Congressional salary
     ("Congress Salary\n($174K — frozen since 2009)",          2009, 2026, MUTED,    "17-year freeze"),
@@ -39,8 +49,9 @@ FREEZE_BARS = [
 # Point events (markers, not bars)
 EVENTS = [
     (2026, 0,  "SB1056\n+$52", GREEN),   # VA benefit fix — row index 4 (VA Max WBA)
-    (2018, 2,  "DC raised\n$9K", BLUE),  # DC wage base raised — row 2
-    (2018, 5,  "DC raised\n$444", BLUE), # DC benefit raised — row 5
+    # Note: DC raised its WBA to $444 in 2018 (captured in row 5), NOT its taxable wage base.
+    # The wage base ($9,000) was already at this level in 2010 per dmv_macro_baselines.csv.
+    (2018, 5,  "DC raised\n$444", BLUE), # DC WBA raised to $444 — row 5
 ]
 
 fig, ax = plt.subplots(figsize=(13, 7))
