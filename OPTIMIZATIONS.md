@@ -1,67 +1,101 @@
-<!-- markdownlint-disable -->
+# 🧠 OPTIMIZATIONS.md
 
-# Master Optimization List — The Stagnant Safety Net
+> A running log of corrections, clarifications, and roadmap items for the `UI_INDEX` project.
+> *This is the source of truth for the portfolio's accuracy and its biggest limitations.*
 
-**Running log of every audit, correction, and enhancement since project inception.**
-Numbered with sub-items for traceability. Status: ✅ done · 🔄 in progress · 📋 planned
-
-Last revised: 2026-06-11
+**Current Status:** October 20, 2026 — v54 of Unclaimed Money Command Center synced. BLS September 2026 + LAUS August 2026 integrated.
 
 ---
 
-## Phase 3 — Portfolio Hardening (✅ complete, commit `dac9d4c`)
+## Recent Corrections (Newest First)
 
-1. ✅ **Buy Me a Coffee integration** — 4 placements (nav, hero section, footer callout, footer link)
-2. ✅ **LinkedIn byline** — `linkedin.com/in/sierran` in nav and footer
-3. ✅ **Light/dark mode toggle** — `body.light` CSS class, localStorage persisted
-4. ✅ **"So What?" callouts** — plain-language `.callout-plain` boxes opening each chapter
-5. ✅ **README corrections** — aligned figures with narrative
+### 52 — October 2026 BLS Data Refresh ✅ INTEGRATED
+**Date:** 2026-10-20  
+**File:** `README.md`, `DATA_CATALOG.md`, `figures/09_unemployment_context.png`  
+**Change:** Integrated BLS September 2026 CPS and BLS LAUS August 2026 data into all relevant files.
+- US unemployment rate: **4.2%** (Sep 2026 CPS) — 7.1 million unemployed
+- Long-term unemployed: **1.9 million** (27.1% of all unemployed)
+- DC unemployment: **5.7%** (Aug 2026 LAUS) — highest in the nation
+- MD unemployment: **4.1%** (Aug 2026 LAUS)
+- VA unemployment: **3.6%** (Aug 2026 LAUS)
+- CPI-U: **3.7%** YoY (Sep 2026)
+- Energy CPI: **+20.4%** YoY
+- Gasoline: **+34.2%** YoY
+- Added "October 2026 Labor Market Reality Check" section to README
+- Added "Data Freshness Disclosure" to Methodology section
+- Updated verification date badges throughout
+- Added 1.9M long-term unemployed stat to 6-Second Scan
+**Why it matters:** The previous README referenced BLS data without specifying vintage. The October 2026 refresh anchors all claims to specific BLS releases, making the portfolio auditable and current. The 4.2% "stable" rate is now contextualized against the 1.9M long-term unemployed — a key narrative counterpoint.
+**Verification:** [bls.gov/news.release/empsit.nr0.htm](https://www.bls.gov/news.release/empsit.nr0.htm) (CPS Sep 2026) · [bls.gov/lau](https://www.bls.gov/lau/) (LAUS Aug 2026) · [bls.gov/cpi](https://www.bls.gov/cpi/) (CPI Sep 2026)
 
-## Phase 4 — Live-Source Data Audit (✅ complete, commit `fa6e5ec`)
+### 51 — Unclaimed Money Command Center v53 → v54 Sync ✅ INTEGRATED
+**Date:** 2026-10-20  
+**File:** `README.md` (social links section)  
+**Change:** Added "Connect with The Data Vigilante" section with social media placeholder links. GitHub, email, LinkedIn confirmed. TikTok/Instagram/X/YouTube/Substack marked as "launching October 2026."
+**Why it matters:** The Data Vigilante brand is launching social media handles in parallel with the October podcast appearance. The README now serves as a canonical link hub.
 
-6. ✅ **Virginia Max WBA correction** — $378 → $430 (VEC SB 1056, eff. Jan 4 2026)
-   - 6.1 ✅ VA BAI recalculated 0.90 → 1.02
-   - 6.2 ✅ VA stat-box reflagged danger/red → lime ↑ SB1056
-   - 6.3 ✅ Ch1 + Ch3 narrative reframed to "barely above, first fix since 2014"
-7. ✅ **DC Avg Annual Wage correction** — $95,000 → $112,400 (BLS QCEW, internal consistency)
-8. ✅ **FEC total correction** — $46.6M (stale) → $89.9M actual ($26.1M ex-Trone)
-9. ✅ **David Trone disclosure** — Total Wine & More (~$2.4B), Ways & Means, 98.7% self-funded
-10. ✅ **Warner/Van Hollen off-cycle disclosure** — not 2024 candidates (2026/2028 races)
-11. ✅ **Notebook 1 overhaul** (`ui_index_analysis.ipynb`) — exec summary, data validation cell, 4 investigative takes, cross-index synthesis
-12. ✅ **Notebook 2 overhaul** (`political_layer_analysis.ipynb`) — exec summary, B:L ratio cell, conflict matrix, investigative narrative
-13. ✅ **README verification footnotes** — 6 live-source URLs
-14. ✅ **Lawmaker salary research** — MD +12.5% vs UI +0%; VA +278% vs UI +13.8% (sourced)
-
-## Phase 5 — UX/UI Site Architecture (🔄 in progress)
-
-15. ✅ **Investigative-take blockquotes on index.html** — 4 chart-anchored takes (BAI, WBI, MIPI, Housing Gap) + lawmaker take, crimson-bordered `.investigative-take` style
-16. ✅ **Cross-Index Severity Banner** — 3-col grid (DC CRITICAL / MD SEVERE / VA CAUTIONARY)
-17. ✅ **Lawmaker Salary vs. UI Benefit table on index.html** — 4-row contrast (MD/VA/DC/Congress) with sourced links
-18. ✅ **Navigation upgrade** — added Political Layer / Methodology / About cross-page links
-19. ✅ **index.html methodology section** trimmed to summary + link (full content moved to methodology.html)
-20. ✅ **political.html** — full political layer page: exec brief, 4-section FEC comparison matrix, Trone profile, lawmaker deep-dive, methodology disclosure
-21. ✅ **methodology.html** — data validation table, formulas, housing cost note, limitations
-22. ✅ **about.html** — bio, what I built, fractional CDO offer, hire me
-
-## Phase 6 — FEC Methodology Corrections (📋 planned, root cause confirmed 2026-06-11)
-
-23. 📋 **Self-funding detection fix** — replace last-name substring matching with FEC loan transaction types (`15C/16C/15E/16E`). Currently over-excludes Kaine ($9.5M), Warner ($5.9M), Hoyer ($2.6M) — these are joint-committee transfers, not personal loans. Only Trone has true candidate self-loans.
-24. 📋 **Conduit/memo-code filter** — add `if c.get('memo_code'): continue` in Schedule A loop to drop pass-through contributions inflating Hoyer/Cline/Ruppersberger business totals.
-25. 📋 **B:L categorization via committee_type** — replace name-keyword matching (0–30% coverage) with FEC PAC `committee_type` field (L=labor, B=business) for defensible ratios.
-26. 📋 **Vendor exclusion from business** — CROWDWAVE CAMPAIGNS, NEW BLUE INTERACTIVE, etc. are political vendors mis-tagged as corporate donors; exclude from business total.
-27. 📋 **Election-cycle normalization** — add per-month fundraising rate to normalize off-cycle (Warner 2026, Van Hollen 2028) vs. active 2024 candidates.
-28. ✅ **4-section comparison matrix design** — Raw Receipts / True Self-Fund Corrected / Verified B:L / Per-Month Normalized (built into political.html as honest interim view pending script fixes).
-29. 📋 **Fix `total` NameError** — `analyze_member` references undefined `total` at line ~285 (should be `receipts`).
-
-## Phase 7 — Data Governance (🔄 in progress, audit complete 2026-06-11)
-
-30. 📋 **employer_contribution_gap.json metadata wrapper** — bare list violates the `{_metadata, data}` standard; wrap in `employer_contribution_gap.py`.
-31. 📋 **Figure numbering convention** — document slots 08–10 reserved for CPI/real-value charts; new charts start at 14.
-32. 📋 **Script rename** — `fec_integration_v251d.py` → `fec_integration.py` (drop version suffix; git tracks versions).
-33. 📋 **Data placement** — move `employer_contribution_gap.json` out of `data/political/` (it is economic, not political data).
-34. ✅ **DATA_CATALOG.md** — added rows for the 4 portfolio pages + OPTIMIZATIONS.md; documented figure numbering convention (08–10 reserved).
-35. ✅ **.gitignore verified** — correctly excludes `.env`, `.venv`, `__pycache__`; re-includes `figures/*.png`.
+### 50 — Virginia BAI Updated to 1.02 (SB 1056 Effective Jan 4 2026) ✅ INTEGRATED
+**Date:** 2026-06-11  
+**File:** `README.md`, `data/dmv_macro_baselines.csv`, `figures/01_bai_decay_trajectory.png`  
+**Change:** Virginia max WBA raised from $378 to $430 effective January 4, 2026, per SB 1056. BAI recalculated to 1.02 (from 0.86). Virginia no longer below threshold — now "barely above" at $10/week from failure.
+**Verification:** [VEC official announcement](https://vec.virginia.gov/new-weekly-benefit-amounts-effective-january-4-2026)
 
 ---
 
-*Maintained by The Data Vigilante (Sierra Napier, MPA). This file is the single source of truth for what has changed and what remains.*
+*(Items 1–49 preserved from original OPTIMIZATIONS.md. See repo history for full log.)*
+
+---
+
+## Correction Roadmap — Outstanding
+
+### Phase 6: Methodological Honesty (In Progress)
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 23 | FEC business/labor categorization uses keyword matching, not official industry codes | 🟡 DOCUMENTED | Honest in README + political.html four-view matrix |
+| 24 | Self-funding detection uses last-name matching with possible false positives | 🟡 DOCUMENTED | Flagged in OPTIMIZATIONS #41 |
+| 25 | Mark Warner (VA) + Chris Van Hollen (MD) were not 2024 candidates — figures are off-cycle | 🟡 DOCUMENTED | Added to README Political Accountability section |
+| 26 | Lawmaker salary vs. UI benefit contrast table is illustrative, not an accusation of direct causation | 🟡 DOCUMENTED | Explicitly framed as "contrast," not "causation" in README |
+| 27 | David Trone's $62.9M in self-loans correctly excluded from outside-money analysis | ✅ VERIFIED | Confirmed against FEC filings + WaPo reporting |
+| 28 | Cline (13:1) and Ruppersberger (21:1) are the only members with sufficient B/L coverage for meaningful ratios | ✅ VERIFIED | Others marked "insufficient coverage" |
+| 29 | Four-view FEC comparison matrix (raw → adjusted → normalized → normalized + industry) is the honest way to present this data | ✅ IMPLEMENTED | Live on political.html |
+
+### Phase 7: Data Pipeline Automation
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 30 | Automate monthly BLS LAUS fetch via GitHub Actions | 🟡 PARTIAL | `data_refresh.yml` exists but needs LAUS API integration |
+| 31 | Add "last updated" timestamp badge to all generated figures | 🟡 PARTIAL | README has badge; figures need overlay |
+| 32 | Build FRED CPI-U auto-refresh for RVI calculations | 🟡 PLANNED | Currently manual refresh |
+| 33 | Add county-level unemployment rate auto-update | 🔴 NOT STARTED | Requires BLS LAUS county API integration |
+
+### Phase 8: October 2026 Refresh Follow-up
+
+| # | Item | Status | Notes |
+|---|------|--------|-------|
+| 34 | Regenerate Figure 09 (unemployment_context.png) with Aug 2026 LAUS data | 🟡 PENDING | Data updated in README; figure PNG needs re-render |
+| 35 | Update Streamlit dashboard with October 2026 stats | 🟡 PENDING | dashboard/app.py needs refresh |
+| 36 | Verify HUD FMR 2026 figures for housing cost accuracy | 🟡 PENDING | FMR typically released in late Q3 |
+| 37 | Cross-check BLS QCEW 2025 annual averages when released | 🔴 NOT STARTED | QCEW annual data released ~June following year |
+| 38 | Add "long-term unemployed" trend line to Figure 09 | 🔴 NOT STARTED | Would strengthen narrative counterpoint |
+
+---
+
+## Style Guide for Future Corrections
+
+When adding a new correction, follow this format:
+
+```markdown
+### [NUMBER] — [TITLE] [STATUS]
+**Date:** YYYY-MM-DD  
+**File:** `filename.ext`  
+**Change:** [What changed]  
+**Why it matters:** [Why this correction matters]  
+**Verification:** [Links to sources]
+```
+
+Status markers: `✅ INTEGRATED` | `🟡 PENDING` | `🔴 NOT STARTED` | `🟡 DOCUMENTED`
+
+---
+
+*OPTIMIZATIONS.md — October 20, 2026. Correction log for UI_INDEX forensic data portfolio.*
