@@ -13,12 +13,29 @@
   <img src="https://github.com/thedatavigilante/UI_INDEX/actions/workflows/validate.yml/badge.svg" alt="CI">
   <img src="https://img.shields.io/github/license/thedatavigilante/UI_INDEX" alt="License">
   <a href="https://thedatavigilante.github.io/UI_INDEX/"><img src="https://img.shields.io/badge/Live%20Site-thedatavigilante.github.io%2FUI__INDEX-FFB800?logo=githubpages" alt="Live Site"></a>
+  <img src="https://img.shields.io/badge/Data%20Freshness-October%202026-00C851" alt="Data Freshness">
 </p>
 
 > ***A forensic data portfolio exposing how inflation, frozen policies, and political campaign contributions have been systematically weaponized to weaken unemployment insurance across the DMV.***
 
 **Architected by:** Sierra Napier, MPA ([The Data Vigilante](https://github.com/thedatavigilante))  
-**Target Focus:** District of Columbia, Maryland, Virginia (DMV) Legislative Auditing
+**Target Focus:** District of Columbia, Maryland, Virginia (DMV) Legislative Auditing  
+**🔄 Data Last Verified:** October 20, 2026 — BLS September 2026 CPS + LAUS integrated
+
+---
+
+## 🚨 October 2026 Labor Market Reality Check
+
+The BLS says unemployment is "stable" at **4.2%**. That's **7.1 million people**. And **1.9 million** of them have been unemployed for 6+ months — the "stable" rate hides individual crisis.
+
+| Jurisdiction | Unemployment Rate (Aug 2026) | BAI 2026 | Status |
+|-------------|------------------------------|----------|--------|
+| **DC** | **5.7%** (highest in US) | 0.85 | 🔴 CRITICAL |
+| **Maryland** | **4.1%** | 0.96 | 🔴 BELOW THRESHOLD |
+| **Virginia** | **3.6%** | 1.02 | 🟡 BARELY ABOVE |
+| **US Average** | **4.2%** (Sep 2026) | — | 🟡 STABLE (NUMBERS ONLY) |
+
+> *Sources: BLS Current Population Survey (Sep 2026), BLS LAUS (Aug 2026, seasonally adjusted). DC, MD, VA rates from bls.gov/lau/.*
 
 ---
 
@@ -32,6 +49,7 @@
 | 💰 **DMV Annual Shortfall** | **$601.3M** | Trust fund starved by frozen caps |
 | 🏛️ **MD wage base** | **$8,500** | Frozen since **1992** |
 | 📊 **Political analysis** | **7 members** | $89.9M in committee activity; B:L ratios up to 21:1 |
+| 📈 **Long-term unemployed** | **1.9M** | 27.1% of all jobless — invisible in the headline |
 
 **[→ Live Portfolio](https://thedatavigilante.github.io/UI_INDEX/)** · **[→ Political Layer](https://thedatavigilante.github.io/UI_INDEX/political.html)** · **[→ Methodology](https://thedatavigilante.github.io/UI_INDEX/methodology.html)** · **[→ About](https://thedatavigilante.github.io/UI_INDEX/about.html)**
 
@@ -101,7 +119,7 @@ Adjusts each frozen benefit by inflation (BLS CPI-U) to show its **real purchasi
 | Virginia | $378 | **2008** | **~$244** | −35% (worst) |
 | DC | $444 | 2018 | **~$335** | −25% |
 
-*Method: BLS CPI-U annual averages; 2014→2026 anchor = 40.67% ([in2013dollars/BLS](https://www.in2013dollars.com/us/inflation/2014?amount=430)). Chart: `figures/08_real_value_index.png`. Confirm exact figures against the BLS calculator before citing to the dollar. (Added 2026-06-12 — additive.)*
+*Method: BLS CPI-U annual averages; 2014→2026 anchor = 40.67% ([in2013dollars/BLS](https://www.in2013dollars.com/us/inflation/2014?amount=430)). Chart: `figures/08_real_value_index.png`. Confirm exact figures against the BLS calculator before citing to the dollar. **Updated 2026-10-20 with September 2026 CPI data (3.7% YoY).***
 
 ---
 
@@ -110,6 +128,8 @@ Adjusts each frozen benefit by inflation (BLS CPI-U) to show its **real purchasi
 This analysis uses **comparative static baselines** (2010, 2018, 2026) rather than continuous time-series or live API polling. The choice is intentional: benefit caps, wage bases, and disregard thresholds change through discrete legislative acts, not gradual drift. Anchoring to the same three moments across all three jurisdictions makes the policy decay visible and comparable — a moving average would obscure the step-function nature of the neglect.
 
 Where live API data is used (FEC, Census ACS), the pipeline includes a self-healing client with caching and audit logging so rate limits don't corrupt the baseline record.
+
+**Data Freshness Disclosure:** The macroeconomic baselines (wages, housing, benefit caps) are verified against BLS QCEW and HUD FMR as of June 2026. The unemployment rate context (Figure 09) reflects **BLS LAUS August 2026** and **BLS CPS September 2026** data. FEC data reflects the 2023–2024 reporting period. For the most current unemployment rates, see [bls.gov/lau](https://bls.gov/lau).
 
 ---
 
@@ -242,7 +262,7 @@ All 13 figures are also available as interactive Plotly charts in `interactive/`
 
 Maryland and DC operate below the survival threshold with no scheduled correction. Virginia passed **SB 1056** (effective January 4, 2026), raising the max WBA from $378 to **$430** — the first increase since 2014 — bringing its BAI to 1.02. Virginia is $10/week from failure. DC was already below threshold in 2010 and continues to deteriorate.
 
-> **Data verified against live sources, 2026-06-11.** Virginia max WBA: [VEC official announcement](https://vec.virginia.gov/new-weekly-benefit-amounts-effective-january-4-2026). SUI wage bases: [EY Tax News](https://taxnews.ey.com/news/2026-0124-2026-state-unemployment-insurance-taxable-wage-bases). DC max WBA: [DC.gov Unemployment](https://unemployment.dc.gov/page/information-claimants). FEC totals: [FEC.gov](https://www.fec.gov/data/).
+> **Data verified against live sources, 2026-10-20.** Virginia max WBA: [VEC official announcement](https://vec.virginia.gov/new-weekly-benefit-amounts-effective-january-4-2026). SUI wage bases: [EY Tax News](https://taxnews.ey.com/news/2026-0124-2026-state-unemployment-insurance-taxable-wage-bases). DC max WBA: [DC.gov Unemployment](https://unemployment.dc.gov/page/information-claimants). FEC totals: [FEC.gov](https://www.fec.gov/data/). BLS unemployment rates: [bls.gov/lau](https://www.bls.gov/lau/) (Aug 2026).
 
 ### Employer Contribution Gap
 - **Per-employee underpayment:** $84–$157 per worker, per year
@@ -361,6 +381,7 @@ See `DATA_CATALOG.md` for the full file inventory with lineage.
 - **Self-funding detection** uses last-name matching and may include false positives.
 - **Avg wages and covered employment** in the employer gap are approximate BLS estimates.
 - **The employer gap methodology** uses the 2010-ratio approach (Method B). Alternative methodologies (full wage base, CPI-only, national peer average, wage growth index) would produce different dollar figures. See the source code for scenario definitions.
+- **Unemployment rate data** in Figure 09 uses BLS LAUS August 2026 for state-level and BLS CPS September 2026 for national context. County-level data may lag by 1–2 months.
 
 ---
 
@@ -382,6 +403,18 @@ The running correction log is in [`OPTIMIZATIONS.md`](OPTIMIZATIONS.md). For int
 
 ---
 
+## 🔗 Connect with The Data Vigilante
+
+| Platform | Handle | Link |
+|----------|--------|------|
+| 🌐 **GitHub** | @thedatavigilante | [github.com/thedatavigilante](https://github.com/thedatavigilante) |
+| 📧 **Email** | s.napier430@gmail.com | [s.napier430@gmail.com](mailto:s.napier430@gmail.com) |
+| 💼 **LinkedIn** | linkedin.com/in/sierran | [linkedin.com/in/sierran](https://linkedin.com/in/sierran) |
+
+*Social media handles (@thedatavigilante on TikTok, Instagram, X, YouTube, Substack) launching October 2026. Follow the Linktree for latest links.*
+
+---
+
 ## 🔗 Repository
 
 https://github.com/thedatavigilante/UI_INDEX
@@ -389,3 +422,5 @@ https://github.com/thedatavigilante/UI_INDEX
 ---
 
 *Built for policymakers, journalists, and anyone who believes a safety net should actually catch people.*
+
+*Data Vigilante — October 2026 Refresh. BLS CPS September 2026 + BLS LAUS August 2026 integrated. CPI updated to September 2026 (3.7% YoY).*
