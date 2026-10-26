@@ -1,0 +1,416 @@
+<title>The Stagnant Safety Net v2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A working paper on unemployment insurance adequacy in DC, Maryland and Virginia, with verified 2026 figures and a guide to who sets the numbers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Theme: "Data Vigilante Terminal" (shared with Day Zero Toolkit v2).
+   Layout: a working paper. Terminal-black masthead, one reading column, numbered sections because the paper is read in order; tables and two charts carry the evidence.
+   --teal is the link/accent token (matrix green in dark). */
+:root{
+  --paper:#F5F5F5; --card:#FFFFFF; --ink:#121212; --ink-2:#555555; --rule:#DCDCDC;
+  --signal:#00FF41; --signal-ink:#0A0A0A; --teal:#007A1F; --alarm:#B00030; --wash:#EAFAEA; --gold:#9A6E00; --lime:#5A8800;
+  --mast:#0A0A0A; --mast-fg:#F5F5F5; --mast-card:#1A1A1A;
+  --display:"Space Mono","Courier New",monospace;
+  --body:"Inter",-apple-system,"Segoe UI",sans-serif;
+  --mono:"Space Mono","Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121212; --card:#1A1A1A; --ink:#F5F5F5; --ink-2:#AAAAAA; --rule:#2A2A2A;
+  --signal:#00FF41; --signal-ink:#0A0A0A; --teal:#00FF41; --alarm:#FF4060; --wash:#16231A; --gold:#D4AF37; --lime:#BFFF00; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121212; --card:#1A1A1A; --ink:#F5F5F5; --ink-2:#AAAAAA; --rule:#2A2A2A;
+  --signal:#00FF41; --signal-ink:#0A0A0A; --teal:#00FF41; --alarm:#FF4060; --wash:#16231A; --gold:#D4AF37; --lime:#BFFF00; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.65;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--mast)}
+a{color:var(--teal);text-underline-offset:2px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+.wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:700;text-wrap:balance;margin:0;line-height:1.15}
+h2{font-size:clamp(1.4rem,4.4vw,1.9rem);letter-spacing:-.01em}
+h3{font-size:1.05rem;letter-spacing:.01em}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.muted{color:var(--ink-2)}
+.small{font-size:.9rem}
+
+.mast{background:var(--mast);color:var(--mast-fg);background-image:radial-gradient(color-mix(in srgb,var(--signal) 14%,transparent) 1px,transparent 1px);background-size:14px 14px}
+.mast .wrap{padding-block:24px 34px;display:grid;gap:16px}
+.mast .eyebrow{color:color-mix(in srgb,var(--mast-fg) 70%,transparent)}
+.byline{display:flex;align-items:center;gap:12px}
+.avatar{width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid var(--signal);background:#FFFFFF;flex:0 0 auto}
+.byline b{display:block;line-height:1.2}
+.byline span{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--signal)}
+.mast h1{font-size:clamp(2.1rem,9vw,4rem);text-transform:uppercase;letter-spacing:-.03em;line-height:1.02}
+.mast h1 span{background:var(--signal);color:var(--signal-ink);padding:0 .1em;display:inline-block}
+.mast .sub{font-size:1.1rem;max-width:36em}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor;padding:4px 8px;border-radius:2px}
+
+.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--rule)}
+.rail nav{display:flex;gap:2px;overflow-x:auto;padding-block:8px;scrollbar-width:none}
+.rail nav::-webkit-scrollbar{display:none}
+.rail a{flex:0 0 auto;font-family:var(--mono);font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;color:var(--ink-2);padding:6px 9px;border-radius:2px}
+.rail a b{color:var(--teal);margin-right:4px}
+.rail a:hover{background:var(--wash);color:var(--ink)}
+
+section{padding-block:40px 4px;display:grid;gap:18px;scroll-margin-top:52px}
+.shead{display:grid;gap:6px;border-top:3px solid var(--ink);padding-top:12px}
+.shead .eyebrow b{color:var(--teal)}
+.prose{display:grid;gap:14px;max-width:42em}
+
+.abstract{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:18px;display:grid;gap:10px}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.tile{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:14px;display:grid;gap:4px;align-content:start}
+.tile b{font-family:var(--display);font-size:2rem;line-height:1;font-variant-numeric:tabular-nums}
+.tile b.bad{color:var(--alarm)}
+.tile b.ok{color:var(--teal)}
+.tile span{font-size:.9rem;color:var(--ink-2)}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.93rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--mono);font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);background:var(--wash)}
+tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+th.n{text-align:right}
+td.neg{color:var(--alarm);font-weight:700}
+td.pos{color:var(--teal);font-weight:700}
+caption{caption-side:bottom;text-align:left;padding:8px 12px;font-size:.82rem;color:var(--ink-2)}
+
+figure{margin:0;background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:14px;display:grid;gap:8px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--ink-2)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-family:var(--mono);font-size:.74rem;color:var(--ink-2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+.formula{font-family:var(--mono);font-size:.88rem;background:var(--wash);padding:10px 12px;border-radius:3px;overflow-x:auto;white-space:nowrap}
+.voice{border-left:4px solid var(--gold);padding:4px 0 4px 16px;display:grid;gap:6px}
+.voice .eyebrow{color:var(--ink)}
+.voice p{font-style:italic}
+.note{background:var(--wash);border-radius:3px;padding:12px 14px;font-size:.93rem}
+.note strong{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:2px}
+
+.bodies{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.body{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:14px;display:grid;gap:8px;align-content:start;min-width:0}
+.body h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.body h3 span{font-size:.7rem;font-family:var(--mono);color:var(--ink-2);font-weight:400;letter-spacing:.06em}
+.body ul{margin:0;padding-left:1.1em;display:grid;gap:4px;font-size:.92rem}
+.ballot{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:2px;justify-self:start;background:var(--signal);color:var(--signal-ink)}
+.ballot.off{background:var(--wash);color:var(--ink)}
+
+.sheet{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:18px;display:grid;gap:14px}
+.sheet h3{font-size:1.2rem}
+.sheet ol{margin:0;padding-left:1.3em;display:grid;gap:6px}
+.copyrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:3px;padding:7px 12px;cursor:pointer}
+
+ol.refs{font-size:.88rem;display:grid;gap:6px;padding-left:1.4em;margin:0}
+ol.refs li{word-break:break-word}
+ul.plain{margin:0;padding-left:1.2em;display:grid;gap:6px}
+
+footer{margin-top:56px;background:var(--mast);color:var(--mast-fg)}
+footer .wrap{padding-block:30px;display:grid;gap:12px}
+footer a{color:var(--signal)}
+footer .fine{font-size:.84rem;color:color-mix(in srgb,var(--mast-fg) 72%,transparent)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="byline"><img class="avatar" src="avatar.png" alt="Illustrated avatar of Sierra Napier" width="60" height="60"><div><b>Sierra Napier, MPA</b><span>The Data Vigilante</span></div></div>
+    <p class="eyebrow">Working paper · Version 2.0 · October 26, 2026</p>
+    <h1>The Stagnant <span>Safety Net</span></h1>
+    <p class="sub">Unemployment insurance adequacy in the District of Columbia, Maryland and Virginia, and the public bodies that set it.</p>
+    <div class="meta"><span class="chip">Verified Oct 2026</span><span class="chip">DOL · BLS · HUD · state records</span><span class="chip">Nonpartisan</span></div>
+  </div>
+</header>
+
+<div class="rail"><div class="wrap"><nav aria-label="Sections">
+  <a href="#abstract"><b>0</b>Abstract</a>
+  <a href="#s1"><b>1</b>Context</a>
+  <a href="#s2"><b>2</b>Data</a>
+  <a href="#s3"><b>3</b>Findings</a>
+  <a href="#s4"><b>4</b>Who sets it</a>
+  <a href="#s5"><b>5</b>Options</a>
+  <a href="#s6"><b>6</b>Limits</a>
+  <a href="#brief"><b>FS</b>Fact sheet</a>
+  <a href="#refs"><b>REF</b>Sources</a>
+</nav></div></div>
+
+<main class="wrap">
+
+<section id="abstract" style="padding-top:32px">
+  <div class="abstract">
+    <p class="eyebrow">Abstract</p>
+    <p>Unemployment insurance (UI) is meant to replace part of a laid-off worker's wages while they look for work. This paper measures how far the maximum weekly benefit in DC, Maryland and Virginia goes against housing costs, inflation and wages in 2026. Using U.S. Department of Labor law summaries, BLS wage and price data and HUD Fair Market Rents for the Washington metro area, it finds that the maximum benefit in all three jurisdictions falls short of a two-bedroom Fair Market Rent. In DC and Maryland it also falls short of a one-bedroom. Maryland's $430 maximum has not changed since 2010 and has lost 35% of its purchasing power. DC's maximum replaces 18.6% of the average weekly wage, the lowest share in the region. Virginia raised its maximum twice in 2026, to $478. The paper closes with the bodies that set these values, the bills considered in 2026 and the trade-offs of the main policy options.</p>
+  </div>
+  <div class="tiles">
+    <div class="tile"><b class="bad">92.5%</b><span>Share of a one-bedroom Fair Market Rent covered by Maryland's $430 maximum</span></div>
+    <div class="tile"><b class="bad">−35%</b><span>Real value lost by Maryland's maximum since it was last set in 2010</span></div>
+    <div class="tile"><b class="bad">18.6%</b><span>DC's maximum as a share of the District's average weekly wage</span></div>
+    <div class="tile"><b class="ok">$478</b><span>Virginia's new maximum, for claims filed on or after July 5, 2026</span></div>
+  </div>
+</section>
+
+<section id="s1">
+  <div class="shead"><p class="eyebrow"><b>Section 1</b> · Context</p><h2>Why the maximum benefit matters</h2></div>
+  <div class="prose">
+    <p>Each state, and the District, sets its own UI benefit formula, maximum weekly benefit and taxable wage base within broad federal rules. Most claimants with steady middle-class earnings hit the maximum, so the cap, not the formula, decides what they receive. When a cap stays flat while rents and wages rise, the program replaces a smaller share of lost income each year without any vote to cut it.</p>
+    <p>The Washington region gives an unusual test. DC, suburban Maryland and Northern Virginia share one labor market and one HUD rent area, yet each jurisdiction sets a different benefit. In 2026 the region also absorbed federal workforce reductions: the federal civilian workforce shrank by about 238,000 people (10.3%) in 2025, according to Pew Research Center's analysis of OPM data. Many of those workers file in these three systems.</p>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="shead"><p class="eyebrow"><b>Section 2</b> · Data and measures</p><h2>Four measures, all from public data</h2></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Input</th><th class="n">DC</th><th class="n">Maryland</th><th class="n">Virginia</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Maximum weekly benefit, Oct 2026</td><td class="n">$444</td><td class="n">$430</td><td class="n">$478</td><td>DOL (Jan 2026); VEC (Jun 2026)</td></tr>
+      <tr><td>Year maximum last changed</td><td class="n">2020</td><td class="n">2010</td><td class="n">2026</td><td>DC Council; WJLA; VEC</td></tr>
+      <tr><td>Taxable wage base</td><td class="n">$9,000</td><td class="n">$8,500</td><td class="n">$8,000</td><td>DOL (Jan 2026)</td></tr>
+      <tr><td>Average weekly wage, Q3 2025</td><td class="n">$2,393</td><td class="n">$1,526</td><td class="n">$1,504</td><td>BLS QCEW</td></tr>
+      <tr><td>Partial-earnings disregard</td><td class="n">⅓ of wages + $50</td><td class="n">$50</td><td class="n">$100</td><td>DOL (Jan 2026)</td></tr>
+    </tbody>
+    <caption>Housing: HUD FY2026 Fair Market Rents for the Washington-Arlington-Alexandria metro area: studio $1,953, one-bedroom $2,015, two-bedroom $2,246 a month. Prices: BLS CPI-U, September 2026 = 336.940.</caption>
+  </table></div>
+  <div class="prose small">
+    <p class="formula">Housing coverage = maximum weekly benefit ÷ (monthly FMR × 12 ÷ 52)</p>
+    <p class="formula">Real value = maximum × (CPI in year set ÷ CPI Sept 2026)</p>
+    <p class="formula">Replacement ceiling = maximum ÷ average weekly wage</p>
+    <p class="formula">Wage-base share = taxable wage base ÷ (average weekly wage × 52)</p>
+    <p class="muted">Each measure uses the maximum benefit, so it describes the best case for a claimant. Workers with lower past earnings receive less. Real values use the CPI-U annual average for the year the maximum was set.</p>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="shead"><p class="eyebrow"><b>Section 3</b> · Findings</p><h2>What the numbers show</h2></div>
+
+  <h3>3.1 The maximum benefit does not cover rent in most cases</h3>
+  <figure>
+    <div class="legend"><span><i style="background:var(--teal)"></i>Studio</span><span><i style="background:var(--gold)"></i>One-bedroom</span><span><i style="background:var(--alarm)"></i>Two-bedroom</span></div>
+    <svg id="chartRent" viewBox="0 0 420 250" role="img" aria-label="Share of weekly Fair Market Rent covered by each maximum benefit"></svg>
+    <figcaption>Figure 1. Maximum weekly benefit as a share of weekly Fair Market Rent, Washington metro, FY2026. The dashed line marks 100%: a benefit that exactly covers rent, with nothing left for food, utilities or transportation.</figcaption>
+  </figure>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Maximum benefit</th><th class="n">Studio ($451/wk)</th><th class="n">1-BR ($465/wk)</th><th class="n">2-BR ($518/wk)</th></tr></thead>
+    <tbody>
+      <tr><td>DC, $444</td><td class="n neg">−$7</td><td class="n neg">−$21</td><td class="n neg">−$74</td></tr>
+      <tr><td>Maryland, $430</td><td class="n neg">−$21</td><td class="n neg">−$35</td><td class="n neg">−$88</td></tr>
+      <tr><td>Virginia, $430 (claims Jan 4 – Jul 4, 2026)</td><td class="n neg">−$21</td><td class="n neg">−$35</td><td class="n neg">−$88</td></tr>
+      <tr><td>Virginia, $478 (claims from Jul 5, 2026)</td><td class="n pos">+$27</td><td class="n pos">+$13</td><td class="n neg">−$40</td></tr>
+    </tbody>
+    <caption>Weekly surplus or shortfall after rent, before taxes on benefits and before any other expense.</caption>
+  </table></div>
+
+  <h3>3.2 Frozen maximums lose value every year</h3>
+  <figure>
+    <div class="legend"><span><i style="background:var(--rule)"></i>Nominal maximum</span><span><i style="background:var(--alarm)"></i>Value in Sept 2026 dollars</span><span><i style="background:var(--teal)"></i>If indexed to CPI</span></div>
+    <svg id="chartReal" viewBox="0 0 420 210" role="img" aria-label="Nominal, real and CPI-indexed maximum benefit for Maryland and DC"></svg>
+    <figcaption>Figure 2. Maryland's maximum set in 2010 and DC's set in 2020, in nominal terms, in September 2026 dollars, and as they would stand if indexed to CPI-U.</figcaption>
+  </figure>
+  <div class="prose"><p>Maryland's $430 is worth about $278 in today's prices, a 35% loss. Indexed to inflation since 2010 it would be about $664. DC's $444 is worth about $341, a 23% loss since 2020; indexed, it would be about $578. Virginia's maximum stayed at $378 for more than a decade before rising to $430 in January 2026 and $478 in July 2026.</p></div>
+
+  <h3>3.3 Replacement falls furthest where wages are highest</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Jurisdiction</th><th class="n">Max ÷ avg weekly wage</th><th class="n">40% of avg wage</th><th class="n">50% of avg wage</th></tr></thead>
+    <tbody>
+      <tr><td>DC</td><td class="n neg">18.6%</td><td class="n">$957</td><td class="n">$1,196</td></tr>
+      <tr><td>Maryland</td><td class="n">28.2%</td><td class="n">$610</td><td class="n">$763</td></tr>
+      <tr><td>Virginia</td><td class="n">31.8%</td><td class="n">$602</td><td class="n">$752</td></tr>
+    </tbody>
+    <caption>The 40% column is the rule proposed in Maryland's 2026 SB 3 / HB 188. Averages are for Q3 2025 and include all covered jobs.</caption>
+  </table></div>
+
+  <h3>3.4 Part-time work reduces benefits steeply</h3>
+  <div class="prose"><p>Claimants are encouraged to take part-time or gig work while they search, but each state deducts earnings above a small disregard. For a claimant at the maximum who earns $250 in a week, the DOL law summaries imply these reductions:</p></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Jurisdiction</th><th class="n">Disregarded</th><th class="n">Benefit cut</th><th class="n">Share of earnings lost</th><th class="n">Total income that week</th></tr></thead>
+    <tbody>
+      <tr><td>DC</td><td class="n">$133</td><td class="n">$117</td><td class="n">47%</td><td class="n">$577</td></tr>
+      <tr><td>Maryland</td><td class="n">$50</td><td class="n">$200</td><td class="n neg">80%</td><td class="n">$480</td></tr>
+      <tr><td>Virginia</td><td class="n">$100</td><td class="n">$150</td><td class="n">60%</td><td class="n">$578</td></tr>
+    </tbody>
+    <caption>Illustrative calculation from the DOL January 2026 summary. Actual deductions follow each state's statute and may round differently.</caption>
+  </table></div>
+
+  <h3>3.5 The financing base has not kept pace with wages</h3>
+  <div class="prose"><p>Employers pay state UI tax only on each worker's first $8,000 to $9,000 of wages. That base equals 7.2% of the average annual wage in DC, 10.7% in Maryland and 10.2% in Virginia. The federal base under FUTA has been $7,000 since 1983. A low, fixed base makes the tax fall more heavily on lower-wage payrolls and limits how much a trust fund can grow without raising rates. This paper does not estimate a revenue shortfall; version 1's $601 million estimate has been withdrawn pending a re-estimate from DOL financial data (see Section 6).</p></div>
+</section>
+
+<section id="s4">
+  <div class="shead"><p class="eyebrow"><b>Section 4</b> · Who sets the numbers</p><h2>The bodies that decide, and when they're on the ballot</h2></div>
+  <div class="prose"><p>Benefit maximums, wage bases and earnings disregards are set by state legislatures and the DC Council, not by Congress. Congress sets the federal framework: the FUTA tax and its $7,000 base, federal standards for state programs, and emergency federal benefits during recessions.</p></div>
+  <div class="bodies">
+    <div class="body">
+      <h3>District of Columbia <span>DC CODE</span></h3>
+      <ul>
+        <li>Council of the District of Columbia; oversight of DOES by the Committee on Executive Administration and Labor (Chair Anita Bonds; members Matthew Frumin, Janeese Lewis George)</li>
+        <li>Mayor and the Department of Employment Services (DOES) administer the program</li>
+        <li>Last change: maximum raised to $444 effective January 2020</li>
+      </ul>
+      <span class="ballot">On the Nov 3, 2026 ballot: Mayor and Council seats</span>
+    </div>
+    <div class="body">
+      <h3>Maryland <span>LABOR &amp; EMPL. ART.</span></h3>
+      <ul>
+        <li>General Assembly: Senate Finance Committee (Chair Pamela Beidle) and House Economic Matters Committee</li>
+        <li>Governor Wes Moore; Maryland Department of Labor administers the program</li>
+        <li>2026: SB 3 (Sen. Kramer) / HB 188 (Del. Charkoudian) would set the maximum at 40% of the state average weekly wage from 2027. Neither advanced out of committee.</li>
+      </ul>
+      <span class="ballot">On the Nov 3, 2026 ballot: Governor and all 188 legislative seats</span>
+    </div>
+    <div class="body">
+      <h3>Virginia <span>CODE OF VA § 60.2</span></h3>
+      <ul>
+        <li>General Assembly: Senate Commerce and Labor (Chair Creigh Deeds) and House Labor and Commerce (Chair Jeion Ward)</li>
+        <li>Governor Abigail Spanberger; Virginia Employment Commission administers the program</li>
+        <li>2025: HB 1766 / SB 1056 raised the maximum from $378 to $430 (claims from Jan 4, 2026). 2026: HB 1320 (Del. Martinez) / SB 759 (Sen. Ebbin) raised it to $478 (claims from Jul 5, 2026).</li>
+      </ul>
+      <span class="ballot off">Next legislative election: November 2027</span>
+    </div>
+  </div>
+  <p class="muted small">Committee assignments as listed on official legislature and Council pages in 2026; they can change between sessions.</p>
+</section>
+
+<section id="s5">
+  <div class="shead"><p class="eyebrow"><b>Section 5</b> · Policy options</p><h2>Options and their trade-offs</h2></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Option</th><th>What it does</th><th>Trade-offs</th></tr></thead>
+    <tbody>
+      <tr><td><b>Index the maximum to wages</b></td><td>Sets the cap as a share of the state average weekly wage (Maryland's SB 3 used 40%), so it adjusts every year without new legislation.</td><td>Raises benefit costs as wages grow; needs matching financing to protect trust-fund solvency.</td></tr>
+      <tr><td><b>Index the maximum to prices</b></td><td>Adjusts the cap each year by CPI so its purchasing power holds.</td><td>Smaller increases than wage indexing; still needs financing.</td></tr>
+      <tr><td><b>Raise or index the taxable wage base</b></td><td>Taxes more of each worker's wages, often paired with lower rates.</td><td>Increases cost for employers with higher-paid staff; can be designed to be revenue-neutral.</td></tr>
+      <tr><td><b>Raise the earnings disregard</b></td><td>Lets claimants keep more of part-time earnings before benefits are cut.</td><td>Modest cost; may lengthen some claims while increasing work activity during them.</td></tr>
+      <tr><td><b>Change dependent allowances</b></td><td>Adds to the benefit for each dependent (Maryland pays $8 per dependent).</td><td>Targets households with children; adds administrative verification.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="s6">
+  <div class="shead"><p class="eyebrow"><b>Section 6</b> · Limitations</p><h2>What this paper does not show</h2></div>
+  <ul class="plain">
+    <li>All measures use the maximum benefit. Typical benefits are lower, so typical shortfalls are larger.</li>
+    <li>The Washington metro FMR is used for all three jurisdictions. Rents in Baltimore, Richmond and rural areas are lower, so coverage there is higher. FMRs are payment standards, not observed asking rents.</li>
+    <li>Average weekly wages are for one quarter (Q3 2025) and are pulled up by high earners, especially in DC.</li>
+    <li>The partial-earnings figures rely on DOL's summary of each law, not the statutes themselves.</li>
+    <li>Trust-fund adequacy and revenue estimates are out of scope for this version.</li>
+  </ul>
+</section>
+
+<section id="brief">
+  <div class="shead"><p class="eyebrow"><b>Fact sheet</b> · For legislators, staff and candidates</p><h2>One page for the 2027 sessions</h2></div>
+  <div class="sheet" id="sheet">
+    <h3>Unemployment insurance in the Washington region, October 2026</h3>
+    <ol>
+      <li>Maximum weekly benefits: DC $444 (since 2020), Maryland $430 (since 2010), Virginia $478 (since July 5, 2026).</li>
+      <li>None of the three maximums covers HUD's FY2026 two-bedroom Fair Market Rent for the Washington metro ($518 a week). Only Virginia's new maximum covers a one-bedroom ($465 a week).</li>
+      <li>Maryland's maximum has lost 35% of its purchasing power since 2010. Indexed to inflation, it would be about $664.</li>
+      <li>DC's maximum equals 18.6% of the District's average weekly wage; Maryland's, 28.2%; Virginia's, 31.8%.</li>
+      <li>A claimant earning $250 in part-time work loses $200 of benefits in Maryland, $150 in Virginia and $117 in DC.</li>
+      <li>Taxable wage bases ($8,000–$9,000) equal 7–11% of average annual wages.</li>
+      <li>Maryland's 2026 proposal (SB 3 / HB 188) would have set the maximum at 40% of the average weekly wage, about $610 today. It did not advance.</li>
+    </ol>
+    <p class="muted small">Sources: U.S. DOL; Virginia Employment Commission; BLS QCEW and CPI-U; HUD FY2026 FMR. Full citations: thedatavigilante.github.io/UI_INDEX</p>
+    <div class="copyrow"><button class="btn" type="button" id="copySheet">Copy fact sheet</button><span class="muted small" id="copyMsg"></span></div>
+  </div>
+</section>
+
+<section id="note">
+  <div class="voice">
+    <p class="eyebrow">Author's note</p>
+    <p>I started this audit while unemployed in 2026, filing the same claims this paper measures. Version 1 was written as a forensic exposé and built in a day. Version 2 rebuilds it as a working paper: every figure re-checked against a primary source, the political analysis refocused on the bodies that actually set these numbers, and the opinions moved here.</p>
+  </div>
+</section>
+
+<section id="changes">
+  <div class="shead"><p class="eyebrow"><b>Log</b> · Changes from version 1</p><h2>What changed</h2></div>
+  <ul class="plain small">
+    <li>Housing costs now use HUD's published FY2026 Fair Market Rents instead of an unsourced market-rate proxy.</li>
+    <li>Corrected Maryland's freeze start to 2010 (v1 said 2014) and DC's last increase to January 2020 (v1 showed 2018).</li>
+    <li>Added Virginia's July 5, 2026 increase to $478 (HB 1320 / SB 759); v1 stopped at the $430 set by SB 1056.</li>
+    <li>Recomputed real values with the September 2026 CPI-U.</li>
+    <li>Updated the partial-earnings disregards to the DOL January 2026 summary; Virginia's disregard is $100, not $50.</li>
+    <li>Replaced the federal campaign-finance layer with the state and DC bodies that set benefits. Congress does not set state maximums.</li>
+    <li>Withdrew the $601M trust-fund shortfall estimate pending a re-estimate from DOL financial data.</li>
+    <li>Moved commentary to the author's note; findings are stated neutrally.</li>
+  </ul>
+</section>
+
+<section id="refs">
+  <div class="shead"><p class="eyebrow"><b>Ref</b> · Sources checked October 2026</p><h2>References</h2></div>
+  <ol class="refs">
+    <li>U.S. Department of Labor, <a href="https://oui.doleta.gov/unemploy/content/sigpros/2020-2029/January2026.pdf" target="_blank" rel="noopener">Significant Provisions of State Unemployment Insurance Laws, January 2026</a>.</li>
+    <li>Virginia Employment Commission, <a href="https://vec.virginia.gov/news/virginia-unemployment-benefits-increasing-july" target="_blank" rel="noopener">Virginia unemployment benefits increasing in July</a>, June 25, 2026.</li>
+    <li>When In Your State, <a href="https://wheninyourstate.com/virginia/virginia-finally-raises-unemployment-pay-after-13-years-of-the-same-old-check/" target="_blank" rel="noopener">Virginia finally raises unemployment pay</a> (HB 1766 / SB 1056).</li>
+    <li>Cardinal News, <a href="https://cardinalnews.org/2026/07/07/cardinal-commerce-notes-unemployment-benefits-increase/" target="_blank" rel="noopener">Unemployment benefits increase</a>, July 7, 2026.</li>
+    <li>Council of the District of Columbia, <a href="https://dccouncil.gov/wp-content/uploads/2019/11/UI-Max.-Benefit-Increase-Emerg.-Dec.pdf" target="_blank" rel="noopener">Unemployment maximum benefit increase to $444</a> (2019), and <a href="https://dccouncil.gov/committees/committee-on-executive-administration-and-labor/" target="_blank" rel="noopener">Committee on Executive Administration and Labor</a>.</li>
+    <li>WJLA, <a href="https://www.wjla.com/news/local/unemployment-benefits-maryland-legislation-federal-job-cuts-employees-firing-president-trump-montgomery-county-lorig-charkoudian-potential-layoffs-increase-minimum-wage-rate-insurance-debt" target="_blank" rel="noopener">Maryland lawmaker pushes to double unemployment benefits</a>, Feb 20, 2025.</li>
+    <li>Maryland General Assembly, <a href="https://mgaleg.maryland.gov/mgawebsite/Legislation/Details/SB0003?ys=2026RS" target="_blank" rel="noopener">SB 3 (2026)</a>; LegiScan, <a href="https://legiscan.com/MD/bill/HB188" target="_blank" rel="noopener">HB 188 (2026)</a>; <a href="https://mgaleg.maryland.gov/mgawebsite/Members/Details/beidle01?ys=2026RS" target="_blank" rel="noopener">Sen. Pamela Beidle</a>.</li>
+    <li>Virginia House of Delegates, <a href="https://house.vga.virginia.gov/committees/H14/reports/5555" target="_blank" rel="noopener">Labor and Commerce Committee report</a>, Jan 22, 2026; Wikipedia, <a href="https://en.wikipedia.org/wiki/Virginia_Senate" target="_blank" rel="noopener">Senate of Virginia</a> (committee chairs).</li>
+    <li>U.S. Bureau of Labor Statistics, <a href="https://www.bls.gov/regions/mid-atlantic/news-release/2026/countyemploymentandwages_districtofcolumbia_20260317.htm" target="_blank" rel="noopener">County Employment and Wages, Third Quarter 2025</a>.</li>
+    <li>U.S. Bureau of Labor Statistics, <a href="https://www.bls.gov/news.release/archives/cpi_10142026.htm" target="_blank" rel="noopener">Consumer Price Index, September 2026</a>; CPI-U annual averages via <a href="https://lmi.idaho.gov/wp-content/uploads/2026/08/2026-CPI.pdf" target="_blank" rel="noopener">Idaho Department of Labor CPI table</a>.</li>
+    <li>HUD FY2026 Fair Market Rents, Washington-Arlington-Alexandria HUD Metro FMR Area, as reported by <a href="https://rentmarker.com/counties/district-of-columbia-dc" target="_blank" rel="noopener">RentMarker</a> and <a href="https://fmr.fyi/zip/20586" target="_blank" rel="noopener">fmr.fyi</a>; official tables at <a href="https://www.huduser.gov/portal/datasets/fmr.html" target="_blank" rel="noopener">huduser.gov</a>.</li>
+    <li>Pew Research Center, <a href="https://www.pewresearch.org/short-reads/2026/03/13/federal-workforce-shrank-10-in-trumps-first-year-back-in-office/" target="_blank" rel="noopener">Federal workforce shrank 10% in Trump's first year back in office</a>, March 13, 2026.</li>
+  </ol>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="byline"><img class="avatar" src="avatar.png" alt="" width="60" height="60"><div><b>Sierra Napier, MPA</b><span>The Data Vigilante · 2026</span></div></div>
+    <p class="fine">Suggested citation: Napier, S. (2026). <i>The Stagnant Safety Net: Unemployment Insurance Adequacy in DC, Maryland and Virginia</i> (Working paper, v2.0). The Data Vigilante. Code and data: <a href="https://github.com/thedatavigilante/UI_INDEX" target="_blank" rel="noopener">github.com/thedatavigilante/UI_INDEX</a> (MIT license). Companion guide: <a href="https://thedatavigilante.github.io/day-zero-toolkit/" target="_blank" rel="noopener">Day Zero Toolkit</a>.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var css=getComputedStyle(document.documentElement);
+  function tok(n){return 'var(--'+n+')'}
+  var M='Space Mono,monospace';
+  // Figure 1: coverage of weekly FMR
+  var wk=[1953*12/52,2015*12/52,2246*12/52];
+  var rows=[['DC',444],['Maryland',430],['VA (Jul 5+)',478]];
+  var cols=['teal','gold','alarm'];
+  var W=420,H=250,L=92,R=46,T=14,B=30,max=1.2;
+  var x=function(v){return L+(W-L-R)*v/max};
+  var s='';
+  [0,.25,.5,.75,1].forEach(function(v){s+='<line x1="'+x(v)+'" x2="'+x(v)+'" y1="'+T+'" y2="'+(H-B)+'" stroke="'+tok('rule')+'" stroke-width="1"/><text x="'+x(v)+'" y="'+(H-10)+'" text-anchor="middle" font-size="11" font-family="'+M+'" fill="'+tok('ink-2')+'">'+Math.round(v*100)+'%</text>'});
+  var band=(H-T-B)/rows.length,bh=14;
+  rows.forEach(function(r,i){
+    var y0=T+i*band+(band-3*bh-6)/2;
+    s+='<text x="'+(L-10)+'" y="'+(y0+bh*1.5+8)+'" text-anchor="end" font-size="12" font-family="'+M+'" fill="'+tok('ink')+'">'+r[0]+'</text>';
+    wk.forEach(function(w,j){var v=r[1]/w,y=y0+j*(bh+3);
+      s+='<rect x="'+L+'" y="'+y+'" width="'+(x(v)-L)+'" height="'+bh+'" rx="2" fill="'+tok(cols[j])+'"/>';
+      s+='<text x="'+(x(v)+5)+'" y="'+(y+bh-3)+'" font-size="11" font-family="'+M+'" fill="'+tok('ink')+'">'+Math.round(v*1000)/10+'%</text>'});
+  });
+  s+='<line x1="'+x(1)+'" x2="'+x(1)+'" y1="'+(T-4)+'" y2="'+(H-B)+'" stroke="'+tok('ink')+'" stroke-width="1.5" stroke-dasharray="5 4"/>';
+  document.getElementById('chartRent').innerHTML=s;
+
+  // Figure 2: nominal vs real vs indexed
+  var data=[['MD (2010)',430,278,664],['DC (2020)',444,341,578]];
+  var c2=['rule','alarm','teal'];
+  var H2=210,L2=92,max2=700,x2=function(v){return L2+(W-L2-R)*v/max2},s2='';
+  [0,200,400,600].forEach(function(v){s2+='<line x1="'+x2(v)+'" x2="'+x2(v)+'" y1="10" y2="'+(H2-30)+'" stroke="'+tok('rule')+'"/><text x="'+x2(v)+'" y="'+(H2-10)+'" text-anchor="middle" font-size="11" font-family="'+M+'" fill="'+tok('ink-2')+'">$'+v+'</text>'});
+  var band2=(H2-40)/data.length;
+  data.forEach(function(d,i){var y0=12+i*band2+(band2-3*bh-6)/2;
+    s2+='<text x="'+(L2-10)+'" y="'+(y0+bh*1.5+8)+'" text-anchor="end" font-size="12" font-family="'+M+'" fill="'+tok('ink')+'">'+d[0]+'</text>';
+    [d[1],d[2],d[3]].forEach(function(v,j){var y=y0+j*(bh+3);
+      s2+='<rect x="'+L2+'" y="'+y+'" width="'+(x2(v)-L2)+'" height="'+bh+'" rx="2" fill="'+tok(c2[j])+'"/>';
+      s2+='<text x="'+(x2(v)+5)+'" y="'+(y+bh-3)+'" font-size="11" font-family="'+M+'" fill="'+tok('ink')+'">$'+v+'</text>'})});
+  document.getElementById('chartReal').innerHTML=s2;
+
+  // Copy fact sheet
+  var btn=document.getElementById('copySheet'),msg=document.getElementById('copyMsg'),sheet=document.getElementById('sheet');
+  btn.addEventListener('click',function(){
+    var text=sheet.querySelector('h3').textContent+'\n\n'+[].map.call(sheet.querySelectorAll('ol li'),function(li,i){return (i+1)+'. '+li.textContent}).join('\n')+'\n\n'+sheet.querySelector('p').textContent;
+    function sel(){var r=document.createRange();r.selectNodeContents(sheet.querySelector('ol'));var g=window.getSelection();g.removeAllRanges();g.addRange(r);msg.textContent='Selected. Copy it from your menu.'}
+    try{navigator.clipboard.writeText(text).then(function(){msg.textContent='Copied.'},sel)}catch(e){sel()}
+  });
+})();
+</script>
